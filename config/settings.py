@@ -85,16 +85,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 if LOCAL_DEPLOY:
     DATABASES = db.POSTGRES
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lagran8',
-        'USER': 'davangcas',
-        'PASSWORD': 'D35zb6pasederecho',
-        'HOST': '127.0.0.1',
-        'DATABASE_PORT': '5432',
-        }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'lagran8',
+            'USER': 'davangcas',
+            'PASSWORD': 'D35zb6pasederecho',
+            'HOST': '127.0.0.1',
+            'DATABASE_PORT': '5432',
+            }
+    }
 
 
 # Password validation

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>{{title}}</title>
+        {% include 'landing/base/css.html' %}
+    </head>
+    <body>
+        <div class="preloader-wrapper" id="preloader">
+            <div class="motion-line dark-big"></div>
+            <div class="motion-line yellow-big"></div>
+            <div class="motion-line dark-small"></div>
+            <div class="motion-line yellow-normal"></div>
+            <div class="motion-line yellow-small1"></div>
+            <div class="motion-line yellow-small2"></div>
+        </div>
+
+        {% include 'landing/base/top_bar.html' %}
+
+        {% include 'landing/base/menu.html' %}
+
+        {% include 'landing/base/js.html' %}
+
+    </body>
+</html>

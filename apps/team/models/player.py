@@ -9,6 +9,7 @@ class Player(models.Model):
     assists = models.PositiveSmallIntegerField(verbose_name="Asistencias")
     yellow_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Amarillas")
     red_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Rojas")
+    played = models.PositiveSmallIntegerField(verbose_name="Partidos Jugados")
 
     class Meta:
         verbose_name = "Jugador"
