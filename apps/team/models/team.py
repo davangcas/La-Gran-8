@@ -6,8 +6,9 @@ class Team(models.Model):
     drawn = models.PositiveIntegerField(verbose_name="Partidos Empatados")
     lost = models.PositiveIntegerField(verbose_name="Partidos Perdidos")
     titles = models.PositiveIntegerField(verbose_name="Títulos conseguidos")
+    date_created = models.DateTimeField(verbose_name="Fecha de creación", auto_now_add=True)
 
-    deleted = models.BooleanField(verbose_name="Eliminado")
+    status = models.BooleanField(verbose_name="Estado")
 
     class Meta:
         verbose_name = "Equipo"

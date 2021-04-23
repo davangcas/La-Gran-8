@@ -10,15 +10,10 @@ class Player(models.Model):
     yellow_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Amarillas")
     red_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Rojas")
     played = models.PositiveSmallIntegerField(verbose_name="Partidos Jugados")
+    role = models.CharField(verbose_name="Rol", max_length=80)
+
+    status = models.BooleanField(verbose_name="Estado")
 
     class Meta:
         verbose_name = "Jugador"
         verbose_name_plural = "Jugadores"
-
-class Goalkepper(Player):
-    invict = models.PositiveSmallIntegerField(verbose_name="Arco invicto")
-
-    class Meta:
-        verbose_name = "Arquero"
-        verbose_name_plural = "Arqueros"
-
