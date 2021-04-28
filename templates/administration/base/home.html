@@ -7,7 +7,17 @@
         <title>{{title}}</title>
         {% include 'administration/base/css.html' %}
     </head>
-    <body>
+    <body class="hold-transition sidebar-mini sidebar-collapse">
+        <div class="wrapper">
+            {% include 'administration/base/navbar.html' %}
+            {% include 'administration/base/aside.html' %}
+            <div class="content-wrapper">
+                {% include 'administration/base/content_header.html' %}
+                {% block content %}
+                {% endblock %}
+            </div>
+            {% include 'administration/base/footer.html' %}
+        </div>
         {% include 'administration/base/js.html' %}
     </body>
 </html>

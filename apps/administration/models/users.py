@@ -10,3 +10,27 @@ class Administrator(models.Model):
         verbose_name = "Administrador"
         verbose_name_plural = "Administradores"
 
+class Sender(models.Model):
+    administrator = models.ForeignKey(Administrator, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Emisor"
+        verbose_name_plural = "Emisores"
+
+class Receiver(models.Model):
+    administrator = models.ForeignKey(Administrator, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Receptor"
+        verbose_name_plural = "Receptores"
+
+class Message(models.Model):
+
+    sender = models.ForeignKey(Sender, on_delete=models.CASCADE)
+    receiver = models.ForeignKey(Receiver, on_delete=models.CASCADE)
+    body = models.TextField(verbose_name="Desarrollo", max_length=300)
+    date_sended = models.DateTimeField(verbose_name="Fecha de envío", auto_now_add=True)
+    
+    class Meta:
+        verbose_name = "Mensaje"
+        verbose_name_plural = "Mensajes"

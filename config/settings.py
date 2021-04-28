@@ -150,3 +150,7 @@ else:
 # media files root
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# login root
+LOGIN_REDIRECT_URL = 'inicio/'
+LOGIN_URL = 'administration:login'

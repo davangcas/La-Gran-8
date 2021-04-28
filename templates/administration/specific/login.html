@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+    {% load widget_tweaks %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iniciar Sesión - La gran 8</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'libs/adminlte/plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'libs/adminlte/dist/css/adminlte.min.css' %}">
+  </head>
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <a href="{% url 'landing:index' %}"><b>Ingreso al sistema</b></a>
+      </div>
+      <!-- /.login-logo -->
+      <div class="card">
+        <div class="card-body login-card-body">
+          <form action="." method="post">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+              {{ form.username|add_class:'form-control'|attr:'autocomplete:on'|attr:'placeholder:Usuario' }}
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              {{ form.password|add_class:'form-control'|attr:'autocomplete:on'|attr:'placeholder:Contraseña' }}
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4">
+                <button type="submit" class="btn btn-dark btn-block">Ingresar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- /.login-card-body -->
+      </div>
+    </div>
+    <script src="{% static 'libs/adminlte/plugins/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script>
+      {% if form.errors %}
+        var errors = '';
+        {% for field in form %}
+          {% for error in field.errors %}
+            errors += '{{ error }} \n';
+          {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+					errors += '{{ error }}\n';
+        {% endfor %}
+        Swal.fire({
+					title: 'Error',
+					text: errors,
+					icon: 'error'
+				});
+      {% endif %}
+    </script>
+  </body>
+</html>
