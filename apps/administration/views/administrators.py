@@ -26,7 +26,7 @@ class AdministratorListView(ListView):
         context['table_id'] = "admins"
         context['table_title'] = "Administradores"
         context['object_list'] = Administrator.objects.filter(status=True)
-        context['header_page_title'] = "Lista de Administradores"
+        context['header_page_title'] = "Lista"
         return context
 
 class AdministratorCreateView(CreateView):
