@@ -36,3 +36,9 @@ class Message(models.Model):
         verbose_name = "Mensaje"
         verbose_name_plural = "Mensajes"
 
+class Notification(models.Model):
+    date_created = models.DateTimeField(verbose_name="Fecha de creación", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Notificación"
+        verbose_name_plural = "Notificaciones"

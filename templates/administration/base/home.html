@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{title}}</title>
         {% include 'administration/base/css.html' %}
+        {% block css %}
+        {% endblock %}
     </head>
     <body class="hold-transition sidebar-mini sidebar-collapse">
         <div class="wrapper">
@@ -19,5 +21,7 @@
             {% include 'administration/base/footer.html' %}
         </div>
         {% include 'administration/base/js.html' %}
+        {% block js %}
+        {% endblock %}
     </body>
 </html>
