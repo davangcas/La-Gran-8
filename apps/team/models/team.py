@@ -1,5 +1,8 @@
 from django.db import models
 
+#from apps.administration.models.users import Administrator
+from apps.administration.models.users import Administrator
+
 class Team(models.Model):
     name = models.CharField(verbose_name="Nombre", max_length=80)
     win = models.PositiveIntegerField(verbose_name="Partidos Ganados")
@@ -7,6 +10,8 @@ class Team(models.Model):
     lost = models.PositiveIntegerField(verbose_name="Partidos Perdidos")
     titles = models.PositiveIntegerField(verbose_name="Títulos conseguidos")
     date_created = models.DateTimeField(verbose_name="Fecha de creación", auto_now_add=True)
+    active = models.BooleanField(verbose_name="Habilitado", default=True, blank=True, null=True)
+    delegated = models.ForeignKey(Administrator, on_delete=models.CASCADE, blank=True, null=True)
 
     status = models.BooleanField(verbose_name="Estado")
 

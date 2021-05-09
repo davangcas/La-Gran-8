@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from apps.administration.models.users import Administrator
 from apps.administration.forms.administrator import AdministratorForm, UserFormNew
@@ -25,8 +25,8 @@ class AdministratorListView(ListView):
         context['title'] = "Administradores"
         context['table_id'] = "admins"
         context['table_title'] = "Administradores"
-        context['object_list'] = Administrator.objects.filter(status=True)
-        context['header_page_title'] = "Lista"
+        context['object_list'] = Administrator.objects.filter(status=True).filter(role="Administrador")
+        context['header_page_title'] = "Lista de Administradores"
         return context
 
 class AdministratorCreateView(CreateView):
@@ -83,4 +83,5 @@ class AdministratorCreateView(CreateView):
             context['form3'] = self.thirth_form_class(self.request.GET)
         context['title'] = "Nuevo administrador"
         context['form_title'] = "Agregar nuevo administrador"
+        context['header_page_title'] = "Nuevo Administrador"
         return context

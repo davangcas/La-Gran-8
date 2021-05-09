@@ -1,0 +1,57 @@
+{% extends 'administration/base/home.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+            <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                    <h3 class="card-title">{{form_title}}</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form action="." method="POST">
+                        {% csrf_token %}
+                    <div class="card-body">
+                        <div class="form-group">
+                        <label for="exampleInputEmail1">{{form.username.label}}</label>
+                        {{form.username|add_class:'form-control'|attr:'placeholder:Nombre de usuario'}}
+                        </div>
+                        <div class="form-group">
+                        <label for="exampleInputPassword1">{{form.password1.label}}</label>
+                        {{form.password1|add_class:'form-control'|attr:'placeholder:Contraseña'}}
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">{{form.password2.label}}</label>
+                            {{form.password2|add_class:'form-control'|attr:'placeholder:Confirmar contraseña'}}
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">{{form3.first_name.label}}</label>
+                            {{form3.first_name|add_class:'form-control'|attr:'placeholder:Nombre'}}
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">{{form3.last_name.label}}</label>
+                            {{form3.last_name|add_class:'form-control'|attr:'placeholder:Apellido'}}
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Crear Administrador</button>
+                    </div>
+                    </form>
+                </div>
+            <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+{% endblock %}

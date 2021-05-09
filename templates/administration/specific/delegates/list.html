@@ -1,0 +1,33 @@
+{% extends 'administration/base/list.html' %}
+{% load static %}
+
+{% block table_headers %}
+    <th>Usuario</th>
+    <th>Nombre/s</th>
+    <th>Apellido</th>
+    <th>Equipo</th>
+    <th>Habilitado</th>
+    <th>Acciones</th>
+{% endblock %}
+
+{% block table_content %}
+    <td>{{obj.user.username}}</td>
+    <td>{{obj.user.first_name}}</td>
+    <td>{{obj.user.last_name}}</td>
+    {% if obj.team == None %}
+        <td>Ninguno</td>
+    {% endif %}
+    {% if obj.team != None %}
+        <td>{{obj.team}}</td>
+    {% endif %}
+    {% if obj.active == True %}
+        <td>Si</td>
+    {% endif %}
+    {% if obj.active == False %}
+        <td>No</td>
+    {% endif %}
+    <td>
+        <a href=""><i class="fas fa-user-edit"></i></a>
+        <a href=""><i class="fas fa-user-times"></i></a>
+    </td>
+{% endblock %}
