@@ -1,6 +1,5 @@
 from django.db import models
 
-#from apps.administration.models.users import Administrator
 from apps.administration.models.users import Administrator
 
 class Team(models.Model):

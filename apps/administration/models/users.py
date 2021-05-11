@@ -5,6 +5,7 @@ class Administrator(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     status = models.BooleanField(verbose_name="Estado")
     role = models.CharField(verbose_name="Rol", max_length=30)
+    dni = models.PositiveIntegerField(verbose_name="DNI", blank=True, null=True, unique=True)
 
     active = models.BooleanField(verbose_name="Habilitación", default=True, blank=True, null=True)
 

@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>{{title}}</title>
         {% include 'landing/base/css.html' %}
+        <link rel='shortcut icon' href="{% static 'landing/img/Logo.jpg' %}">
     </head>
     <body>
         <div class="preloader-wrapper" id="preloader">
@@ -26,6 +27,8 @@
 
         {% block content %}
         {% endblock %}
+
+        {% include 'landing/base/footer.html' %}
 
         {% include 'landing/base/js.html' %}
 

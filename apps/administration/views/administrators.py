@@ -85,3 +85,26 @@ class AdministratorCreateView(CreateView):
         context['form_title'] = "Agregar nuevo administrador"
         context['header_page_title'] = "Nuevo Administrador"
         return context
+
+class AdministratorUpdateView(UpdateView):
+    model = Administrator
+    template_name = "administration/specific/administrator/update.html"
+    success_url = reverse_lazy('administration:administrators')
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'form' not in context:
+            context['form'] = self.form_class(self.request.GET)
+        if 'form2' not in context:
+            context['form2'] = self.second_form_class(self.request.GET)
+        if 'form3' not in context:
+            context['form3'] = self.thirth_form_class(self.request.GET)
+        context['title'] = "Editar administrador"
+        context['form_title'] = "Modificar administrador"
+        context['header_page_title'] = "Editar Administrador"
+        return context
+
