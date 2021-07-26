@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import model_to_dict
 
 from apps.administration.models.users import Administrator
 
@@ -14,6 +15,11 @@ class Team(models.Model):
 
     status = models.BooleanField(verbose_name="Estado")
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
     class Meta:
         verbose_name = "Equipo"
         verbose_name_plural = "Equipos"
+

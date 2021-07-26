@@ -64,7 +64,7 @@
         </li>
         <!-- Equipos -->
         <li class="nav-item menu-open">
-          <a href="" class="nav-link active">
+          <a href="{% url 'administration:teams' %}" class="nav-link active">
             <i class="nav-icon fas fa-shield-alt"></i>
             <p>
               Equipos
@@ -82,6 +82,30 @@
               <a href="{% url 'administration:teams' %}" class="nav-link">
                 <i class="far fa-eye nav-icon"></i>
                 <p>Ver equipos</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- Jugadores -->
+        <li class="nav-item menu-open">
+          <a href="" class="nav-link active">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+              Jugadores
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="" class="nav-link">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Agregar jugador</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link">
+                <i class="far fa-eye nav-icon"></i>
+                <p>Ver jugadores</p>
               </a>
             </li>
           </ul>
@@ -106,6 +130,30 @@
               <a href="" class="nav-link">
                 <i class="far fa-eye nav-icon"></i>
                 <p>Ver torneos</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- Noticias -->
+        <li class="nav-item menu-open">
+          <a href="" class="nav-link active">
+            <i class="nav-icon far fa-newspaper"></i>
+            <p>
+              Noticias
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="" class="nav-link">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Agregar equipo</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'administration:teams' %}" class="nav-link">
+                <i class="far fa-eye nav-icon"></i>
+                <p>Ver equipos</p>
               </a>
             </li>
           </ul>

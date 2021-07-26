@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import model_to_dict
 
 from apps.team.models.team import Team
 from apps.team.models.tournament import Tournament
@@ -10,6 +11,10 @@ class Match(models.Model):
     away_team = models.ForeignKey(Team, on_delete=models.PROTECT)
     goals_local = models.PositiveSmallIntegerField()
     goals_away = models.PositiveSmallIntegerField()
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         verbose_name = "Partido"

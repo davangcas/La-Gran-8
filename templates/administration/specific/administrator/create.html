@@ -6,6 +6,34 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+            {% if form.errors %}
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="card card-default">
+                    <div class="card-header">
+                      <h3 class="card-title">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Advertencia
+                      </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    {% for error in form.errors %}
+                    <div class="card-body">
+                      <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5><i class="icon fas fa-ban"></i> {{error}}</h5>
+                        {{form.errors}}
+                      </div>
+                    </div>
+                    {% endfor %}
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <!-- /.col -->
+                <!-- /.col -->
+            </div>
+            {% endif %}
         <div class="row">
             <!-- left column -->
             <div class="col-md-12">

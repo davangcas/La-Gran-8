@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import model_to_dict
 
 from apps.team.models.team import Team
 
@@ -10,6 +11,10 @@ class Tournament(models.Model):
     champion = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     status = models.BooleanField(verbose_name="Estado")
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         verbose_name = "Torneo"

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import model_to_dict
 
 class Administrator(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
@@ -9,6 +10,10 @@ class Administrator(models.Model):
 
     active = models.BooleanField(verbose_name="Habilitación", default=True, blank=True, null=True)
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
     class Meta:
         verbose_name = "Administrador"
         verbose_name_plural = "Administradores"
@@ -16,12 +21,20 @@ class Administrator(models.Model):
 class Sender(models.Model):
     administrator = models.ForeignKey(Administrator, on_delete=models.CASCADE)
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
     class Meta:
         verbose_name = "Emisor"
         verbose_name_plural = "Emisores"
 
 class Receiver(models.Model):
     administrator = models.ForeignKey(Administrator, on_delete=models.CASCADE)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         verbose_name = "Receptor"
@@ -35,12 +48,20 @@ class Message(models.Model):
     date_sended = models.DateTimeField(verbose_name="Fecha de envío", auto_now_add=True)
     status = models.BooleanField(verbose_name="Mensaje enviado")
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
     class Meta:
         verbose_name = "Mensaje"
         verbose_name_plural = "Mensajes"
 
 class Notification(models.Model):
     date_created = models.DateTimeField(verbose_name="Fecha de creación", auto_now_add=True)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         verbose_name = "Notificación"
