@@ -41,12 +41,3 @@ class PlayOff(models.Model):
     class Meta:
         verbose_name = "Eliminatoria"
         verbose_name_plural = "Eliminatorias"
-
-class DayMatch(models.Model):
-    date = models.DateField(verbose_name="Fecha")
-
-    status = models.BooleanField(verbose_name="Estado")
-
-    class Meta:
-        verbose_name = "Fecha de juego"
-        verbose_name_plural = "Fechas de juego"

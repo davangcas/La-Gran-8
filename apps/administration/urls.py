@@ -4,24 +4,25 @@ from django.contrib.auth.views import LogoutView
 from apps.administration.views.index import (
     IndexView, 
     IndexDelegateView,
-    )
+)
 from apps.administration.views.login import (
     LoginFormView,
-    )
+)
 from apps.administration.views.administrators import (
     AdministratorListView, 
     AdministratorCreateView,
     AdministratorUpdateView,
     AdministratorDeleteView,
-    )
+)
 from apps.administration.views.delegates import (
     DelegateCreateView, 
     DelegateListView,
     DelegateDeleteView,
-    )
+)
 from apps.administration.views.teams import (
     TeamListView,
-    )
+    TeamCreateView,
+)
 
 app_name = "administration"
 
@@ -38,4 +39,5 @@ urlpatterns = [
     path('delegados/nuevo/', DelegateCreateView.as_view(), name="delegates_new"),
     path('delegados/eliminar/<int:pk>/', DelegateDeleteView.as_view(), name="delegates_delete"),
     path('equipos/', TeamListView.as_view(), name="teams"),
+    path('equipos/nuevo/', TeamCreateView.as_view(), name="teams_new"),
 ]

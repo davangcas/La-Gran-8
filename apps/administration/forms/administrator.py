@@ -7,7 +7,7 @@ class AdministratorForm(ModelForm):
     class Meta:
         model = Administrator
         fields = [
-            
+            'dni',
         ]
 
 class UserFormNew(ModelForm):

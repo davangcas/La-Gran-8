@@ -15,7 +15,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import (
     render, 
     redirect,
-    )
+)
 
 from apps.administration.models.users import Administrator
 from apps.administration.forms.administrator import (
@@ -130,6 +130,14 @@ class AdministratorDeleteView(DeleteView):
     model = Administrator
     template_name = "administration/specific/administrator/delete.html"
     success_url = reverse_lazy('administration:administrators')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        user = User.objects.get(pk=self.object.user.id)
+        self.object.delete()
+        user.delete()
+        return HttpResponseRedirect(success_url)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
