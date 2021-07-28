@@ -11,7 +11,13 @@
 {% block table_content %}
     <td>{{obj.name}}</td>
     <td>{{obj.delegated.user.first_name}} {{obj.delegated.user.last_name}}</td>
-    <td>{{obj.active}}</td>
+    <td>
+        {% if obj.active %}
+            Si
+        {% else %}
+            No
+        {% endif %}
+    </td>
     <td>
         <a href=""><i class="fas fa-user-edit"></i></a>
         <a href=""><i class="fas fa-user-times"></i></a>

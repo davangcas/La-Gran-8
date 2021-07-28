@@ -14,6 +14,9 @@ class Administrator(models.Model):
         item = model_to_dict(self)
         return item
 
+    def __str__(self):
+        return self.user.username
+
     class Meta:
         verbose_name = "Administrador"
         verbose_name_plural = "Administradores"

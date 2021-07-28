@@ -13,7 +13,7 @@
     <td>{{obj.user.first_name}}</td>
     <td>{{obj.user.last_name}}</td>
     <td>
-        <a href=""><i class="fas fa-user-edit"></i></a>
-        <a href=""><i class="fas fa-user-times"></i></a>
+        <a href="{% url 'administration:administrators_edit' obj.id %}"><i class="fas fa-user-edit"></i></a>
+        <a href="{% url 'administration:administrators_delete' obj.id %}"><i class="fas fa-user-times"></i></a>
     </td>
 {% endblock %}

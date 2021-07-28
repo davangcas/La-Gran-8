@@ -8,13 +8,13 @@ class Player(models.Model):
     dni = models.PositiveIntegerField(verbose_name="DNI")
     date_created = models.DateField(verbose_name="Fecha de creación", auto_now_add=True)
     date_born = models.DateField(verbose_name="Fecha de Nacimiento")
-    goals = models.PositiveSmallIntegerField(verbose_name="Goles")
-    assists = models.PositiveSmallIntegerField(verbose_name="Asistencias")
-    yellow_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Amarillas")
-    red_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Rojas")
-    played = models.PositiveSmallIntegerField(verbose_name="Partidos Jugados")
+    goals = models.PositiveSmallIntegerField(verbose_name="Goles", blank=True, default=0)
+    assists = models.PositiveSmallIntegerField(verbose_name="Asistencias", blank=True, default=0)
+    yellow_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Amarillas", blank=True, default=0)
+    red_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Rojas", blank=True, default=0)
+    played = models.PositiveSmallIntegerField(verbose_name="Partidos Jugados", blank=True, default=0)
 
-    status = models.BooleanField(verbose_name="Estado")
+    status = models.BooleanField(verbose_name="Estado", blank=True, default=True)
 
     def toJSON(self):
         item = model_to_dict(self)

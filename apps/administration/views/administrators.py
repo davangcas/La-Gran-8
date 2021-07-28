@@ -1,16 +1,27 @@
 import datetime
 
-from django.views.generic import CreateView, ListView, DeleteView, UpdateView
+from django.views.generic import (
+    CreateView, 
+    ListView, 
+    DeleteView, 
+    UpdateView,
+    )
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import (
+    render, 
+    redirect,
+    )
 
 from apps.administration.models.users import Administrator
-from apps.administration.forms.administrator import AdministratorForm, UserFormNew
+from apps.administration.forms.administrator import (
+    AdministratorForm, 
+    UserFormNew,
+    )
 
 class AdministratorListView(ListView):
     model = Administrator
@@ -19,6 +30,10 @@ class AdministratorListView(ListView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        return query.filter(status=True).filter(role="Administrador")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -90,6 +105,9 @@ class AdministratorUpdateView(UpdateView):
     model = Administrator
     template_name = "administration/specific/administrator/update.html"
     success_url = reverse_lazy('administration:administrators')
+    form_class = UserCreationForm
+    second_form_class = AdministratorForm
+    thirth_form_class = UserFormNew
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -108,3 +126,13 @@ class AdministratorUpdateView(UpdateView):
         context['header_page_title'] = "Editar Administrador"
         return context
 
+class AdministratorDeleteView(DeleteView):
+    model = Administrator
+    template_name = "administration/specific/administrator/delete.html"
+    success_url = reverse_lazy('administration:administrators')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Eliminar Administrador"
+        context['header_page_title'] = "Eliminar Administrador"
+        return context

@@ -7,7 +7,8 @@ class Tournament(models.Model):
     name = models.CharField(verbose_name="Nombre", max_length=80)
     teams = models.PositiveSmallIntegerField(verbose_name="Cantidad de equipos")
     date_created = models.DateTimeField(verbose_name="Fecha de creación", auto_now_add=True)
-    date_init = models.DateField(verbose_name="Fecha de comienzo")
+    date_init = models.DateField(verbose_name="Fecha de comienzo", blank=True, null=True)
+    date_finish = models.DateField(verbose_name="Fecha de finalización", blank=True, null=True)
     champion = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     status = models.BooleanField(verbose_name="Estado")

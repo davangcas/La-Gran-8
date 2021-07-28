@@ -86,3 +86,14 @@ class DelegateCreateView(CreateView):
         context['form_title'] = "Agregar nuevo delegado"
         context['header_page_title'] = "Nuevo Delegado"
         return context
+
+class DelegateDeleteView(DeleteView):
+    model = Administrator
+    template_name = "administration/specific/delegates/delete.html"
+    success_url = reverse_lazy('administration:delegates')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Eliminar Delegado"
+        context['header_page_title'] = "Eliminar Delegado"
+        return context
