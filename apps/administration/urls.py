@@ -24,6 +24,10 @@ from apps.administration.views.teams import (
     TeamCreateView,
 )
 
+from apps.administration.views.noticias import (
+    NoticiasListView,
+)
+
 app_name = "administration"
 
 urlpatterns = [
@@ -40,4 +44,5 @@ urlpatterns = [
     path('delegados/eliminar/<int:pk>/', DelegateDeleteView.as_view(), name="delegates_delete"),
     path('equipos/', TeamListView.as_view(), name="teams"),
     path('equipos/nuevo/', TeamCreateView.as_view(), name="teams_new"),
+    path('noticias/', NoticiasListView.as_view(), name="noticias"),
 ]

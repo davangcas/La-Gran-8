@@ -5,7 +5,7 @@ from django.views.generic import (
     ListView, 
     DeleteView, 
     UpdateView,
-    )
+)
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -21,7 +21,8 @@ from apps.administration.models.users import Administrator
 from apps.administration.forms.administrator import (
     AdministratorForm, 
     UserFormNew,
-    )
+    UserUpdateForm,
+)
 
 class AdministratorListView(ListView):
     model = Administrator
@@ -102,12 +103,10 @@ class AdministratorCreateView(CreateView):
         return context
 
 class AdministratorUpdateView(UpdateView):
-    model = Administrator
+    model = User
     template_name = "administration/specific/administrator/update.html"
     success_url = reverse_lazy('administration:administrators')
-    form_class = UserCreationForm
-    second_form_class = AdministratorForm
-    thirth_form_class = UserFormNew
+    form_class = UserUpdateForm
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -117,10 +116,6 @@ class AdministratorUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         if 'form' not in context:
             context['form'] = self.form_class(self.request.GET)
-        if 'form2' not in context:
-            context['form2'] = self.second_form_class(self.request.GET)
-        if 'form3' not in context:
-            context['form3'] = self.thirth_form_class(self.request.GET)
         context['title'] = "Editar administrador"
         context['form_title'] = "Modificar administrador"
         context['header_page_title'] = "Editar Administrador"

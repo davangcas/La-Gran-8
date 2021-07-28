@@ -1,0 +1,19 @@
+{% extends 'administration/base/list.html' %}
+{% load static %}
+
+{% block table_headers %}
+    <th>ID</th>
+    <th>Fecha de creación</th>
+    <th>Titulo</th>
+    <th>Acciones</th>
+{% endblock %}
+
+{% block table_content %}
+    <td>{{obj.id}}</td>
+    <td>{{obj.date_created}}</td>
+    <td>{{obj.title}}</td>
+    <td>
+        <a href=""><i class="fas fa-user-edit"></i></a>
+        <a href=""><i class="fas fa-user-times"></i></a>
+    </td>
+{% endblock %}

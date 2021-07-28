@@ -8,5 +8,6 @@ class TeamForm(ModelForm):
     class Meta:
         model = Team
         fields = [
-            
+            'delegated',
+            'name',
         ]

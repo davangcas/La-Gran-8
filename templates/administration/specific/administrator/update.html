@@ -48,24 +48,16 @@
                     {% csrf_token %}
                 <div class="card-body">
                     <div class="form-group">
-                    <label for="exampleInputEmail1">{{form.username.label}}</label>
-                    {{form.username|add_class:'form-control'|attr:'placeholder:Nombre de usuario'}}
+                      <label for="exampleInputPassword1">{{form.username.label}}</label>
+                      {{form.username|add_class:'form-control'|attr:'placeholder:Nombre'}}
                     </div>
                     <div class="form-group">
-                    <label for="exampleInputPassword1">{{form.password1.label}}</label>
-                    {{form.password1|add_class:'form-control'|attr:'placeholder:Contraseña'}}
+                        <label for="exampleInputPassword1">{{form.first_name.label}}</label>
+                        {{form.first_name|add_class:'form-control'|attr:'placeholder:Nombre'}}
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">{{form.password2.label}}</label>
-                        {{form.password2|add_class:'form-control'|attr:'placeholder:Confirmar contraseña'}}
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">{{form3.first_name.label}}</label>
-                        {{form3.first_name|add_class:'form-control'|attr:'placeholder:Nombre'}}
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">{{form3.last_name.label}}</label>
-                        {{form3.last_name|add_class:'form-control'|attr:'placeholder:Apellido'}}
+                        <label for="exampleInputPassword1">{{form.last_name.label}}</label>
+                        {{form.last_name|add_class:'form-control'|attr:'placeholder:Apellido'}}
                     </div>
                 </div>
                 <!-- /.card-body -->
