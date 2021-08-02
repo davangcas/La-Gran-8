@@ -1,0 +1,52 @@
+{% extends 'landing/base/home.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <section class="news-single col-xs-12 col-sm-12 col-md-9">
+                <div class="item">
+                    <div class="top-info">
+                        <div class="date"><a href="">{{novedad.date_created}}</a></div>
+                    </div>
+                    <div class="post-text">
+                        <blockquote>
+                            <p>{{novedad.title}}</p>
+                            <p class="name">La Gran 8</p>
+                        </blockquote>
+                        <p>{{novedad.body}}</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="tags">
+                                    <a href="https://www.facebook.com/search/top/?q=la%20gran%208">La Gran 8</a>
+                                    <a href="">Fútbol</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="share-bar">
+                                    <li class="facebook"><a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+                                    <li class="instagram"><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="img-wrap">
+                        {% if novedad.id == ultimo_id %}
+                        <div class="bage highlight">Última Noticia</div>
+                        {% endif %}
+                        <img src="{{novedad.image.url}}" alt="{{novedad.title}}">
+                    </div>
+                </div>
+            </section>
+            <div class="pagination-wrap">
+                <ul class="pagination">
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

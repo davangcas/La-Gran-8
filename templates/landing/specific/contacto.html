@@ -2,4 +2,32 @@
 {% load static %}
 
 {% block content %}
+<section class="contacts-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h4>Ponete en contacto con nosotros!</h4>	
+                <p> Podes escribirnos a nuestro numero por Whatsapp o ponerte en contacto con nostros a traves del mail </p>
+                <div class="contact-office-img">
+                    <img class="img-responsive" src="{% static 'landing/img/1.jpg' %}" alt="contact-office-img">	
+                </div>
+                <ul class="contact-list">
+                    <li><i class="fa fa-flag" aria-hidden="true"></i><span>F8 - La Rioja - Argentina</span></li>
+                    <li><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:infolagran8@gmail.com">infolagran8@gmail.com</a></li>
+                    <li class="phone"><i class="fa fa-phone" aria-hidden="true"></i><span>+54 9 3804 66-4444</span></li>
+                </ul>
+                <ul class="contact-bar">
+                    <li class="facebook"><a href="https://www.facebook.com/lagran8"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+                    <li class="instagram"><a href="https://www.instagram.com/lagran8ok/"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="pagination-wrap">
+        <ul class="pagination">
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</section>
 {% endblock %}

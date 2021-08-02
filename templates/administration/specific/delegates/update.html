@@ -3,4 +3,79 @@
 {% load widget_tweaks %}
 
 {% block content %}
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        {% if form.errors %}
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card card-default">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Advertencia
+                  </h3>
+                </div>
+                <!-- /.card-header -->
+                {% for error in form.errors %}
+                <div class="card-body">
+                  <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-ban"></i> {{error}}</h5>
+                    {{form.errors}}
+                  </div>
+                </div>
+                {% endfor %}
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <!-- /.col -->
+        </div>
+        {% endif %}
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+        <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                <h3 class="card-title">{{form_title}}</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="." method="POST">
+                    {% csrf_token %}
+                <div class="card-body">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">{{form2.username.label}}</label>
+                      {{form2.username|add_class:'form-control'|attr:'placeholder:Nombre'}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">{{form2.first_name.label}}</label>
+                        {{form2.first_name|add_class:'form-control'|attr:'placeholder:Nombre'}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">{{form2.last_name.label}}</label>
+                        {{form2.last_name|add_class:'form-control'|attr:'placeholder:Apellido'}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">{{form.dni.label}}</label>
+                        {{form.dni|add_class:'form-control'|attr:'placeholder:DNI'}}
+                    </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>  Guardar Cambios</button>
+                </div>
+                </form>
+            </div>
+        <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 {% endblock %}

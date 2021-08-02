@@ -13,7 +13,7 @@
     <td>{{obj.date_created}}</td>
     <td>{{obj.title}}</td>
     <td>
-        <a href=""><i class="fas fa-user-edit"></i></a>
-        <a href=""><i class="fas fa-user-times"></i></a>
+        <a href=""><i class="fas fa-marker"></i></a>
+        <a href="{% url 'administration:noticias_delete' obj.id %}"><i class="fas fa-trash-alt"></i></a>
     </td>
 {% endblock %}

@@ -16,6 +16,7 @@ from django.shortcuts import (
 )
 
 from apps.administration.models.noticias import Noticia
+from apps.administration.forms.noticias import NoticiaForm
 
 class NoticiasListView(ListView):
     model = Noticia
@@ -31,4 +32,36 @@ class NoticiasListView(ListView):
         context['table_id'] = "noticias"
         context['table_title'] = "Noticias"
         context['header_page_title'] = "Lista de Noticias"
+        return context
+
+class NoticiaCreateView(CreateView):
+    model = Noticia
+    form_class = NoticiaForm
+    template_name = "administration/specific/noticias/create.html"
+    success_url = reverse_lazy('administration:noticias')
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Crear Noticia"
+        context['header_page_title'] = "Nueva Noticia"
+        context['form_title'] = "Agregar novedad"
+        return context
+
+class NoticiaDeleteView(DeleteView):
+    model = Noticia
+    template_name = "administration/specific/noticias/delete.html"
+    success_url = reverse_lazy('administration:noticias')
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Eliminar Noticia"
+        context['header_page_title'] = "Eliminar Noticia"
         return context

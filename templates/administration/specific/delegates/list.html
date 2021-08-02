@@ -27,7 +27,7 @@
         <td>No</td>
     {% endif %}
     <td>
-        <a href=""><i class="fas fa-user-edit"></i></a>
+        <a href="{% url 'administration:delegates_edit' obj.id %}"><i class="fas fa-user-edit"></i></a>
         <a href="{% url 'administration:delegates_delete' obj.id %}"><i class="fas fa-user-times"></i></a>
     </td>
 {% endblock %}

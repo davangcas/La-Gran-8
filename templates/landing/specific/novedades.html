@@ -2,4 +2,37 @@
 {% load static %}
 
 {% block content %}
+<div class="content">
+    <div class="container">
+        <div class="row row-offcanvas row-offcanvas-left">
+            <!--NEWS LIST BEGIN-->
+            <div class="news-list col-xs-12 col-md-9">
+            {% for n in novedades %}
+            <div class="item img-top">
+                <div class="img-wrap">
+                    {% if n.id == ultima %}
+                    <div class="bage"><a href="{% url 'landing:novedades_detail' n.id %}">Nueva</a></div>
+                    {% endif %}
+                    <a href="{% url 'landing:novedades_detail' n.id %}"><img src="{{n.image.url}}" alt="novedad"></a>
+                </div>
+                <div class="info">
+                    <a href="{% url 'landing:novedades_detail' n.id %}" class="name">{{n.title}}</a>	
+                    <div class="wrap">
+                        <a href="{% url 'landing:novedades_detail' n.id %}">{{n.date_created}}</a> por <a href="news-single.html">La Gran 8</a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="pagination-wrap">
+                <ul class="pagination">
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            </div>
+            <!--NEWS LIST END-->
+        </div>
+    </div>
+</div>
 {% endblock %}

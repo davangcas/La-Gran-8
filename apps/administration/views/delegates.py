@@ -11,6 +11,7 @@ from django.shortcuts import render
 
 from apps.administration.models.users import Administrator
 from apps.administration.forms.administrator import AdministratorForm, UserFormNew
+from apps.administration.forms.delegates import DelegateForm, DelegateUserForm
 
 
 class DelegateListView(ListView):
@@ -104,4 +105,48 @@ class DelegateDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Eliminar Delegado"
         context['header_page_title'] = "Eliminar Delegado"
+        return context
+
+class DelegateUpdateView(UpdateView):
+    model = Administrator
+    second_model = User
+    template_name = "administration/specific/delegates/update.html"
+    success_url = reverse_lazy('administration:delegates')
+    form_class = DelegateForm
+    second_form_class = DelegateUserForm
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        id_admin = self.kwargs['pk']
+        admin = self.model.objects.get(pk=id_admin)
+        usuario = self.second_model.objects.get(pk=admin.user_id)
+        form = self.form_class(request.POST, instance=admin)
+        form2 = self.second_form_class(request.POST, instance=usuario)
+        if form.is_valid() and form2.is_valid():
+            form.save()
+            form2.save()
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            self.object = None
+            context = self.get_context_data(**kwargs)
+            context['errors1'] = form.errors
+            context['errors2'] = form2.errors
+            return render(request, self.template_name, context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        admin = self.model.objects.get(pk=self.kwargs['pk'])
+        usuario = self.second_model.objects.get(pk=admin.user_id)
+        if 'form' not in context:
+            context['form'] = self.form_class()
+        if 'form2' not in context:
+            context['form2'] = self.second_form_class(instance=usuario)
+        context['id'] = self.kwargs['pk']
+        context['title'] = "Editar Delegado"
+        context['form_title'] = "Modificar Delegado"
+        context['header_page_title'] = "Editar Delegado"
         return context
