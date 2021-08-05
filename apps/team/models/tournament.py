@@ -21,7 +21,6 @@ class Tournament(models.Model):
         verbose_name = "Torneo"
         verbose_name_plural = "Torneos"
 
-
 class League(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     matchs = models.PositiveSmallIntegerField("Partidos")

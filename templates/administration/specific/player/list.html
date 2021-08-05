@@ -1,0 +1,21 @@
+{% extends 'administration/base/list.html' %}
+{% load static %}
+
+{% block table_headers %}
+    <th>ID</th>
+    <th>Nombre y Apellido</th>
+    <th>DNI</th>
+    <th>Equipo</th>
+    <th>Acciones</th>
+{% endblock %}
+
+{% block table_content %}
+    <td>{{obj.id}}</td>
+    <td>{{obj.name}}</td>
+    <td>{{obj.dni}}</td>
+    <td>{{obj.team.name}}</td>
+    <td>
+        <a href=""><i class="fas fa-marker"></i></a>
+        <a href=""><i class="fas fa-trash-alt"></i></a>
+    </td>
+{% endblock %}

@@ -24,12 +24,17 @@ from apps.administration.views.delegates import (
 from apps.administration.views.teams import (
     TeamListView,
     TeamCreateView,
+    TeamUpdateView,
+    TeamDeleteView,
 )
-
 from apps.administration.views.noticias import (
     NoticiasListView,
     NoticiaCreateView,
     NoticiaDeleteView,
+)
+from apps.administration.views.player import (
+    PlayerListView,
+    PlayerCreateView,
 )
 
 app_name = "administration"
@@ -50,7 +55,11 @@ urlpatterns = [
     path('delegados/editar/<int:pk>/', DelegateUpdateView.as_view(), name="delegates_edit"),
     path('equipos/', TeamListView.as_view(), name="teams"),
     path('equipos/nuevo/', TeamCreateView.as_view(), name="teams_new"),
+    path('equipos/editar/<int:pk>/', TeamUpdateView.as_view(), name="teams_edit"),
+    path('equipo/eliminar/<int:pk>/', TeamDeleteView.as_view(), name="teams_delete"),
     path('noticias/', NoticiasListView.as_view(), name="noticias"),
     path('noticias/nueva/', NoticiaCreateView.as_view(), name="noticias_new"),
-    path('noticias/eliminar/<int:pk>/', NoticiaDeleteView.as_view(), name="noticias_delete")
+    path('noticias/eliminar/<int:pk>/', NoticiaDeleteView.as_view(), name="noticias_delete"),
+    path('jugadores/', PlayerListView.as_view(), name="players"),
+    path('jugadores/nuevo/', PlayerCreateView.as_view(), name="players_new"),
 ]

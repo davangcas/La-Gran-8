@@ -6,32 +6,66 @@
     <section class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-12">
-              <!-- Default box -->
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">{{header_title}}</h3>
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{numero_delegados}}</h3>
   
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
+                  <p>Delegados de equipos</p>
                 </div>
-                <div class="card-body">
-                  Start creating your amazing application!
+                <div class="icon">
+                  <i class="fas fa-user-tie"></i>
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  Footer
-                </div>
-                <!-- /.card-footer-->
+                <a href="{% url 'administration:delegates' %}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-              <!-- /.card -->
             </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{jugadores_registrados}}</h3>
+  
+                  <p>Jugadores Registrados</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-running"></i>
+                </div>
+                <a href="" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{equipos_habilitados}}</h3>
+  
+                  <p>Equipos habilitados</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+                <a href="{% url 'administration:teams' %}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3>{{numero_administradores}}</h3>
+  
+                  <p>Administradores del sitio</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-user-cog"></i>
+                </div>
+                <a href="{% url 'administration:administrators' %}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
           </div>
         </div>
     </section>

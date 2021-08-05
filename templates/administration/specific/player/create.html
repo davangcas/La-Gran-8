@@ -48,27 +48,16 @@
                     {% csrf_token %}
                 <div class="card-body">
                     {% for field in form %}
-                        {% if field.label != "Logo" %}
                         <div class="form-group">
                             <label for="">{{field.label}}</label>
                             {{field|add_class:'form-control'}}
                         </div>
-                        {% endif %}
                     {% endfor %}
-                    <div class="input-group">
-                      <div class="custom-file">
-                        {{form.logo|add_class:'custom-file-input'|attr:'id:exampleInputFile'}}
-                        <label class="custom-file-label" for="exampleInputFile">{{form.logo.label}}</label>
-                      </div>
-                      <div class="input-group-append">
-                        <span class="input-group-text">Cargar</span>
-                      </div>
-                    </div>
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Crear Equipo</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Añadir Jugador</button>
                 </div>
                 </form>
             </div>

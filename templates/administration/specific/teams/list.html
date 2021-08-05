@@ -5,6 +5,7 @@
     <th>Nombre de equipo</th>
     <th>Delegado</th>
     <th>Habilitacion</th>
+    <th>Logo</th>
     <th>Acciones</th>
 {% endblock %}
 
@@ -18,8 +19,10 @@
             No
         {% endif %}
     </td>
+    <td><img src="{{obj.logo.url}}" alt="" height="30vh"></td>
     <td>
-        <a href=""><i class="fas fa-user-edit"></i></a>
-        <a href=""><i class="fas fa-user-times"></i></a>
+        <a href=""><i class="fas fa-eye"></i></a>
+        <a href="{% url 'administration:teams_edit' obj.id %}"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'administration:teams_delete' obj.id %}"><i class="fas fa-trash-alt"></i></a>
     </td>
 {% endblock %}
