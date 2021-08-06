@@ -23,11 +23,14 @@ from apps.administration.forms.administrator import (
     UserFormNew,
     UserUpdateForm,
 )
+from apps.administration.decorators import user_validator 
+
 
 class AdministratorListView(ListView):
     model = Administrator
     template_name = "administration/specific/administrator/list.html"
 
+    @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -53,6 +56,7 @@ class AdministratorCreateView(CreateView):
     thirth_form_class = UserFormNew
     success_url = reverse_lazy('administration:administrators')
 
+    @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -108,6 +112,7 @@ class AdministratorUpdateView(UpdateView):
     success_url = reverse_lazy('administration:administrators')
     form_class = UserUpdateForm
 
+    @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -125,6 +130,11 @@ class AdministratorDeleteView(DeleteView):
     model = Administrator
     template_name = "administration/specific/administrator/delete.html"
     success_url = reverse_lazy('administration:administrators')
+
+    @method_decorator(user_validator)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()

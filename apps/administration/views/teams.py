@@ -13,11 +13,14 @@ from apps.administration.forms.team import (
     TeamCreateForm,
     TeamUpdateForm,
 )
+from apps.administration.decorators import user_validator
+
 
 class TeamListView(ListView):
     model = Team
     template_name = "administration/specific/teams/list.html"
 
+    @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -37,6 +40,11 @@ class TeamCreateView(CreateView):
     form_class = TeamCreateForm
     success_url = reverse_lazy('administration:teams')
 
+    @method_decorator(user_validator)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Nuevo Equipo"
@@ -50,6 +58,11 @@ class TeamUpdateView(UpdateView):
     template_name = "administration/specific/teams/update.html"
     success_url = reverse_lazy('administration:teams')
 
+    @method_decorator(user_validator)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Editar equipo"
@@ -61,6 +74,11 @@ class TeamDeleteView(DeleteView):
     model = Team
     template_name = "administration/specific/teams/delete.html"
     success_url = reverse_lazy('administration:teams')
+
+    @method_decorator(user_validator)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

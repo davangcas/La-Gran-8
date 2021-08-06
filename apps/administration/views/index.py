@@ -8,6 +8,8 @@ from django.shortcuts import redirect
 from apps.administration.models.users import Administrator
 from apps.team.models.team import Team
 from apps.team.models.player import Player
+from apps.administration.decorators import user_validator
+
 
 class IndexView(TemplateView):
     template_name = "administration/specific/index.html"

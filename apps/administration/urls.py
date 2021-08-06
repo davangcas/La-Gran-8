@@ -35,6 +35,8 @@ from apps.administration.views.noticias import (
 from apps.administration.views.player import (
     PlayerListView,
     PlayerCreateView,
+    PlayerDeleteView,
+    PlayerUpdateView,
 )
 
 app_name = "administration"
@@ -62,4 +64,6 @@ urlpatterns = [
     path('noticias/eliminar/<int:pk>/', NoticiaDeleteView.as_view(), name="noticias_delete"),
     path('jugadores/', PlayerListView.as_view(), name="players"),
     path('jugadores/nuevo/', PlayerCreateView.as_view(), name="players_new"),
+    path('jugadores/eliminar/<int:pk>/', PlayerDeleteView.as_view(), name="players_delete"),
+    path('jugadores/editar/<int:pk>/', PlayerUpdateView.as_view(), name="players_edit"),
 ]

@@ -9,4 +9,14 @@ class PlayerForm(ModelForm):
             'team',
             'name',
             'dni',
+            'date_born',
+        ]
+
+class PlayerEditForm(ModelForm):
+    class Meta:
+        model = Player
+        fields = [
+            'name',
+            'dni',
+            'date_born',
         ]

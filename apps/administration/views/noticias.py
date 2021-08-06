@@ -17,11 +17,14 @@ from django.shortcuts import (
 
 from apps.administration.models.noticias import Noticia
 from apps.administration.forms.noticias import NoticiaForm
+from apps.administration.decorators import user_validator
+
 
 class NoticiasListView(ListView):
     model = Noticia
     template_name = "administration/specific/noticias/list.html"
 
+    @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -40,6 +43,7 @@ class NoticiaCreateView(CreateView):
     template_name = "administration/specific/noticias/create.html"
     success_url = reverse_lazy('administration:noticias')
 
+    @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -56,6 +60,7 @@ class NoticiaDeleteView(DeleteView):
     template_name = "administration/specific/noticias/delete.html"
     success_url = reverse_lazy('administration:noticias')
 
+    @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)

@@ -12,12 +12,14 @@ from django.shortcuts import render
 from apps.administration.models.users import Administrator
 from apps.administration.forms.administrator import AdministratorForm, UserFormNew
 from apps.administration.forms.delegates import DelegateForm, DelegateUserForm
+from apps.administration.decorators import user_validator
 
 
 class DelegateListView(ListView):
     model = Administrator
     template_name = "administration/specific/delegates/list.html"
 
+    @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -39,6 +41,7 @@ class DelegateCreateView(CreateView):
     thirth_form_class = UserFormNew
     success_url = reverse_lazy('administration:delegates')
 
+    @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -93,6 +96,11 @@ class DelegateDeleteView(DeleteView):
     template_name = "administration/specific/delegates/delete.html"
     success_url = reverse_lazy('administration:delegates')
 
+    @method_decorator(user_validator)
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         success_url = self.get_success_url()
@@ -115,6 +123,7 @@ class DelegateUpdateView(UpdateView):
     form_class = DelegateForm
     second_form_class = DelegateUserForm
     
+    @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
