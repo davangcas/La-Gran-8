@@ -5,16 +5,16 @@ from django.forms import model_to_dict
 class Player(models.Model):
     team = models.ForeignKey(Team, on_delete=models.PROTECT, verbose_name="Equipo")
     name = models.CharField(verbose_name="Nombre y Apellido", max_length=150)
-    dni = models.PositiveIntegerField(verbose_name="DNI")
+    dni = models.PositiveIntegerField(verbose_name="DNI", unique=True)
     date_created = models.DateField(verbose_name="Fecha de creación", auto_now_add=True)
     date_born = models.DateField(verbose_name="Fecha de Nacimiento")
-    goals = models.PositiveSmallIntegerField(verbose_name="Goles", blank=True, default=0)
-    assists = models.PositiveSmallIntegerField(verbose_name="Asistencias", blank=True, default=0)
-    yellow_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Amarillas", blank=True, default=0)
-    red_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Rojas", blank=True, default=0)
-    played = models.PositiveSmallIntegerField(verbose_name="Partidos Jugados", blank=True, default=0)
+    goals = models.PositiveSmallIntegerField(verbose_name="Goles", blank=True, default=0, null=True)
+    assists = models.PositiveSmallIntegerField(verbose_name="Asistencias", blank=True, default=0, null=True)
+    yellow_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Amarillas", blank=True, default=0, null=True)
+    red_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Rojas", blank=True, default=0, null=True)
+    played = models.PositiveSmallIntegerField(verbose_name="Partidos Jugados", blank=True, default=0, null=True)
 
-    status = models.BooleanField(verbose_name="Estado", blank=True, default=True)
+    status = models.BooleanField(verbose_name="Estado", blank=True, default=True, null=True)
 
     def toJSON(self):
         item = model_to_dict(self)

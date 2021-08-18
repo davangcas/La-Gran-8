@@ -37,6 +37,10 @@ from apps.administration.views.player import (
     PlayerCreateView,
     PlayerDeleteView,
     PlayerUpdateView,
+    PlayerDelegateListView,
+    PlayerDelegateCreateView,
+    PlayerDelegateDeleteView,
+    PlayerDelegateUpdateView,
 )
 from apps.administration.views.tournament import (
     TorunamentCreateView,
@@ -48,11 +52,11 @@ from apps.administration.views.tournament import (
 app_name = "administration"
 
 urlpatterns = [
+    # admin urls
     path('', LoginFormView.as_view(), name="login"),
     path('logout/', LogoutView.as_view(next_page='administration:login'), name="logout"),
     path('cambiar_contraseña/', UpdatePasswordView.as_view(), name="change_password"),
     path('inicio/', IndexView.as_view(), name="index"),
-    path('iniciod/', IndexDelegateView.as_view(), name="indexd"),
     path('admins/', AdministratorListView.as_view(), name="administrators"),
     path('admins/nuevo/', AdministratorCreateView.as_view(), name="administrators_new"),
     path('admins/editar/<int:pk>/', AdministratorUpdateView.as_view(), name="administrators_edit"),
@@ -76,4 +80,10 @@ urlpatterns = [
     path('torneo/nuevo/', TorunamentCreateView.as_view(), name="tournament_new"),
     path('torneo/eliminar/<int:pk>/', TournamentDeleteView.as_view(), name="tournament_delete"),
     path('torneo/nuevo/liga/', TournamentLigaCreateView.as_view(), name="tournament_new_liga"),
+    # delegates urls
+    path('inicio/mi_equipo/', IndexDelegateView.as_view(), name="indexd"),
+    path('mi_equipo/judadores/', PlayerDelegateListView.as_view(), name="dplayers"),
+    path('mi_equipo/jugadores/nuevo/', PlayerDelegateCreateView.as_view(), name="dplayer_new"),
+    path('mi_equipo/jugadores/eliminar/<int:pk>/', PlayerDelegateDeleteView.as_view(), name="dplayer_delete"),
+    path('mi_equipo/jugadores/editar/<int:pk>/', PlayerDelegateUpdateView.as_view(), name="dplayer_edit"),
 ]

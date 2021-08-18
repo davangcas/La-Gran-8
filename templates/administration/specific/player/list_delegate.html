@@ -1,0 +1,21 @@
+{% extends 'administration/base/list.html' %}
+{% load static %}
+
+{% block add_button_list %}
+    <a href="{% url 'administration:dplayer_new' %}" class="btn btn-primary"> <i class="fas fa-plus-square"></i> Agregar Nuevo Jugador</a>
+{% endblock %}
+
+{% block table_headers %}
+    <th>Nombre y Apellido</th>
+    <th>DNI</th>
+    <th>Acciones</th>
+{% endblock %}
+
+{% block table_content %}
+    <td>{{obj.name}}</td>
+    <td>{{obj.dni}}</td>
+    <td>
+        <a href="{% url 'administration:dplayer_edit' obj.id %}"><i class="fas fa-marker"></i></a>
+        <a href="{% url 'administration:dplayer_delete' obj.id %}"><i class="fas fa-trash-alt"></i></a>
+    </td>
+{% endblock %}

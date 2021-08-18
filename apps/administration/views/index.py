@@ -43,4 +43,6 @@ class IndexDelegateView(TemplateView):
         context["title"] = "Delegado - Inicio"
         context["header_title"] = "Inicio - Delegado"
         context['header_page_title'] = "Bienvenido " + str(self.request.user.first_name) + " " + str(self.request.user.last_name)
+        context['equipo'] = Team.objects.filter(delegated=self.request.user.administrator).first()
+        context['jugadores'] = Player.objects.filter(team=Team.objects.filter(delegated=self.request.user.administrator).first())
         return context

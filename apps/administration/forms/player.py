@@ -1,4 +1,4 @@
-from django.forms import ModelForm, DateInput, Select
+from django.forms import ModelForm, DateInput, Select, widgets
 
 from apps.team.models.player import Player
 
@@ -34,3 +34,20 @@ class PlayerEditForm(ModelForm):
             'dni',
             'date_born',
         ]
+
+class PlayerCreateDelegatedForm(ModelForm):
+    class Meta:
+        model = Player
+        fields = [
+            'name',
+            'dni',
+            'date_born',
+        ]
+        widgets = {
+            'date_born': DateInput(
+                attrs={
+                    "class":"form-control",
+                    "placeholder":"dd/mm/yyyy",
+                }
+            ),
+        }

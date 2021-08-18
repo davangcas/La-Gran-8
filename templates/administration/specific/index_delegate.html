@@ -6,28 +6,14 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>{{numero_delegados}}</h3>
-
-                <p>Delegados de equipos</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-user-tie"></i>
-              </div>
-              <a href="{% url 'administration:delegates' %}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
           <!-- ./col -->
-          <div class="col-lg-3 col-6">
+          <div class="col-lg-6 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53</h3>
+                <h3>{{jugadores.count}}</h3>
 
-                <p>Jugadores Registrados</p>
+                <p>Jugadores En el equipo</p>
               </div>
               <div class="icon">
                 <i class="fas fa-running"></i>
@@ -35,34 +21,18 @@
               <a href="" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>{{equipos_habilitados}}</h3>
-
-                <p>Equipos habilitados</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <a href="{% url 'administration:teams' %}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
+          <div class="col-lg-6 col-6">
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3>65 °</h3>
 
-                <p>Administradores del sitio</p>
+                <p>Posicion en el campeonato</p>
               </div>
               <div class="icon">
-                <i class="fas fa-user-cog"></i>
+                <i class="fas fa-medal"></i>
               </div>
-              <a href="{% url 'administration:administrators' %}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
