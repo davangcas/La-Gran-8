@@ -4,7 +4,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from django.shortcuts import HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect, render
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -26,7 +26,8 @@ class PlayerCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        form = self.get_form()
+        self.object = self.get_object
+        form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(self.get_success_url())

@@ -47,21 +47,24 @@
                 <form action="." method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                 <div class="card-body">
-                    {% for field in form %}
-                        {% if field.label != "Logo" %}
-                        <div class="form-group">
-                            <label for="">{{field.label}}</label>
-                            {{field|add_class:'form-control'}}
+
+                    <div class="form-group">
+                      <label for="">{{form.delegated.label}}</label>
+                      {{form.delegated}}
+                    </div>
+                    <div class="form-group">
+                      <label for="">{{form.name.label}}</label>
+                      {{form.name|add_class:'form-control'}}
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <div class="custom-file">
+                          {{form.logo|add_class:'custom-file-input'|attr:'id:exampleInputFile'}}
+                          <label class="custom-file-label" for="exampleInputFile">{{form.logo.label}}</label>
                         </div>
-                        {% endif %}
-                    {% endfor %}
-                    <div class="input-group">
-                      <div class="custom-file">
-                        {{form.logo|add_class:'custom-file-input'|attr:'id:exampleInputFile'}}
-                        <label class="custom-file-label" for="exampleInputFile">{{form.logo.label}}</label>
-                      </div>
-                      <div class="input-group-append">
-                        <span class="input-group-text">Cargar</span>
+                        <div class="input-group-append">
+                          <span class="input-group-text">Cargar</span>
+                        </div>
                       </div>
                     </div>
                 </div>
@@ -79,4 +82,18 @@
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+{% endblock %}
+
+{% block js %}
+  <script>
+    $(function(){
+      //Initialize Select2 Elements
+      $('.select2').select2()
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+    });
+  </script>
 {% endblock %}

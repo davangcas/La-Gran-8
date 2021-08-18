@@ -1,0 +1,44 @@
+{% extends 'administration/base/list.html' %}
+{% load static %}
+
+{% block add_button_list %}
+    <a href="{% url 'administration:tournament_new' %}" class="btn btn-primary"> <i class="fas fa-plus-square"></i> Agregar Nuevo Torneo</a>
+{% endblock %}
+
+{% block table_headers %}
+    <th>Nombre de Torneo</th>
+    <th>Estado</th>
+    <th>Fecha de creacion</th>
+    <th>Fin de inscripciones</th>
+    <th>Formato</th>
+    <th>Acciones</th>
+{% endblock %}
+
+{% block table_content %}
+    <td>{{obj.name}}</td>
+    <td>
+        {% if obj.status %}
+            Activo
+        {% else %}
+            Finalizado
+        {% endif %}
+    </td>
+    <td>{{obj.date_created}}</td>
+    <td>{{obj.date_finish}}</td>
+    {% if obj.format == "1" %}
+        <td>Liga</td>
+    {% endif %}
+    {% if obj.format == "2" %}
+        <td>Eliminatoria</td>
+    {% endif %}
+    {% if obj.format == "3" %}
+        <td>Grupo y Eliminatoria</td>
+    {% endif %}
+    {% if obj.format == "4" %}
+        <td>Zonas</td>
+    {% endif %}
+    <td>
+        <a href=""><i class="fas fa-eye"></i></a>
+        <a href="{% url 'administration:tournament_delete' obj.id %}"><i class="fas fa-trash-alt"></i></a>
+    </td>
+{% endblock %}

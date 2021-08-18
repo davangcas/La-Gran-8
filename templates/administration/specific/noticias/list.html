@@ -1,6 +1,10 @@
 {% extends 'administration/base/list.html' %}
 {% load static %}
 
+{% block add_button_list %}
+    <a href="{% url 'administration:noticias_new' %}" class="btn btn-primary"> <i class="fas fa-plus-square"></i> Agregar Nueva Novedad</a>
+{% endblock %}
+
 {% block table_headers %}
     <th>ID</th>
     <th>Fecha de creación</th>

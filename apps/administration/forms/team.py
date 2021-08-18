@@ -1,5 +1,6 @@
 from django.forms import (
     ModelForm,
+    Select
 )
 
 from apps.team.models.team import Team
@@ -18,6 +19,14 @@ class TeamCreateForm(ModelForm):
             'delegated',
             'logo',
         ]
+        widgets = {
+            "delegated": Select(
+                attrs= {
+                    "class": "form-control select2 select2-hidden-accessible",
+                    "style":"width: 100%;",
+                }
+            ),
+        }
 
 class TeamUpdateForm(ModelForm):
     def __init__(self, *args, **kwargs):

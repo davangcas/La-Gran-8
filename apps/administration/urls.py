@@ -38,6 +38,12 @@ from apps.administration.views.player import (
     PlayerDeleteView,
     PlayerUpdateView,
 )
+from apps.administration.views.tournament import (
+    TorunamentCreateView,
+    TournamentListView,
+    TournamentDeleteView,
+    TournamentLigaCreateView,
+)
 
 app_name = "administration"
 
@@ -66,4 +72,8 @@ urlpatterns = [
     path('jugadores/nuevo/', PlayerCreateView.as_view(), name="players_new"),
     path('jugadores/eliminar/<int:pk>/', PlayerDeleteView.as_view(), name="players_delete"),
     path('jugadores/editar/<int:pk>/', PlayerUpdateView.as_view(), name="players_edit"),
+    path('torneos/', TournamentListView.as_view(), name="tournaments"),
+    path('torneo/nuevo/', TorunamentCreateView.as_view(), name="tournament_new"),
+    path('torneo/eliminar/<int:pk>/', TournamentDeleteView.as_view(), name="tournament_delete"),
+    path('torneo/nuevo/liga/', TournamentLigaCreateView.as_view(), name="tournament_new_liga"),
 ]
