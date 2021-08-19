@@ -1,8 +1,13 @@
 from django.forms import ModelForm, Select, SelectMultiple
 
 from apps.team.models.tournament import Tournament, League
+from apps.team.models.team import Team
 
 class TournamentForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['teams'].queryset = Team.objects.filter(active=True)
+    
     class Meta:
         model = Tournament
         fields = [

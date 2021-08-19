@@ -28,5 +28,10 @@
         <a href=""><i class="fas fa-eye"></i></a>
         <a href="{% url 'administration:teams_edit' obj.id %}"><i class="fas fa-edit"></i></a>
         <a href="{% url 'administration:teams_delete' obj.id %}"><i class="fas fa-trash-alt"></i></a>
+        {% if obj.active %}
+            <a href="{% url 'administration:activar_equipo' obj.id %}"><i class="fas fa-times-circle"></i></a>
+        {% else %}
+            <a href="{% url 'administration:activar_equipo' obj.id %}"><i class="fas fa-check-circle"></i></a>
+        {% endif %}
     </td>
 {% endblock %}

@@ -3,7 +3,7 @@ from apps.team.models.team import Team
 from django.forms import model_to_dict
 
 class Player(models.Model):
-    team = models.ForeignKey(Team, on_delete=models.PROTECT, verbose_name="Equipo")
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name="Equipo")
     name = models.CharField(verbose_name="Nombre y Apellido", max_length=150)
     dni = models.PositiveIntegerField(verbose_name="DNI", unique=True)
     date_created = models.DateField(verbose_name="Fecha de creación", auto_now_add=True)

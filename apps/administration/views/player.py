@@ -13,6 +13,7 @@ from django.utils.decorators import method_decorator
 from apps.team.models.player import Player
 from apps.administration.forms.player import PlayerForm, PlayerEditForm, PlayerCreateDelegatedForm
 from apps.administration.decorators import user_validator
+from apps.administration.services import check_players_capacity
 
 
 class PlayerCreateView(CreateView):
@@ -32,6 +33,7 @@ class PlayerCreateView(CreateView):
         if form.is_valid():
             try:
                 form.save()
+                check_players_capacity()
                 return HttpResponseRedirect(self.get_success_url())
             except Exception as e:
                 context = self.get_context_data(**kwargs)

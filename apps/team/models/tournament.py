@@ -35,6 +35,24 @@ class League(models.Model):
         verbose_name = "Liga"
         verbose_name_plural = "Ligas"
 
+class LeagueTable(models.Model):
+    league = models.ForeignKey(League, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, blank=True, null=True)
+    position = models.PositiveSmallIntegerField(verbose_name="Posición", blank=True, null=True, default=1)
+    played = models.PositiveSmallIntegerField(verbose_name="Partidos jugados", blank=True, null=True, default=0)
+    wins = models.PositiveSmallIntegerField(verbose_name="Partidos ganados", blank=True, null=True, default=0)
+    loss = models.PositiveSmallIntegerField(verbose_name="Partidos perdidos", blank=True, null=True, default=0)
+    draw = models.PositiveSmallIntegerField(verbose_name="Partidos empatados", blank=True, null=True, default=0)
+    goals = models.PositiveSmallIntegerField(verbose_name="Goles", blank=True, null=True, default=0)
+    goals_received = models.PositiveSmallIntegerField(verbose_name="Goles Recibidos", blank=True, null=True, default=0)
+    dif_goals = models.PositiveSmallIntegerField(verbose_name="Diferencia de goles", blank=True, null=True, default=0)
+    points = models.PositiveSmallIntegerField(verbose_name="Puntos", blank=True, null=True, default=0)
+
+    class Meta:
+        verbose_name = "Tabla de Posiciones"
+        verbose_name_plural = "Tabla de Posiciones"
+        ordering = ['-points']
+
 class TeamLeague(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)

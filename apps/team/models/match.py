@@ -3,6 +3,7 @@ from django.forms import model_to_dict
 
 from apps.team.models.team import Team
 from apps.team.models.tournament import Tournament
+from apps.team.choices import MATCH_HOURS
 
 class FieldMatch(models.Model):
     name = models.CharField(verbose_name="Nombre", max_length=30)
@@ -26,7 +27,10 @@ class Match(models.Model):
     
     goals_local = models.PositiveSmallIntegerField(verbose_name="Goles equipo local")
     goals_away = models.PositiveSmallIntegerField(verbose_name="Goles equipo visitante")
-    date_of_match = models.DateTimeField(verbose_name="Fecha del partido")
+    date_of_match = models.DateField(verbose_name="Fecha del partido")
+    hour_of_match = models.CharField(verbose_name="Hora del partido", max_length=2, choices=MATCH_HOURS, default="16")
+
+    played = models.BooleanField(verbose_name="Fecha Jugada", blank=True, null=True, default=False)
 
     def __str__(self):
         return self.local_team.name + " vs " +  self.away_team.name

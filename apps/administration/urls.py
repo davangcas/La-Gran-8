@@ -48,6 +48,7 @@ from apps.administration.views.tournament import (
     TournamentDeleteView,
     TournamentLigaCreateView,
 )
+from apps.administration.views.special_views import activate_team
 
 app_name = "administration"
 
@@ -80,6 +81,8 @@ urlpatterns = [
     path('torneo/nuevo/', TorunamentCreateView.as_view(), name="tournament_new"),
     path('torneo/eliminar/<int:pk>/', TournamentDeleteView.as_view(), name="tournament_delete"),
     path('torneo/nuevo/liga/', TournamentLigaCreateView.as_view(), name="tournament_new_liga"),
+    # Views whithout a template
+    path('equipos/activar/<int:pk>/', activate_team, name="activar_equipo"),
     # delegates urls
     path('inicio/mi_equipo/', IndexDelegateView.as_view(), name="indexd"),
     path('mi_equipo/judadores/', PlayerDelegateListView.as_view(), name="dplayers"),
