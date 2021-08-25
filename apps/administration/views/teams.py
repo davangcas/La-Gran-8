@@ -18,6 +18,7 @@ from apps.administration.forms.team import (
     TeamCreateNextForm,
 )
 from apps.administration.decorators import user_validator
+from apps.team.models.player import Player
 
 
 class TeamListView(ListView):
@@ -95,7 +96,7 @@ class TeamDeleteView(DeleteView):
 
 
 class TeamDetailView(TemplateView):
-    template_name = "administration/specific/team_detail_delegate.html"
+    template_name = "administration/specific/teams/admin/detail.html"
 
     @method_decorator(user_validator)
     @method_decorator(login_required)
@@ -105,6 +106,7 @@ class TeamDetailView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['equipo'] = Team.objects.get(pk=self.kwargs['pk'])
+        context['jugadores'] = Player.objects.filter(team=Team.objects.get(pk=self.kwargs['pk']))
         return context
 
 

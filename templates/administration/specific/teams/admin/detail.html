@@ -1,0 +1,136 @@
+{% extends 'administration/base/home.html' %}
+{% load static %}
+
+{% block css %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'libs/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{equipo.played}}</h3>
+  
+                  <p>Partidos jugados</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-running"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{equipo.win}}</h3>
+  
+                  <p>Partidos Ganados</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-medal"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{equipo.drawn}}</h3>
+  
+                  <p>Partidos Empatados</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-grip-lines-vertical"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3>{{equipo.lost}}</h3>
+  
+                  <p>Partidos perdidos</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-window-close"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+          </div>
+        </div>
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                <h3 class="card-title">Jugadores de {{ equipo.name }}</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                <table id="jugadores" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nombre y Apellido</th>
+                        <th>DNI</th>
+                        <th>PJ</th>
+                        <th>Goles</th>
+                        <th>TA</th>
+                        <th>TR</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in jugadores %}
+                            <tr>
+                                <td>{{ obj.name }}</td>
+                                <td>{{ obj.dni }}</td>
+                                <td>{{ obj.played }}</td>
+                                <td>{{ obj.goals }}</td>
+                                <td>{{ obj.yellow_cards }}</td>
+                                <td>{{ obj.red_cards }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        </div>
+    </section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block js %}
+    <!-- DataTables -->
+    <script src="{% static 'libs/adminlte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'libs/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'libs/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'libs/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script>
+        $(function () {
+          $("#jugadores").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "language":{
+                "url":"{% static 'administration/json/español.json' %}"
+            }
+          });
+        });
+    </script>
+{% endblock %}
