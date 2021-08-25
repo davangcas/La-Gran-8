@@ -40,3 +40,11 @@ class TeamUpdateForm(ModelForm):
             'delegated',
             'logo',
         ]
+
+class TeamCreateNextForm(ModelForm):
+    class Meta:
+        model = Team
+        fields = [
+            'name',
+            'logo',
+        ]

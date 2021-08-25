@@ -122,6 +122,7 @@ class PlayerDelegateCreateView(CreateView):
                 player = form.save(commit=False)
                 player.team = team
                 player.save()
+                check_players_capacity()
                 return HttpResponseRedirect(self.get_success_url())
             except Exception as e:
                 context = self.get_context_data(**kwargs)

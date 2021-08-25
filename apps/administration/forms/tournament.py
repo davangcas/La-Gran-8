@@ -1,4 +1,6 @@
-from django.forms import ModelForm, Select, SelectMultiple
+from django.db.models import fields
+from django.forms import ModelForm, SelectMultiple
+from django import forms
 
 from apps.team.models.tournament import Tournament, League
 from apps.team.models.team import Team
@@ -27,6 +29,9 @@ class TournamentForm(ModelForm):
         }
 
 class LeagueForm(ModelForm):
+
     class Meta:
         model = League
-        fields = "__all__"
+        fields = [
+            'vueltas',
+        ]

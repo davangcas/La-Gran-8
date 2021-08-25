@@ -6,7 +6,7 @@ from apps.team.models.tournament import Tournament
 from apps.team.choices import MATCH_HOURS
 
 class FieldMatch(models.Model):
-    name = models.CharField(verbose_name="Nombre", max_length=30)
+    name = models.CharField(verbose_name="Cancha", max_length=30)
 
     def __str__(self):
         return self.name

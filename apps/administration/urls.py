@@ -26,6 +26,8 @@ from apps.administration.views.teams import (
     TeamCreateView,
     TeamUpdateView,
     TeamDeleteView,
+    TeamDetailView,
+    TeamCreateNextView,
 )
 from apps.administration.views.noticias import (
     NoticiasListView,
@@ -47,6 +49,7 @@ from apps.administration.views.tournament import (
     TournamentListView,
     TournamentDeleteView,
     TournamentLigaCreateView,
+    TournamentDetailView,
 )
 from apps.administration.views.special_views import activate_team
 
@@ -68,8 +71,10 @@ urlpatterns = [
     path('delegados/editar/<int:pk>/', DelegateUpdateView.as_view(), name="delegates_edit"),
     path('equipos/', TeamListView.as_view(), name="teams"),
     path('equipos/nuevo/', TeamCreateView.as_view(), name="teams_new"),
+    path('equipos/siguiente/nuevo/<int:pk>/', TeamCreateNextView.as_view(), name="teams_next_new"),
     path('equipos/editar/<int:pk>/', TeamUpdateView.as_view(), name="teams_edit"),
     path('equipo/eliminar/<int:pk>/', TeamDeleteView.as_view(), name="teams_delete"),
+    path('equipo/detalle/<int:pk>/', TeamDetailView.as_view(), name="team_detail"),
     path('noticias/', NoticiasListView.as_view(), name="noticias"),
     path('noticias/nueva/', NoticiaCreateView.as_view(), name="noticias_new"),
     path('noticias/eliminar/<int:pk>/', NoticiaDeleteView.as_view(), name="noticias_delete"),
@@ -80,7 +85,8 @@ urlpatterns = [
     path('torneos/', TournamentListView.as_view(), name="tournaments"),
     path('torneo/nuevo/', TorunamentCreateView.as_view(), name="tournament_new"),
     path('torneo/eliminar/<int:pk>/', TournamentDeleteView.as_view(), name="tournament_delete"),
-    path('torneo/nuevo/liga/', TournamentLigaCreateView.as_view(), name="tournament_new_liga"),
+    path('torneo/nuevo/liga/<int:pk>/', TournamentLigaCreateView.as_view(), name="tournament_new_liga"),
+    path('torneo/detalle/<int:pk>/', TournamentDetailView.as_view(), name="tournament_detail"),
     # Views whithout a template
     path('equipos/activar/<int:pk>/', activate_team, name="activar_equipo"),
     # delegates urls

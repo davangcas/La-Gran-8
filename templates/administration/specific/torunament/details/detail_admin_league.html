@@ -1,0 +1,154 @@
+{% extends 'administration/base/home.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'libs/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="content">
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-md-6">
+                <div class="card card-primary" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+                  <div class="card-header">
+                    <h3 class="card-title">Posiciones</h3>
+    
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                      </button>
+                    </div>
+                    <!-- /.card-tools -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <table id="standings" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Posición</th>
+                            <th>Equipo</th>
+                            <th>Pts</th>
+                            <th>PJ</th>
+                            <th>PG</th>
+                            <th>PE</th>
+                            <th>PP</th>
+                            <th>GF</th>
+                            <th>GC</th>
+                            <th>DG</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for obj in standings %}
+                                <tr>
+                                    <td>{{ obj.position }}</td>
+                                    <td>{{ obj.team.name }}</td>
+                                    <td>{{ obj.points }}</td>
+                                    <td>{{ obj.played }}</td>
+                                    <td>{{ obj.wins }}</td>
+                                    <td>{{ obj.draw }}</td>
+                                    <td>{{ obj.loss }}</td>
+                                    <td>{{ obj.goals }}</td>
+                                    <td>{{ obj.goals_received }}</td>
+                                    <td>{{ obj.dif_goals }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <!-- /.col -->
+            <div class="col-md-6">
+                <div class="card card-info" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+                  <div class="card-header">
+                    <h3 class="card-title">Goleadores</h3>
+    
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                      </button>
+                    </div>
+                    <!-- /.card-tools -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    The body of the card
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-md-6">
+                <div class="card card-purple" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+                  <div class="card-header">
+                    <h3 class="card-title">Amonestados</h3>
+    
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                      </button>
+                    </div>
+                    <!-- /.card-tools -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    The body of the card
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <!-- /.col -->
+            <div class="col-md-6">
+              <div class="card card-danger" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+                <div class="card-header">
+                  <h3 class="card-title">Datos del torneo</h3>
+  
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                    </button>
+                  </div>
+                  <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="callout callout-danger">
+                        <h5>Formato del torneo - {{ formato }} </h5>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+    <!-- DataTables -->
+    <script src="{% static 'libs/adminlte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'libs/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'libs/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'libs/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script>
+        $(function () {
+          $("#standings").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "language":{
+                "url":"{% static 'administration/json/español.json' %}"
+            }
+          });
+        });
+    </script>
+{% endblock %}

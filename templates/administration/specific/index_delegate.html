@@ -57,13 +57,16 @@
                   </button>
                 </div>
               </div>
+              {% if torneo %}
               <div class="card-body">
                 Start creating your amazing application!
               </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                Footer
+              {% else %}
+              <div class="card-body">
+                No ha comenzado ningun torneo aún
               </div>
+              {% endif %}
+              <!-- /.card-body -->
               <!-- /.card-footer-->
             </div>
             <!-- /.card -->

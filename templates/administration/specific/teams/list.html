@@ -25,7 +25,7 @@
     </td>
     <td><img src="{{obj.logo.url}}" alt="" height="30vh"></td>
     <td>
-        <a href=""><i class="fas fa-eye"></i></a>
+        <a href="{% url 'administration:team_detail' obj.id %}"><i class="fas fa-eye"></i></a>
         <a href="{% url 'administration:teams_edit' obj.id %}"><i class="fas fa-edit"></i></a>
         <a href="{% url 'administration:teams_delete' obj.id %}"><i class="fas fa-trash-alt"></i></a>
         {% if obj.active %}

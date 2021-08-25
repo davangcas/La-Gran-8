@@ -29,6 +29,7 @@ class Tournament(models.Model):
 
 class League(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    vueltas = models.PositiveSmallIntegerField(verbose_name="Vueltas", default=2)
     status = models.BooleanField(verbose_name="Estado")
 
     class Meta:
@@ -36,8 +37,9 @@ class League(models.Model):
         verbose_name_plural = "Ligas"
 
 class LeagueTable(models.Model):
-    league = models.ForeignKey(League, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, blank=True, null=True)
+    league = models.ForeignKey(League, on_delete=models.CASCADE, blank=True, null=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, blank=True, null=True)
+
     position = models.PositiveSmallIntegerField(verbose_name="Posición", blank=True, null=True, default=1)
     played = models.PositiveSmallIntegerField(verbose_name="Partidos jugados", blank=True, null=True, default=0)
     wins = models.PositiveSmallIntegerField(verbose_name="Partidos ganados", blank=True, null=True, default=0)
@@ -45,7 +47,7 @@ class LeagueTable(models.Model):
     draw = models.PositiveSmallIntegerField(verbose_name="Partidos empatados", blank=True, null=True, default=0)
     goals = models.PositiveSmallIntegerField(verbose_name="Goles", blank=True, null=True, default=0)
     goals_received = models.PositiveSmallIntegerField(verbose_name="Goles Recibidos", blank=True, null=True, default=0)
-    dif_goals = models.PositiveSmallIntegerField(verbose_name="Diferencia de goles", blank=True, null=True, default=0)
+    dif_goals = models.IntegerField(verbose_name="Diferencia de goles", blank=True, null=True, default=0)
     points = models.PositiveSmallIntegerField(verbose_name="Puntos", blank=True, null=True, default=0)
 
     class Meta:
@@ -53,13 +55,9 @@ class LeagueTable(models.Model):
         verbose_name_plural = "Tabla de Posiciones"
         ordering = ['-points']
 
-class TeamLeague(models.Model):
-    league = models.ForeignKey(League, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-
 class PlayOff(models.Model):
     torunament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-    initial_round = models.PositiveSmallIntegerField(verbose_name="Rondas")
+    away_goal = models.BooleanField(verbose_name="Gol de visitante", default=True)
 
     status = models.BooleanField(verbose_name="Estado")
 

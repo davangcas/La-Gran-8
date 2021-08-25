@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from apps.administration.models.users import Administrator
 from apps.team.models.team import Team
 from apps.team.models.player import Player
+from apps.team.models.tournament import Tournament
 from apps.administration.decorators import user_validator
 
 
@@ -45,4 +46,5 @@ class IndexDelegateView(TemplateView):
         context['header_page_title'] = "Bienvenido " + str(self.request.user.first_name) + " " + str(self.request.user.last_name)
         context['equipo'] = Team.objects.filter(delegated=self.request.user.administrator).first()
         context['jugadores'] = Player.objects.filter(team=Team.objects.filter(delegated=self.request.user.administrator).first())
+        context["torneo"] = Tournament.objects.filter(status=True)
         return context

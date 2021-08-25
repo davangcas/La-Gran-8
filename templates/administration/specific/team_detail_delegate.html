@@ -1,0 +1,69 @@
+{% extends 'administration/base/home.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{equipo.played}}</h3>
+  
+                  <p>Partidos jugados</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-running"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{equipo.win}}</h3>
+  
+                  <p>Partidos Ganados</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-medal"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{equipo.drawn}}</h3>
+  
+                  <p>Partidos Empatados</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-grip-lines-vertical"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3>{{equipo.lost}}</h3>
+  
+                  <p>Partidos perdidos</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-window-close"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+          </div>
+        </div>
+    </section>
+    <!-- /.content -->
+{% endblock %}

@@ -8,11 +8,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.views.generic.base import TemplateView
 
 from apps.administration.models.users import Administrator
 from apps.administration.forms.administrator import AdministratorForm, UserFormNew
 from apps.administration.forms.delegates import DelegateForm, DelegateUserForm
 from apps.administration.decorators import user_validator
+from apps.team.models.team import Team
 
 
 class DelegateListView(ListView):
@@ -45,6 +47,11 @@ class DelegateCreateView(CreateView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        last_delegated = Administrator.objects.filter(role="Delegado").last()
+        success_url = reverse_lazy('administration:teams_next_new', kwargs={'pk':last_delegated.id})
+        return success_url
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object

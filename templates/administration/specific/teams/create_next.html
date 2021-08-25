@@ -48,14 +48,25 @@
                     {% csrf_token %}
                 <div class="card-body">
                     <div class="form-group">
-                      <label>{{form.vueltas.label}}</label>
-                      {{form.vueltas|add_class:'form-control'}}
+                      <label for="">{{form.name.label}}</label>
+                      {{form.name|add_class:'form-control'}}
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <div class="custom-file">
+                          {{form.logo|add_class:'custom-file-input'|attr:'id:exampleInputFile'}}
+                          <label class="custom-file-label" for="exampleInputFile">{{form.logo.label}}</label>
+                        </div>
+                        <div class="input-group-append">
+                          <span class="input-group-text">Cargar</span>
+                        </div>
+                      </div>
                     </div>
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-chevron-circle-right"></i> Siguiente</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Crear Equipo</button>
                 </div>
                 </form>
             </div>
