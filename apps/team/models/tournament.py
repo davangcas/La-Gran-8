@@ -3,6 +3,7 @@ from django.db.models.fields.related import ForeignKey
 from django.forms import model_to_dict
 
 from apps.team.models.team import Team
+from apps.team.models.player import Player
 from apps.team.choices import TOURNAMENT_FORMATS
 
 class Tournament(models.Model):
@@ -27,6 +28,7 @@ class Tournament(models.Model):
         verbose_name = "Torneo"
         verbose_name_plural = "Torneos"
 
+
 class League(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     vueltas = models.PositiveSmallIntegerField(verbose_name="Vueltas", default=2)
@@ -35,6 +37,7 @@ class League(models.Model):
     class Meta:
         verbose_name = "Liga"
         verbose_name_plural = "Ligas"
+
 
 class LeagueTable(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE, blank=True, null=True)
@@ -55,6 +58,7 @@ class LeagueTable(models.Model):
         verbose_name_plural = "Tabla de Posiciones"
         ordering = ['-points']
 
+
 class PlayOff(models.Model):
     torunament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     away_goal = models.BooleanField(verbose_name="Gol de visitante", default=True)
@@ -64,3 +68,34 @@ class PlayOff(models.Model):
     class Meta:
         verbose_name = "Eliminatoria"
         verbose_name_plural = "Eliminatorias"
+
+
+class Scorers(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, blank=True)
+    position = models.PositiveSmallIntegerField(verbose_name="Posición", blank=True, null=True, default=1)
+    goals = models.PositiveSmallIntegerField(verbose_name="Goles", blank=True, null=True, default=0)
+    played = models.PositiveSmallIntegerField(verbose_name="Partidos Jugados", blank=True, null=True, default=0)
+
+    def __str__(self):
+        return self.player.name + " - " + self.tournament.name
+
+    class Meta:
+        verbose_name = "Tabla de Goleadores"
+        verbose_name_plural = "Tabla de Goleadores"
+
+
+class Cautions(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, blank=True)
+    position = models.PositiveSmallIntegerField(verbose_name="Posición", blank=True, null=True, default=1)
+    played = models.PositiveSmallIntegerField(verbose_name="Partidos Jugados", blank=True, null=True, default=0)
+    yellow_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Amarillas", blank=True, null=True, default=0)
+    red_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Rojas", blank=True, null=True, default=0)
+
+    def __str__(self):
+        return self.player.name + " - " + self.tournament.name
+
+    class Meta:
+        verbose_name = "Tabla de Amonestados"
+        verbose_name_plural = "Tabla de Amonestados"

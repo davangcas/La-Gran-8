@@ -8,6 +8,7 @@ class EquiposView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Equipos"
+        context['equipos'] = Team.objects.all()
         return context
 
 class EquipoView(TemplateView):

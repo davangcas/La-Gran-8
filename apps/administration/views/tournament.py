@@ -4,10 +4,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from apps.team.models.tournament import LeagueTable, Tournament, League, PlayOff
+from apps.team.models.tournament import LeagueTable, Scorers, Tournament, League, Cautions
 from apps.administration.forms.tournament import TournamentForm, LeagueForm
 from apps.administration.decorators import user_validator
-from apps.administration.services import generate_league_table, get_tournament_name
+from apps.administration.services import generate_league_table, get_tournament_name, generate_scorers_table, generate_cards_to_players
 
 class TorunamentCreateView(CreateView):
     model = Tournament
@@ -90,6 +90,8 @@ class TournamentLigaCreateView(CreateView):
                 league.tournament = Tournament.objects.get(pk=self.kwargs['pk'])
                 league.save()
                 generate_league_table(league.id)
+                generate_scorers_table(league.tournament.id)
+                generate_cards_to_players(league.tournament.id)
                 return HttpResponseRedirect(self.get_success_url())
             except Exception as e:
                 context = self.get_context_data(**kwargs)
@@ -125,4 +127,8 @@ class TournamentDetailView(DetailView):
         if self.get_object().format == "1":
             context['formato'] = "Liga"
             context['standings'] = LeagueTable.objects.filter(league=League.objects.filter(tournament=self.get_object()).last())
+            context['scorers'] = Scorers.objects.all().filter(tournament=context['tournament']).order_by('goals')
+            context['tournament'] = Tournament.objects.get(pk=self.kwargs['pk'])
+            context['league'] = League.objects.filter(tournament=context['tournament']).last()
+            context['cards'] = Cautions.objects.all().filter(tournament=context['tournament']).order_by('position')
         return context

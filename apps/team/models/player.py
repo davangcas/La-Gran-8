@@ -20,6 +20,9 @@ class Player(models.Model):
         item = model_to_dict(self)
         return item
 
+    def __str__(self):
+        return self.name + " - " + self.team.name
+
     class Meta:
         verbose_name = "Jugador"
         verbose_name_plural = "Jugadores"
@@ -70,4 +73,3 @@ class Strickers(models.Model):
     class Meta: 
         verbose_name = "Delantero"
         verbose_name_plural = "Delanteros"
-

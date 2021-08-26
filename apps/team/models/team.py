@@ -9,7 +9,7 @@ class Team(models.Model):
     name = models.CharField(verbose_name="Nombre", max_length=80)
     played = models.PositiveIntegerField(verbose_name="Partidos Ganados", blank=True, default=0, null=True)
     win = models.PositiveIntegerField(verbose_name="Partidos Ganados", blank=True, default=0, null=True)
-    drawn = models.PositiveIntegerField(verbose_name="Partidos Empatados", blank=True, default=0, null=True)
+    draw = models.PositiveIntegerField(verbose_name="Partidos Empatados", blank=True, default=0, null=True)
     lost = models.PositiveIntegerField(verbose_name="Partidos Perdidos", blank=True, default=0, null=True)
     titles = models.PositiveIntegerField(verbose_name="Títulos conseguidos", blank=True, default=0, null=True)
     date_created = models.DateTimeField(verbose_name="Fecha de creación", auto_now_add=True)

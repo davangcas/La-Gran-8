@@ -2,4 +2,41 @@
 {% load static %}
 
 {% block content %}
+    <div class="content">
+        <div class="container last-hockey-macthes">
+            <div class="row">
+                <div class="col-md-12 overflow-scroll">
+                    <h6>Todos los equipos</h6>
+                    <table>
+                        <tbody><tr>
+                            <th>Equipo</th>
+                            <th>PJ</th>
+                            <th>PG</th>
+                            <th>PE</th>
+                            <th>PP</th>
+                            <th>Ver detalles</th>
+                        </tr>
+                        {% for team in equipos %}
+                        <tr>
+                            <td>
+                                <a href="">
+                                    <span class="team">
+                                        <img src="{{team.logo.url}}" width="30" height="30" alt="main-match-icon">
+                                    </span>
+                                    <span>{{ team.name }}</span>
+                                </a>
+                            </td>
+                            
+                            <td>{{ team.played }}</td>
+                            <td>{{ team.win }}</td>
+                            <td>{{ team.draw }}</td>
+                            <td>{{ team.lost }}</td>
+                            <td><a href=""><span><i class="fas fa-arrow-alt-circle-right"></i></span></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
