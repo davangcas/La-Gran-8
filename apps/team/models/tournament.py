@@ -4,7 +4,7 @@ from django.forms import model_to_dict
 
 from apps.team.models.team import Team
 from apps.team.models.player import Player
-from apps.team.choices import TOURNAMENT_FORMATS
+from apps.team.choices import TOURNAMENT_FORMATS, MATCH_HOURS
 
 class Tournament(models.Model):
     name = models.CharField(verbose_name="Nombre del torneo", max_length=80)
@@ -99,3 +99,26 @@ class Cautions(models.Model):
     class Meta:
         verbose_name = "Tabla de Amonestados"
         verbose_name_plural = "Tabla de Amonestados"
+
+
+class DaysOfWeek(models.Model):
+    name = models.CharField(verbose_name="Dia de la semana", max_length=15)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Día de la semana"
+        verbose_name_plural = "Dias de la semana"
+
+
+class ConfigTournament(models.Model):
+    days = models.ManyToManyField(DaysOfWeek, verbose_name="Dias en los que se juegan los partidos")
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    hour_init = models.CharField(verbose_name="Horario de comienzo de los partidos", max_length=2, choices=MATCH_HOURS)
+    hour_end = models.CharField(verbose_name="Horario de finalización de los partidos", max_length=2, choices=MATCH_HOURS)
+    fields = models.PositiveSmallIntegerField(verbose_name="Cantidad de canchas disponibles para jugar", default=1)
+
+    class Meta:
+        verbose_name = "Configuración del Torneo"
+        verbose_name_plural = "Configuraciones de Torneos"

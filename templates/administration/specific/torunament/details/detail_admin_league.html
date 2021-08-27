@@ -199,34 +199,29 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="standings" class="table table-bordered table-striped">
+                  <table id="fechas" class="table table-bordered table-striped">
                       <thead>
                       <tr>
-                          <th>Posición</th>
-                          <th>Equipo</th>
-                          <th>Pts</th>
-                          <th>PJ</th>
-                          <th>PG</th>
-                          <th>PE</th>
-                          <th>PP</th>
-                          <th>GF</th>
-                          <th>GC</th>
-                          <th>DG</th>
+                          <th>N°</th>
+                          <th>Fecha de Juego</th>
+                          <th>Fecha Jugada</th>
+                          <th>Acciones</th>
                       </tr>
                       </thead>
                       <tbody>
-                          {% for obj in standings %}
+                          {% for obj in group_matchs %}
                               <tr>
-                                  <td>{{ obj.position }}</td>
-                                  <td>{{ obj.team.name }}</td>
-                                  <td>{{ obj.points }}</td>
-                                  <td>{{ obj.played }}</td>
-                                  <td>{{ obj.wins }}</td>
-                                  <td>{{ obj.draw }}</td>
-                                  <td>{{ obj.loss }}</td>
-                                  <td>{{ obj.goals }}</td>
-                                  <td>{{ obj.goals_received }}</td>
-                                  <td>{{ obj.dif_goals }}</td>
+                                  <td>{{ obj.number }}</td>
+                                  <td>{{ obj.day_of_match }}</td>
+                                  {% if obj.played %}
+                                    <td>Si</td>
+                                  {% else %}
+                                    <td>No</td>
+                                  {% endif %}
+                                  <td>
+                                    <a href="">Configurar</a>
+                                    <a href="">Ver detalles</a>
+                                  </td>
                               </tr>
                           {% endfor %}
                       </tbody>
@@ -264,6 +259,13 @@
             }
           });
           $("#cards").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "language":{
+                "url":"{% static 'administration/json/español.json' %}"
+            }
+          });
+          $("#fechas").DataTable({
             "responsive": true,
             "autoWidth": false,
             "language":{

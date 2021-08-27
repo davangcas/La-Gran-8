@@ -4,7 +4,18 @@ from django.views.generic.base import TemplateResponseMixin
 from apps.team.models.team import Team
 from apps.administration.models.users import Administrator
 from apps.team.models.player import Player
-from apps.team.models.tournament import Tournament, League, LeagueTable, Scorers, Cautions
+from apps.team.models.tournament import (
+    Tournament, 
+    League, 
+    LeagueTable, 
+    Scorers, 
+    Cautions, 
+    DaysOfWeek,
+    ConfigTournament,
+)
+from apps.team.models.match import (
+    FieldMatch,
+)
 
 def check_players_capacity():
 
@@ -82,3 +93,46 @@ def generate_cards_to_players(id_tournament):
             player=player,
         )
         cautions.save()
+
+
+def check_or_create_days():
+    days = DaysOfWeek.objects.all()
+    if days:
+        print("Ya se han creado los días")
+    else:
+        lunes = DaysOfWeek.objects.create(name="Lunes")
+        lunes.save()
+        martes = DaysOfWeek.objects.create(name="Martes")
+        martes.save()
+        miercoles = DaysOfWeek.objects.create(name="Miércoles")
+        miercoles.save()
+        jueves = DaysOfWeek.objects.create(name="Jueves")
+        jueves.save()
+        viernes = DaysOfWeek.objects.create(name="Viernes")
+        viernes.save()
+        sabado = DaysOfWeek.objects.create(name="Sabado")
+        sabado.save()
+        domingo = DaysOfWeek.objects.create(name="Domingo")
+        domingo.save()
+        print("Dias creados correctamente")
+
+
+def check_tournament_active():
+    status = True
+    tournaments = Tournament.objects.filter(status=True)
+    if tournaments:
+        status = True
+    else:
+        status = False
+    return status
+
+
+def generate_fields(id_config):
+    config = ConfigTournament.objects.get(pk=id_config)
+    for number in range(config.fields):
+        field = FieldMatch.objects.create(
+            tournament=config.tournament,
+            name="Cancha " + str(number+1),
+        )
+        field.save()
+    print(FieldMatch.objects.all())

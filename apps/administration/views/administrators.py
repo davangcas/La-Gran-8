@@ -24,6 +24,7 @@ from apps.administration.forms.administrator import (
     UserUpdateForm,
 )
 from apps.administration.decorators import user_validator 
+from apps.administration.services import check_tournament_active
 
 
 class AdministratorListView(ListView):
@@ -46,7 +47,9 @@ class AdministratorListView(ListView):
         context['table_title'] = "Administradores"
         context['object_list'] = Administrator.objects.filter(status=True).filter(role="Administrador")
         context['header_page_title'] = "Lista de Administradores"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class AdministratorCreateView(CreateView):
     template_name = "administration/specific/administrator/create.html"
@@ -104,7 +107,9 @@ class AdministratorCreateView(CreateView):
         context['title'] = "Nuevo administrador"
         context['form_title'] = "Agregar nuevo administrador"
         context['header_page_title'] = "Nuevo Administrador"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class AdministratorUpdateView(UpdateView):
     model = User
@@ -124,7 +129,9 @@ class AdministratorUpdateView(UpdateView):
         context['title'] = "Editar administrador"
         context['form_title'] = "Modificar administrador"
         context['header_page_title'] = "Editar Administrador"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class AdministratorDeleteView(DeleteView):
     model = Administrator
@@ -148,4 +155,7 @@ class AdministratorDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Eliminar Administrador"
         context['header_page_title'] = "Eliminar Administrador"
+        context['active_tournament'] = check_tournament_active()
         return context
+
+

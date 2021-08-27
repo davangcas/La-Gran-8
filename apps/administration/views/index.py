@@ -10,6 +10,7 @@ from apps.team.models.team import Team
 from apps.team.models.player import Player
 from apps.team.models.tournament import Tournament
 from apps.administration.decorators import user_validator
+from apps.administration.services import check_tournament_active
 
 
 class IndexView(TemplateView):
@@ -30,7 +31,9 @@ class IndexView(TemplateView):
         context['equipos_habilitados'] = Team.objects.filter(active=True).count()
         context['jugadores_registrados'] = Player.objects.all().count()
         context['numero_administradores'] = Administrator.objects.filter(role="Administrador").count()
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class IndexDelegateView(TemplateView):
     template_name = "administration/specific/index_delegate.html"
@@ -47,4 +50,7 @@ class IndexDelegateView(TemplateView):
         context['equipo'] = Team.objects.filter(delegated=self.request.user.administrator).first()
         context['jugadores'] = Player.objects.filter(team=Team.objects.filter(delegated=self.request.user.administrator).first())
         context["torneo"] = Tournament.objects.filter(status=True)
+        context['active_tournament'] = check_tournament_active()
         return context
+
+

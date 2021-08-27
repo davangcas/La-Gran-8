@@ -19,6 +19,7 @@ from apps.administration.forms.team import (
 )
 from apps.administration.decorators import user_validator
 from apps.team.models.player import Player
+from apps.administration.services import check_tournament_active
 
 
 class TeamListView(ListView):
@@ -37,6 +38,7 @@ class TeamListView(ListView):
         context['table_id'] = "teams"
         context['table_title'] = "Equipos"
         context['header_page_title'] = "Lista de Equipos"
+        context['active_tournament'] = check_tournament_active()
         return context
 
 
@@ -56,6 +58,7 @@ class TeamCreateView(CreateView):
         context['title'] = "Nuevo Equipo"
         context['form_title'] = "Agregar nuevo equipo"
         context['header_page_title'] = "Nuevo Equipo"
+        context['active_tournament'] = check_tournament_active()
         return context
 
 
@@ -75,6 +78,7 @@ class TeamUpdateView(UpdateView):
         context['title'] = "Editar equipo"
         context['form_title'] = "Modificar equipo"
         context['header_page_title'] = "Modificar Equipo"
+        context['active_tournament'] = check_tournament_active()
         return context
 
 
@@ -92,6 +96,7 @@ class TeamDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Eliminar Equipo"
         context['header_page_title'] = "Eliminar Equipo"
+        context['active_tournament'] = check_tournament_active()
         return context
 
 
@@ -107,6 +112,7 @@ class TeamDetailView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['equipo'] = Team.objects.get(pk=self.kwargs['pk'])
         context['jugadores'] = Player.objects.filter(team=Team.objects.get(pk=self.kwargs['pk']))
+        context['active_tournament'] = check_tournament_active()
         return context
 
 
@@ -140,4 +146,7 @@ class TeamCreateNextView(CreateView):
         context['title'] = "Nuevo Equipo"
         context['form_title'] = "Agregar nuevo equipo"
         context['header_page_title'] = "Nuevo Equipo"
+        context['active_tournament'] = check_tournament_active()
         return context
+
+

@@ -2,7 +2,7 @@ from django.db.models import fields
 from django.forms import ModelForm, SelectMultiple
 from django import forms
 
-from apps.team.models.tournament import Tournament, League
+from apps.team.models.tournament import Tournament, League, ConfigTournament
 from apps.team.models.team import Team
 
 class TournamentForm(ModelForm):
@@ -35,3 +35,23 @@ class LeagueForm(ModelForm):
         fields = [
             'vueltas',
         ]
+
+
+class ConfigTournamentForm(ModelForm):
+
+    class Meta:
+        model = ConfigTournament
+        fields = [
+            'days',
+            'hour_init',
+            'hour_end',
+            'fields'
+        ]
+        widgets = {
+            'days': SelectMultiple(
+                attrs= {
+                    "class": "select2 select2-hidden-accessible",
+                    "style": "width: 100%;",
+                }
+            ),
+        }

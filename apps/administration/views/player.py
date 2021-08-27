@@ -14,6 +14,7 @@ from apps.team.models.player import Player
 from apps.administration.forms.player import PlayerForm, PlayerEditForm, PlayerCreateDelegatedForm
 from apps.administration.decorators import user_validator
 from apps.administration.services import check_players_capacity
+from apps.administration.services import check_tournament_active
 
 
 class PlayerCreateView(CreateView):
@@ -50,7 +51,9 @@ class PlayerCreateView(CreateView):
         context['title'] = "Nuevo Jugador"
         context['form_title'] = "Agregar jugador"
         context['header_page_title'] = "Nuevo Jugador"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class PlayerListView(ListView):
     model = Player
@@ -67,7 +70,9 @@ class PlayerListView(ListView):
         context['table_id'] = "jugadores"
         context['table_title'] = "Jugadores"
         context['header_page_title'] = "Lista de Jugadores"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class PlayerDeleteView(DeleteView):
     model = Player
@@ -83,7 +88,9 @@ class PlayerDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Eliminar Jugador"
         context['header_page_title'] = "Eliminar Jugador"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class PlayerUpdateView(UpdateView):
     model = Player
@@ -101,7 +108,9 @@ class PlayerUpdateView(UpdateView):
         context['title'] = "Editar Jugador"
         context['form_title'] = "Modificar Jugador"
         context['header_page_title'] = "Editar Jugador"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class PlayerDelegateCreateView(CreateView):
     model = Player
@@ -140,7 +149,9 @@ class PlayerDelegateCreateView(CreateView):
         context['title'] = "Nuevo Jugador"
         context['form_title'] = "Agregar jugador"
         context['header_page_title'] = "Nuevo Jugador"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class PlayerDelegateListView(ListView):
     model = Player
@@ -160,7 +171,9 @@ class PlayerDelegateListView(ListView):
         context['table_id'] = "jugadores"
         context['table_title'] = "Jugadores"
         context['header_page_title'] = "Lista de Jugadores"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class PlayerDelegateDeleteView(DeleteView):
     model = Player
@@ -175,7 +188,9 @@ class PlayerDelegateDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Eliminar Jugador"
         context['header_page_title'] = "Eliminar Jugador"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class PlayerDelegateUpdateView(UpdateView):
     model = Player
@@ -192,4 +207,7 @@ class PlayerDelegateUpdateView(UpdateView):
         context['title'] = "Editar Jugador"
         context['form_title'] = "Modificar Jugador"
         context['header_page_title'] = "Editar Jugador"
+        context['active_tournament'] = check_tournament_active()
         return context
+
+

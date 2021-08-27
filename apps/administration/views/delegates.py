@@ -15,6 +15,7 @@ from apps.administration.forms.administrator import AdministratorForm, UserFormN
 from apps.administration.forms.delegates import DelegateForm, DelegateUserForm
 from apps.administration.decorators import user_validator
 from apps.team.models.team import Team
+from apps.administration.services import check_tournament_active
 
 
 class DelegateListView(ListView):
@@ -33,7 +34,9 @@ class DelegateListView(ListView):
         context['table_title'] = "Delegados"
         context['object_list'] = Administrator.objects.filter(status=True).filter(role="Delegado")
         context['header_page_title'] = "Lista de delegados"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class DelegateCreateView(CreateView):
     template_name = "administration/specific/delegates/create.html"
@@ -96,7 +99,9 @@ class DelegateCreateView(CreateView):
         context['title'] = "Nuevo delegado"
         context['form_title'] = "Agregar nuevo delegado"
         context['header_page_title'] = "Nuevo Delegado"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class DelegateDeleteView(DeleteView):
     model = Administrator
@@ -120,7 +125,9 @@ class DelegateDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Eliminar Delegado"
         context['header_page_title'] = "Eliminar Delegado"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class DelegateUpdateView(UpdateView):
     model = Administrator
@@ -165,4 +172,7 @@ class DelegateUpdateView(UpdateView):
         context['title'] = "Editar Delegado"
         context['form_title'] = "Modificar Delegado"
         context['header_page_title'] = "Editar Delegado"
+        context['active_tournament'] = check_tournament_active()
         return context
+
+

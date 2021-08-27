@@ -5,7 +5,9 @@ from apps.team.models.team import Team
 from apps.team.models.tournament import Tournament
 from apps.team.choices import MATCH_HOURS
 
+
 class FieldMatch(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(verbose_name="Cancha", max_length=30)
 
     def __str__(self):
@@ -18,6 +20,7 @@ class FieldMatch(models.Model):
     class Meta:
         verbose_name = "Cancha"
         verbose_name_plural = "Canchas"
+
 
 class Match(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
@@ -42,4 +45,17 @@ class Match(models.Model):
     class Meta:
         verbose_name = "Partido"
         verbose_name_plural = "Partidos"
-    
+
+
+class DateOfMatch(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    matchs = models.ManyToManyField(Match)
+    number = models.PositiveSmallIntegerField(verbose_name="Número de Fecha")
+    day_of_match = models.DateField(verbose_name="Fecha de Juego")
+
+    played = models.BooleanField(verbose_name="Fecha Jugada", default=False, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Fecha"
+        verbose_name = "Fechas"
+

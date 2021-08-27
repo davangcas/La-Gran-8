@@ -4,10 +4,20 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from apps.team.models.tournament import LeagueTable, Scorers, Tournament, League, Cautions
-from apps.administration.forms.tournament import TournamentForm, LeagueForm
+from apps.team.models.tournament import LeagueTable, Scorers, Tournament, League, Cautions, ConfigTournament
+from apps.administration.forms.tournament import TournamentForm, LeagueForm, ConfigTournamentForm
 from apps.administration.decorators import user_validator
-from apps.administration.services import generate_league_table, get_tournament_name, generate_scorers_table, generate_cards_to_players
+from apps.administration.services import (
+    generate_league_table, 
+    get_tournament_name, 
+    generate_scorers_table, 
+    generate_cards_to_players,
+    check_or_create_days,
+    check_tournament_active,
+    generate_fields,
+)
+from apps.team.models.match import DateOfMatch
+
 
 class TorunamentCreateView(CreateView):
     model = Tournament
@@ -17,6 +27,7 @@ class TorunamentCreateView(CreateView):
 
     def get_success_url(self):
         torneo = Tournament.objects.last()
+        check_or_create_days()
         if torneo.format == "1":
             success_url = reverse_lazy('administration:tournament_new_liga', kwargs={'pk':torneo.id})
         return success_url
@@ -31,6 +42,7 @@ class TorunamentCreateView(CreateView):
         context['title'] = "Nuevo Torneo"
         context['form_title'] = "Agregar Torneo"
         context['header_page_title'] = "Nuevo Torneo"
+        context['active_tournament'] = check_tournament_active()
         return context
 
 
@@ -49,6 +61,7 @@ class TournamentListView(ListView):
         context['table_id'] = "Torneos"
         context['table_title'] = "Torneos"
         context['header_page_title'] = "Lista de Torneos"
+        context['active_tournament'] = check_tournament_active()
         return context
 
 
@@ -66,13 +79,16 @@ class TournamentDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Eliminar Torneo"
         context['header_page_title'] = "Eliminar Torneo"
+        context['active_tournament'] = check_tournament_active()
         return context
 
 
 class TournamentLigaCreateView(CreateView):
     model = League
+    second_model = ConfigTournament
     template_name = "administration/specific/torunament/create_liga.html"
     form_class = LeagueForm
+    second_form_class = ConfigTournamentForm
     success_url = reverse_lazy('administration:tournaments')
 
     @method_decorator(user_validator)
@@ -83,15 +99,21 @@ class TournamentLigaCreateView(CreateView):
     def post(self, request, *args: str, **kwargs):
         self.object = self.get_object
         form = self.form_class(request.POST)
-        if form.is_valid():
+        form2 = self.second_form_class(request.POST)
+        if form.is_valid() and form2.is_valid():
             try:
+                torneo = Tournament.objects.get(pk=self.kwargs['pk'])
                 league = form.save(commit=False)
+                config = form2.save(commit=False)
+                config.tournament = torneo
                 league.status = True
-                league.tournament = Tournament.objects.get(pk=self.kwargs['pk'])
+                league.tournament = torneo
                 league.save()
+                config.save()
                 generate_league_table(league.id)
                 generate_scorers_table(league.tournament.id)
                 generate_cards_to_players(league.tournament.id)
+                generate_fields(config.id)
                 return HttpResponseRedirect(self.get_success_url())
             except Exception as e:
                 context = self.get_context_data(**kwargs)
@@ -105,9 +127,14 @@ class TournamentLigaCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if 'form' not in context:
+            context['form'] = self.form_class(self.request.GET)
+        if 'form2' not in context:
+            context['form2'] = self.second_form_class(self.request.GET)
         context['title'] = "Nuevo Torneo"
         context['form_title'] = "Agregar Torneo"
         context['header_page_title'] = "Nuevo Torneo"
+        context['active_tournament'] = check_tournament_active()
         return context
 
 
@@ -124,6 +151,7 @@ class TournamentDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['header_page_title'] = get_tournament_name(self.kwargs['pk'])
         context['title'] = "Torneo" + " " + get_tournament_name(self.kwargs['pk'])
+        context['active_tournament'] = check_tournament_active()
         if self.get_object().format == "1":
             context['formato'] = "Liga"
             context['standings'] = LeagueTable.objects.filter(league=League.objects.filter(tournament=self.get_object()).last())
@@ -131,4 +159,6 @@ class TournamentDetailView(DetailView):
             context['tournament'] = Tournament.objects.get(pk=self.kwargs['pk'])
             context['league'] = League.objects.filter(tournament=context['tournament']).last()
             context['cards'] = Cautions.objects.all().filter(tournament=context['tournament']).order_by('position')
+            context['group_matchs'] = DateOfMatch.objects.filter(tournament=context['tournament'])
         return context
+

@@ -18,6 +18,7 @@ from django.shortcuts import (
 from apps.administration.models.noticias import Noticia
 from apps.administration.forms.noticias import NoticiaForm
 from apps.administration.decorators import user_validator
+from apps.administration.services import check_tournament_active
 
 
 class NoticiasListView(ListView):
@@ -35,7 +36,9 @@ class NoticiasListView(ListView):
         context['table_id'] = "noticias"
         context['table_title'] = "Noticias"
         context['header_page_title'] = "Lista de Noticias"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class NoticiaCreateView(CreateView):
     model = Noticia
@@ -53,7 +56,9 @@ class NoticiaCreateView(CreateView):
         context['title'] = "Crear Noticia"
         context['header_page_title'] = "Nueva Noticia"
         context['form_title'] = "Agregar novedad"
+        context['active_tournament'] = check_tournament_active()
         return context
+
 
 class NoticiaDeleteView(DeleteView):
     model = Noticia
@@ -69,4 +74,7 @@ class NoticiaDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Eliminar Noticia"
         context['header_page_title'] = "Eliminar Noticia"
+        context['active_tournament'] = check_tournament_active()
         return context
+
+
