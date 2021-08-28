@@ -13,6 +13,65 @@
         <div class="row">
           <!-- /.col -->
           <div class="col-md-12">
+              <div class="card card-orange" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+                <div class="card-header">
+                  <h3 class="card-title" style="color: blanchedalmond;">Fixture</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus" style="color: bisque;"></i>
+                    </button>
+                  </div>
+                  <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  
+                  <table id="fechas" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                          <th>N°</th>
+                          <th>Fecha de Juego</th>
+                          <th>Fecha Jugada</th>
+                          <th>Acciones</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                          {% for obj in group_matchs %}
+                              <tr>
+                                  <td>{{ obj.number }}</td>
+                                  <td>{{ obj.day_of_match }}</td>
+                                  {% if obj.played %}
+                                    <td>Si</td>
+                                  {% else %}
+                                    <td>No</td>
+                                  {% endif %}
+                                  <td>
+                                    {% if obj.played %}
+                                      <a href="{% url 'administration:match_day_detail' obj.id %}"><i class="fas fa-eye"></i></a>
+                                    {% else %}
+                                      <a href="{% url 'administration:fecha_jugada' obj.id %}"><i class="fas fa-check-circle"></i></a>
+                                      <a href="{% url 'administration:match_day_edit' obj.id %}"><i class="fas fa-cogs"></i></a>
+                                      <a href="{% url 'administration:match_day_detail' obj.id %}"><i class="fas fa-eye"></i></a>
+                                    {% endif %}
+                                  </td>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <a href="{% url 'administration:create_match_day' tournament_id %}" class="btn btn-info"><i class="fas fa-calendar-plus"></i> Cargar Fecha Manualmente</a>
+                  <a href="{% url 'administration:automatic_generate' tournament_id %}" class="btn btn-success"><i class="fas fa-magic"></i> Generar encuentros automaticamente</a>
+                </div>
+              </div>
+              <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-md-12">
             <div class="card card-primary" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
               <div class="card-header">
                 <h3 class="card-title">Posiciones</h3>
@@ -183,55 +242,6 @@
               <!-- /.card -->
             </div>
             <!-- /.col -->
-        </div>
-        <div class="row">
-          <!-- /.col -->
-          <div class="col-md-12">
-              <div class="card card-orange" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
-                <div class="card-header">
-                  <h3 class="card-title" style="color: blanchedalmond;">Fixture</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus" style="color: bisque;"></i>
-                    </button>
-                  </div>
-                  <!-- /.card-tools -->
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <table id="fechas" class="table table-bordered table-striped">
-                      <thead>
-                      <tr>
-                          <th>N°</th>
-                          <th>Fecha de Juego</th>
-                          <th>Fecha Jugada</th>
-                          <th>Acciones</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                          {% for obj in group_matchs %}
-                              <tr>
-                                  <td>{{ obj.number }}</td>
-                                  <td>{{ obj.day_of_match }}</td>
-                                  {% if obj.played %}
-                                    <td>Si</td>
-                                  {% else %}
-                                    <td>No</td>
-                                  {% endif %}
-                                  <td>
-                                    <a href="">Configurar</a>
-                                    <a href="">Ver detalles</a>
-                                  </td>
-                              </tr>
-                          {% endfor %}
-                      </tbody>
-                  </table>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-          </div>
-          <!-- /.col -->
         </div>
     </section>
 {% endblock %}

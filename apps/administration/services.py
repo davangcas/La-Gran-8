@@ -136,3 +136,5 @@ def generate_fields(id_config):
         )
         field.save()
     print(FieldMatch.objects.all())
+
+

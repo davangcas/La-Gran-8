@@ -51,7 +51,13 @@ from apps.administration.views.tournament import (
     TournamentLigaCreateView,
     TournamentDetailView,
 )
-from apps.administration.views.special_views import activate_team
+from apps.administration.views.special_views import (
+    activate_team,
+    put_match_day_as_played,
+    generate_automatic_matchs,
+)
+from apps.administration.views.day_of_match import DateOfMatchCreateView, DateOfMatchUpdateView, MatchDayDetailView
+from apps.administration.views.match import MatchCreateView, MatchUpdateView, LoadMatchResultView
 
 app_name = "administration"
 
@@ -87,8 +93,16 @@ urlpatterns = [
     path('torneo/eliminar/<int:pk>/', TournamentDeleteView.as_view(), name="tournament_delete"),
     path('torneo/nuevo/liga/<int:pk>/', TournamentLigaCreateView.as_view(), name="tournament_new_liga"),
     path('torneo/detalle/<int:pk>/', TournamentDetailView.as_view(), name="tournament_detail"),
+    path('torneo/crear_fecha/<int:pk>/', DateOfMatchCreateView.as_view(), name="create_match_day"),
+    path('torneo/editar_fecha/<int:pk>/', DateOfMatchUpdateView.as_view(), name="match_day_edit"),
+    path('torneo/fecha/detalle/<int:pk>/', MatchDayDetailView.as_view(), name="match_day_detail"),
+    path('torneo/crear/partido/<int:pk>/', MatchCreateView.as_view(), name="create_match"),
+    path('torneto/moficar/partido/<int:pk>/<int:date_id>/', MatchUpdateView.as_view(), name="update_match"),
+    path('torneto/cargar/partido/<int:pk>/<int:date_id>/', LoadMatchResultView.as_view(), name="load_result"),
     # Views whithout a template
     path('equipos/activar/<int:pk>/', activate_team, name="activar_equipo"),
+    path('fecha/activar/<int:pk>/', put_match_day_as_played, name="fecha_jugada"),
+    path('fechas/generar/automatica/<int:pk>/', generate_automatic_matchs, name="automatic_generate"),
     # delegates urls
     path('inicio/mi_equipo/', IndexDelegateView.as_view(), name="indexd"),
     path('mi_equipo/judadores/', PlayerDelegateListView.as_view(), name="dplayers"),

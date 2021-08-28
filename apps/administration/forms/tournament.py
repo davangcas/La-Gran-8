@@ -2,7 +2,7 @@ from django.db.models import fields
 from django.forms import ModelForm, SelectMultiple
 from django import forms
 
-from apps.team.models.tournament import Tournament, League, ConfigTournament
+from apps.team.models.tournament import Tournament, League, ConfigTournament, DaysOfWeek
 from apps.team.models.team import Team
 
 class TournamentForm(ModelForm):
@@ -39,6 +39,10 @@ class LeagueForm(ModelForm):
 
 class ConfigTournamentForm(ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['days'].queryset = DaysOfWeek.objects.all()
+        
     class Meta:
         model = ConfigTournament
         fields = [

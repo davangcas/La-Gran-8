@@ -100,16 +100,17 @@ class TournamentLigaCreateView(CreateView):
         self.object = self.get_object
         form = self.form_class(request.POST)
         form2 = self.second_form_class(request.POST)
+        print(form2)
         if form.is_valid() and form2.is_valid():
             try:
                 torneo = Tournament.objects.get(pk=self.kwargs['pk'])
                 league = form.save(commit=False)
                 config = form2.save(commit=False)
                 config.tournament = torneo
+                config.save()
                 league.status = True
                 league.tournament = torneo
                 league.save()
-                config.save()
                 generate_league_table(league.id)
                 generate_scorers_table(league.tournament.id)
                 generate_cards_to_players(league.tournament.id)
@@ -152,6 +153,7 @@ class TournamentDetailView(DetailView):
         context['header_page_title'] = get_tournament_name(self.kwargs['pk'])
         context['title'] = "Torneo" + " " + get_tournament_name(self.kwargs['pk'])
         context['active_tournament'] = check_tournament_active()
+        context['tournament_id'] = self.kwargs['pk']
         if self.get_object().format == "1":
             context['formato'] = "Liga"
             context['standings'] = LeagueTable.objects.filter(league=League.objects.filter(tournament=self.get_object()).last())
