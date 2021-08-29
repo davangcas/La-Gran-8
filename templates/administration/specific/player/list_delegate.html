@@ -6,12 +6,14 @@
 {% endblock %}
 
 {% block table_headers %}
+    <th>Dorsal</th>
     <th>Nombre y Apellido</th>
     <th>DNI</th>
     <th>Acciones</th>
 {% endblock %}
 
 {% block table_content %}
+    <td>{{ obj.dorsal }}</td>
     <td>{{obj.name}}</td>
     <td>{{obj.dni}}</td>
     <td>

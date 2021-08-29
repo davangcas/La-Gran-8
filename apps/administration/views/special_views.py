@@ -31,7 +31,7 @@ def generate_automatic_matchs(request, pk):
     print(dias)
     if torneo.format == "1":
         settings = ConfigTournament.objects.filter(tournament=torneo).last()
-        print(settings.days)
+        print(settings.days.all().first())
     elif torneo.format == "2":
         pass
     elif torneo.format == "3":

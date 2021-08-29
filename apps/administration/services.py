@@ -16,6 +16,7 @@ from apps.team.models.tournament import (
 from apps.team.models.match import (
     FieldMatch,
 )
+from apps.administration.models.config import GeneralConfig
 
 def check_players_capacity():
 
@@ -23,7 +24,9 @@ def check_players_capacity():
     team = Team.objects.get(pk=last_player.team.id)
     team_players = Player.objects.filter(team=team)
 
-    if team_players.count() >= 12:
+    config = GeneralConfig.objects.first()
+
+    if team_players.count() >= config.players_requisit:
         team.active = True
         team.save()
 
@@ -136,5 +139,37 @@ def generate_fields(id_config):
         )
         field.save()
     print(FieldMatch.objects.all())
+
+
+def create_dorsal(team):
+    players = Player.objects.filter(team=team)
+    if players.count() > 1:
+        id_list = []
+        for player in players:
+            id_list.append(player.id)
+        ultimo_id = id_list[-2]
+        ultimo_dorsal_cargado = Player.objects.get(pk=ultimo_id).dorsal
+        ultimo_jugador = Player.objects.last()
+        ultimo_jugador.dorsal = ultimo_dorsal_cargado + 1
+        ultimo_jugador.save()
+
+    else:
+        nuevo_dorsal = players.last()
+        nuevo_dorsal.dorsal = 1
+        nuevo_dorsal.save()
+
+
+def change_player_dorsal(player):
+    dorsal = player.dorsal
+    players_same = Player.objects.filter(dorsal=dorsal)
+    print(players_same.count())
+    if players_same.count() == 2:
+        other_player = players_same.exclude(pk=player.id).last()
+        last_dorsal = Player.objects.filter(team=player.team).order_by('dorsal').last().dorsal
+        print(last_dorsal)
+        other_player.dorsal = last_dorsal + 1
+        other_player.save()
+
+
 
 

@@ -13,8 +13,7 @@ from django.utils.decorators import method_decorator
 from apps.team.models.player import Player
 from apps.administration.forms.player import PlayerForm, PlayerEditForm, PlayerCreateDelegatedForm
 from apps.administration.decorators import user_validator
-from apps.administration.services import check_players_capacity
-from apps.administration.services import check_tournament_active
+from apps.administration.services import check_players_capacity, check_tournament_active, create_dorsal, change_player_dorsal
 
 
 class PlayerCreateView(CreateView):
@@ -33,8 +32,9 @@ class PlayerCreateView(CreateView):
         form = self.form_class(request.POST)
         if form.is_valid():
             try:
-                form.save()
+                player = form.save()
                 check_players_capacity()
+                create_dorsal(player.team)
                 return HttpResponseRedirect(self.get_success_url())
             except Exception as e:
                 context = self.get_context_data(**kwargs)
@@ -103,6 +103,11 @@ class PlayerUpdateView(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+    def get_success_url(self):
+        change_player_dorsal(self.object)
+        success_url = reverse_lazy('administration:players')
+        return success_url
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Editar Jugador"
@@ -131,6 +136,7 @@ class PlayerDelegateCreateView(CreateView):
                 player = form.save(commit=False)
                 player.team = team
                 player.save()
+                create_dorsal(player.team)
                 check_players_capacity()
                 return HttpResponseRedirect(self.get_success_url())
             except Exception as e:
@@ -201,6 +207,11 @@ class PlayerDelegateUpdateView(UpdateView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        change_player_dorsal(self.object)
+        success_url = reverse_lazy('administration:dplayers')
+        return success_url
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

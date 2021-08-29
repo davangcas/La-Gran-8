@@ -84,11 +84,11 @@ class TournamentDeleteView(DeleteView):
 
 
 class TournamentLigaCreateView(CreateView):
-    model = League
-    second_model = ConfigTournament
+    model = ConfigTournament
+    second_model = League
     template_name = "administration/specific/torunament/create_liga.html"
-    form_class = LeagueForm
-    second_form_class = ConfigTournamentForm
+    form_class = ConfigTournamentForm
+    second_form_class = LeagueForm
     success_url = reverse_lazy('administration:tournaments')
 
     @method_decorator(user_validator)
@@ -100,12 +100,11 @@ class TournamentLigaCreateView(CreateView):
         self.object = self.get_object
         form = self.form_class(request.POST)
         form2 = self.second_form_class(request.POST)
-        print(form2)
         if form.is_valid() and form2.is_valid():
             try:
                 torneo = Tournament.objects.get(pk=self.kwargs['pk'])
-                league = form.save(commit=False)
-                config = form2.save(commit=False)
+                league = form2.save(commit=False)
+                config = form.save(commit=False)
                 config.tournament = torneo
                 config.save()
                 league.status = True

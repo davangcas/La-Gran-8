@@ -31,6 +31,7 @@ class PlayerEditForm(ModelForm):
         model = Player
         fields = [
             'name',
+            'dorsal',
             'dni',
             'date_born',
         ]

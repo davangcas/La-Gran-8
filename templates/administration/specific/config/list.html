@@ -1,0 +1,16 @@
+{% extends 'administration/base/list.html' %}
+{% load static %}
+
+{% block table_headers %}
+    <th>Configuración</th>
+    <th>Valor</th>
+    <th>Acciones</th>
+{% endblock %}
+
+{% block table_content %}
+    <td>{{ obj.name }}</td>
+    <td>{{obj.players_requisit}}</td>
+    <td>
+        <a href="{% url 'administration:general_config_edit' obj.id %}"><i class="fas fa-wrench"></i></a>
+    </td>
+{% endblock %}

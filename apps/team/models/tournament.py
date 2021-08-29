@@ -114,7 +114,7 @@ class DaysOfWeek(models.Model):
 
 class ConfigTournament(models.Model):
     days = models.ManyToManyField(DaysOfWeek, verbose_name="Dias en los que se juegan los partidos")
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, blank=True, null=True)
     hour_init = models.CharField(verbose_name="Horario de comienzo de los partidos", max_length=2, choices=MATCH_HOURS)
     hour_end = models.CharField(verbose_name="Horario de finalización de los partidos", max_length=2, choices=MATCH_HOURS)
     fields = models.PositiveSmallIntegerField(verbose_name="Cantidad de canchas disponibles para jugar", default=1)

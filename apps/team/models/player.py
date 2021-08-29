@@ -13,6 +13,7 @@ class Player(models.Model):
     yellow_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Amarillas", blank=True, default=0, null=True)
     red_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Rojas", blank=True, default=0, null=True)
     played = models.PositiveSmallIntegerField(verbose_name="Partidos Jugados", blank=True, default=0, null=True)
+    dorsal = models.PositiveSmallIntegerField(verbose_name="Dorsal", blank=True, null=True, default=1)
 
     status = models.BooleanField(verbose_name="Estado", blank=True, default=True, null=True)
 

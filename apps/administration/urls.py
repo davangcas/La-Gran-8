@@ -58,6 +58,7 @@ from apps.administration.views.special_views import (
 )
 from apps.administration.views.day_of_match import DateOfMatchCreateView, DateOfMatchUpdateView, MatchDayDetailView
 from apps.administration.views.match import MatchCreateView, MatchUpdateView, LoadMatchResultView
+from apps.administration.views.config import ConfigListView, ConfigupdateView
 
 app_name = "administration"
 
@@ -67,6 +68,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='administration:login'), name="logout"),
     path('cambiar_contraseña/', UpdatePasswordView.as_view(), name="change_password"),
     path('inicio/', IndexView.as_view(), name="index"),
+    path('config/', ConfigListView.as_view(), name="general_config"),
+    path('config/actualizar/<int:pk>/', ConfigupdateView.as_view(), name="general_config_edit"),
     path('admins/', AdministratorListView.as_view(), name="administrators"),
     path('admins/nuevo/', AdministratorCreateView.as_view(), name="administrators_new"),
     path('admins/editar/<int:pk>/', AdministratorUpdateView.as_view(), name="administrators_edit"),

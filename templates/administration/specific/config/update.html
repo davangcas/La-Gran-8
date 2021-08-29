@@ -47,31 +47,17 @@
                 <form action="." method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                 <div class="card-body">
-                    <div class="form-group">
-                      <label>{{form2.vueltas.label}}</label>
-                      {{form2.vueltas|add_class:'form-control'}}
-                    </div>
-                    <div class="form-group">
-                      <label>{{form.days.label}}</label>
-                      {{form.days}}
-                    </div>
-                    <div class="form-group">
-                      <label>{{form.hour_init.label}}</label>
-                      {{form.hour_init|add_class:'form-control'}}
-                    </div>
-                    <div class="form-group">
-                      <label>{{form.hour_end.label}}</label>
-                      {{form.hour_end|add_class:'form-control'}}
-                    </div>
-                    <div class="form-group">
-                      <label>{{form.fields.label}}</label>
-                      {{form.fields|add_class:'form-control'}}
-                    </div>
+                    {% for field in form %}
+                        <div class="form-group">
+                            <label for="">{{field.label}}</label>
+                            {{field|add_class:'form-control'}}
+                        </div>
+                    {% endfor %}
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-chevron-circle-right"></i> Siguiente</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Cambios</button>
                 </div>
                 </form>
             </div>
@@ -82,18 +68,4 @@
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
-{% endblock %}
-
-{% block js %}
-  <script>
-    $(function(){
-      //Initialize Select2 Elements
-      $('.select2').select2()
-
-      //Initialize Select2 Elements
-      $('.select2bs4').select2({
-        theme: 'bootstrap4'
-      })
-    });
-  </script>
 {% endblock %}

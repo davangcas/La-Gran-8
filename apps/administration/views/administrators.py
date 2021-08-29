@@ -23,7 +23,7 @@ from apps.administration.forms.administrator import (
     UserFormNew,
     UserUpdateForm,
 )
-from apps.administration.decorators import user_validator 
+from apps.administration.decorators import user_validator, crete_or_not_config
 from apps.administration.services import check_tournament_active
 
 
@@ -31,6 +31,7 @@ class AdministratorListView(ListView):
     model = Administrator
     template_name = "administration/specific/administrator/list.html"
 
+    @method_decorator(crete_or_not_config)
     @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -59,6 +60,7 @@ class AdministratorCreateView(CreateView):
     thirth_form_class = UserFormNew
     success_url = reverse_lazy('administration:administrators')
 
+    @method_decorator(crete_or_not_config)
     @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -117,6 +119,7 @@ class AdministratorUpdateView(UpdateView):
     success_url = reverse_lazy('administration:administrators')
     form_class = UserUpdateForm
 
+    @method_decorator(crete_or_not_config)
     @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -138,6 +141,7 @@ class AdministratorDeleteView(DeleteView):
     template_name = "administration/specific/administrator/delete.html"
     success_url = reverse_lazy('administration:administrators')
 
+    @method_decorator(crete_or_not_config)
     @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

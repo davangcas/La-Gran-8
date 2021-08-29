@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from apps.team.models.tournament import Tournament
-from apps.administration.decorators import user_validator
+from apps.administration.decorators import user_validator, crete_or_not_config
 from apps.administration.services import (
     check_tournament_active,
 )
@@ -19,6 +19,7 @@ class DateOfMatchCreateView(CreateView):
     form_class = DayOfMatchForm
     success_url = ""
 
+    @method_decorator(crete_or_not_config)
     @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -61,6 +62,7 @@ class DateOfMatchUpdateView(UpdateView):
     form_class = DayOfMatchForm
     success_url = ""
 
+    @method_decorator(crete_or_not_config)
     @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -83,6 +85,7 @@ class MatchDayDetailView(DetailView):
     model = DateOfMatch
     template_name = "administration/specific/fixture/detail.html"
 
+    @method_decorator(crete_or_not_config)
     @method_decorator(user_validator)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
