@@ -1,9 +1,10 @@
+from apps.administration.models.users import Administrator
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
 from apps.team.models.team import Team
 from apps.team.models.match import DateOfMatch
-from apps.team.models.tournament import Tournament, ConfigTournament, DaysOfWeek
+from apps.team.models.tournament import League, Tournament, ConfigTournament, DaysOfWeek
 
 def activate_team(request, pk):
     success_url = reverse_lazy('administration:teams')
@@ -27,11 +28,10 @@ def put_match_day_as_played(request, pk):
 
 def generate_automatic_matchs(request, pk):
     torneo = Tournament.objects.filter(status=True).last()
-    dias = DaysOfWeek.objects.all()
-    print(dias)
     if torneo.format == "1":
-        settings = ConfigTournament.objects.filter(tournament=torneo).last()
-        print(settings.days.all().first())
+        settings = ConfigTournament.objects.filter(tournament=torneo).first()
+        league = League.objects.get(tournament=torneo)
+        print(league)
     elif torneo.format == "2":
         pass
     elif torneo.format == "3":
@@ -41,3 +41,14 @@ def generate_automatic_matchs(request, pk):
     success_url = reverse_lazy('administration:tournament_detail', kwargs={'pk':pk})
     return HttpResponseRedirect(success_url)
 
+
+def change_delegate_status(request, pk):
+    success_url = reverse_lazy('administration:delegates')
+    delegate = Administrator.objects.get(pk=pk)
+    if delegate.active:
+        delegate.active = False
+        delegate.save()
+    else:
+        delegate.active = True
+        delegate.save()
+    return HttpResponseRedirect(success_url)

@@ -32,7 +32,7 @@ class DelegateListView(ListView):
         context['title'] = "Delegados"
         context['table_id'] = "delegados"
         context['table_title'] = "Delegados"
-        context['object_list'] = Administrator.objects.filter(status=True).filter(role="Delegado")
+        context['object_list'] = Administrator.objects.filter(role="Delegado")
         context['header_page_title'] = "Lista de delegados"
         context['active_tournament'] = check_tournament_active()
         return context

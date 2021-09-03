@@ -104,7 +104,7 @@ class TournamentLigaCreateView(CreateView):
             try:
                 torneo = Tournament.objects.get(pk=self.kwargs['pk'])
                 league = form2.save(commit=False)
-                config = form.save(commit=False)
+                config = form.save()
                 config.tournament = torneo
                 config.save()
                 league.status = True

@@ -24,6 +24,11 @@
         <td>No</td>
     {% endif %}
     <td>
+        {% if obj.active %}
+            <a href="{% url 'administration:change_delegate_status' obj.id %}"><i class="fas fa-times-circle"></i></a>
+        {% else %}
+            <a href="{% url 'administration:change_delegate_status' obj.id %}"><i class="fas fa-check-circle"></i></a>
+        {% endif %}
         <a href="{% url 'administration:delegates_edit' obj.id %}"><i class="fas fa-user-edit"></i></a>
         <a href="{% url 'administration:delegates_delete' obj.id %}"><i class="fas fa-user-times"></i></a>
     </td>

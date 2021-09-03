@@ -41,12 +41,14 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
+            {% if request.user.administrator.active %}
             <li class="nav-item">
               <a href="{% url 'administration:dplayer_new' %}" class="nav-link">
                 <i class="fas fa-plus-circle nav-icon"></i>
                 <p>Agregar jugador</p>
               </a>
             </li>
+            {% endif %}
             <li class="nav-item">
               <a href="{% url 'administration:dplayers' %}" class="nav-link">
                 <i class="far fa-eye nav-icon"></i>

@@ -34,6 +34,9 @@ class League(models.Model):
     vueltas = models.PositiveSmallIntegerField(verbose_name="Vueltas", default=2)
     status = models.BooleanField(verbose_name="Estado")
 
+    def __str__(self):
+        return self.tournament.name + " - Liga"
+
     class Meta:
         verbose_name = "Liga"
         verbose_name_plural = "Ligas"

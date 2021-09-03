@@ -55,6 +55,7 @@ from apps.administration.views.special_views import (
     activate_team,
     put_match_day_as_played,
     generate_automatic_matchs,
+    change_delegate_status,
 )
 from apps.administration.views.day_of_match import DateOfMatchCreateView, DateOfMatchUpdateView, MatchDayDetailView
 from apps.administration.views.match import MatchCreateView, MatchUpdateView, LoadMatchResultView
@@ -78,6 +79,7 @@ urlpatterns = [
     path('delegados/nuevo/', DelegateCreateView.as_view(), name="delegates_new"),
     path('delegados/eliminar/<int:pk>/', DelegateDeleteView.as_view(), name="delegates_delete"),
     path('delegados/editar/<int:pk>/', DelegateUpdateView.as_view(), name="delegates_edit"),
+    path('delegados/activar/<int:pk>/', change_delegate_status, name="change_delegate_status"),
     path('equipos/', TeamListView.as_view(), name="teams"),
     path('equipos/nuevo/', TeamCreateView.as_view(), name="teams_new"),
     path('equipos/siguiente/nuevo/<int:pk>/', TeamCreateNextView.as_view(), name="teams_next_new"),

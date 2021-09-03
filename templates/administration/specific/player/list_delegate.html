@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block add_button_list %}
+    {% if request.user.administrator.active %}
     <a href="{% url 'administration:dplayer_new' %}" class="btn btn-primary"> <i class="fas fa-plus-square"></i> Agregar Nuevo Jugador</a>
+    {% endif %}
 {% endblock %}
 
 {% block table_headers %}
