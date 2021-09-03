@@ -9,7 +9,7 @@ from apps.administration.models.users import Administrator
 from apps.team.models.team import Team
 from apps.team.models.player import Player
 from apps.team.models.tournament import Tournament
-from apps.administration.decorators import user_validator
+from apps.administration.decorators import user_validator, change_delegate_to_register_players
 from apps.administration.services import check_tournament_active
 
 
@@ -39,6 +39,7 @@ class IndexDelegateView(TemplateView):
     template_name = "administration/specific/index_delegate.html"
 
     @method_decorator(login_required)
+    @method_decorator(change_delegate_to_register_players)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 

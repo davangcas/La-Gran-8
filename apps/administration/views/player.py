@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 
 from apps.team.models.player import Player
 from apps.administration.forms.player import PlayerForm, PlayerEditForm, PlayerCreateDelegatedForm
-from apps.administration.decorators import user_validator
+from apps.administration.decorators import user_validator, change_delegate_to_register_players
 from apps.administration.services import check_players_capacity, check_tournament_active, create_dorsal, change_player_dorsal
 
 
@@ -123,6 +123,7 @@ class PlayerDelegateCreateView(CreateView):
     form_class = PlayerCreateDelegatedForm
     success_url = reverse_lazy('administration:dplayers')
 
+    @method_decorator(change_delegate_to_register_players)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -163,6 +164,7 @@ class PlayerDelegateListView(ListView):
     model = Player
     template_name = "administration/specific/player/list_delegate.html"
 
+    @method_decorator(change_delegate_to_register_players)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -186,6 +188,7 @@ class PlayerDelegateDeleteView(DeleteView):
     template_name = "administration/specific/player/delete_delegate.html"
     success_url = reverse_lazy('administration:dplayers')
 
+    @method_decorator(change_delegate_to_register_players)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -204,6 +207,7 @@ class PlayerDelegateUpdateView(UpdateView):
     template_name = "administration/specific/player/update_delegate.html"
     success_url = reverse_lazy('administration:dplayers')
 
+    @method_decorator(change_delegate_to_register_players)
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)

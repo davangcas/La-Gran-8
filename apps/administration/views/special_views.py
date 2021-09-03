@@ -47,8 +47,10 @@ def change_delegate_status(request, pk):
     delegate = Administrator.objects.get(pk=pk)
     if delegate.active:
         delegate.active = False
+        delegate.tournament_sensitive = True
         delegate.save()
     else:
         delegate.active = True
+        delegate.tournament_sensitive = False
         delegate.save()
     return HttpResponseRedirect(success_url)

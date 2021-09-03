@@ -9,6 +9,7 @@ class Administrator(models.Model):
     dni = models.PositiveIntegerField(verbose_name="DNI", blank=True, null=True, unique=True)
 
     active = models.BooleanField(verbose_name="Habilitación", default=True, blank=True, null=True)
+    tournament_sensitive = models.BooleanField(verbose_name="Sensibilidad a fecha de torneo", default=True, blank=True, null=True)
 
     def toJSON(self):
         item = model_to_dict(self)

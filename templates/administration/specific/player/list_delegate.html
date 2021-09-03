@@ -19,7 +19,11 @@
     <td>{{obj.name}}</td>
     <td>{{obj.dni}}</td>
     <td>
-        <a href="{% url 'administration:dplayer_edit' obj.id %}"><i class="fas fa-marker"></i></a>
-        <a href="{% url 'administration:dplayer_delete' obj.id %}"><i class="fas fa-trash-alt"></i></a>
+        {% if request.user.administrator.active %}
+            <a href="{% url 'administration:dplayer_edit' obj.id %}"><i class="fas fa-marker"></i></a>
+            <a href="{% url 'administration:dplayer_delete' obj.id %}"><i class="fas fa-trash-alt"></i></a>
+        {% else %}
+        -------------
+        {% endif %}
     </td>
 {% endblock %}

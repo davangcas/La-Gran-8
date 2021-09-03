@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.views.generic.base import TemplateResponseMixin
 
@@ -101,7 +103,7 @@ def generate_cards_to_players(id_tournament):
 def check_or_create_days():
     days = DaysOfWeek.objects.all()
     if days:
-        print("Ya se han creado los días")
+        pass
     else:
         lunes = DaysOfWeek.objects.create(name="Lunes")
         lunes.save()
@@ -117,7 +119,6 @@ def check_or_create_days():
         sabado.save()
         domingo = DaysOfWeek.objects.create(name="Domingo")
         domingo.save()
-        print("Dias creados correctamente")
 
 
 def check_tournament_active():
@@ -138,7 +139,6 @@ def generate_fields(id_config):
             name="Cancha " + str(number+1),
         )
         field.save()
-    print(FieldMatch.objects.all())
 
 
 def create_dorsal(team):
@@ -162,14 +162,10 @@ def create_dorsal(team):
 def change_player_dorsal(player):
     dorsal = player.dorsal
     players_same = Player.objects.filter(dorsal=dorsal)
-    print(players_same.count())
     if players_same.count() == 2:
         other_player = players_same.exclude(pk=player.id).last()
         last_dorsal = Player.objects.filter(team=player.team).order_by('dorsal').last().dorsal
-        print(last_dorsal)
         other_player.dorsal = last_dorsal + 1
         other_player.save()
-
-
 
 
