@@ -49,6 +49,7 @@ from apps.administration.views.tournament import (
     TournamentListView,
     TournamentDeleteView,
     TournamentLigaCreateView,
+    TournamentGroupAndPlayOffView,
     TournamentDetailView,
 )
 from apps.administration.views.special_views import (
@@ -97,6 +98,7 @@ urlpatterns = [
     path('torneo/nuevo/', TorunamentCreateView.as_view(), name="tournament_new"),
     path('torneo/eliminar/<int:pk>/', TournamentDeleteView.as_view(), name="tournament_delete"),
     path('torneo/nuevo/liga/<int:pk>/', TournamentLigaCreateView.as_view(), name="tournament_new_liga"),
+    path('torneo/nuevo/grupos/<int:pk>/', TournamentGroupAndPlayOffView.as_view(), name="tournament_new_groups"),
     path('torneo/detalle/<int:pk>/', TournamentDetailView.as_view(), name="tournament_detail"),
     path('torneo/crear_fecha/<int:pk>/', DateOfMatchCreateView.as_view(), name="create_match_day"),
     path('torneo/editar_fecha/<int:pk>/', DateOfMatchUpdateView.as_view(), name="match_day_edit"),

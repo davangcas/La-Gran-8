@@ -48,8 +48,12 @@
                     {% csrf_token %}
                 <div class="card-body">
                     <div class="form-group">
-                      <label>{{form2.vueltas.label}}</label>
-                      {{form2.vueltas|add_class:'form-control'}}
+                        <label>{{form2.teams_second_round.label}}</label>
+                        {{form2.teams_second_round|add_class:'form-control'}}
+                    </div>
+                    <div class="form-group">
+                        <label>{{form2.groups.label}}</label>
+                        {{form2.groups|add_class:'form-control'}}
                     </div>
                     <div class="form-group">
                       <label>{{form.days.label}}</label>
@@ -66,6 +70,12 @@
                     <div class="form-group">
                       <label>{{form.fields.label}}</label>
                       {{form.fields|add_class:'form-control'}}
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            {{form2.away_goal|add_class:'form-check-input'}}
+                            <label>{{form2.away_goal.label}}</label>
+                        </div>
                     </div>
                 </div>
                 <!-- /.card-body -->

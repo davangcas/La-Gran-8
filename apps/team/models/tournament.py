@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields import BooleanField
 from django.db.models.fields.related import ForeignKey
 from django.forms import model_to_dict
 
@@ -125,3 +126,36 @@ class ConfigTournament(models.Model):
     class Meta:
         verbose_name = "Configuración del Torneo"
         verbose_name_plural = "Configuraciones de Torneos"
+
+
+class GroupAndPlayOff(models.Model):
+
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, blank=True, null=True)
+    away_goal = models.BooleanField(verbose_name="Gol de Visitante", default=True)
+    teams_second_round = models.PositiveSmallIntegerField(verbose_name="Cantidad de equipos que clasifican a segunda ronda", default=2)
+    groups = models.PositiveSmallIntegerField(verbose_name="Cantidad de grupos", default=8)
+
+    class Meta:
+        verbose_name = "Grupo y Eliminatoria - Configuración"
+        verbose_name_plural = "Grupo y Eliminatoria - Configuraciones"
+
+
+class Group(models.Model):
+    group_play_off = models.ForeignKey(GroupAndPlayOff, on_delete=models.CASCADE, blank=True, null=True)
+    teams = models.ManyToManyField(Team, blank=True, null=True)
+    group_name = models.CharField(verbose_name="Nombre del Grupo", max_length=25, blank=True, null=True)
+
+
+class GroupTable(models.Model):
+    group_play_off = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+    position = models.PositiveSmallIntegerField(verbose_name="Posición", blank=True, null=True, default=1)
+    played = models.PositiveSmallIntegerField(verbose_name="Partidos jugados", blank=True, null=True, default=0)
+    wins = models.PositiveSmallIntegerField(verbose_name="Partidos ganados", blank=True, null=True, default=0)
+    loss = models.PositiveSmallIntegerField(verbose_name="Partidos perdidos", blank=True, null=True, default=0)
+    draw = models.PositiveSmallIntegerField(verbose_name="Partidos empatados", blank=True, null=True, default=0)
+    goals = models.PositiveSmallIntegerField(verbose_name="Goles", blank=True, null=True, default=0)
+    goals_received = models.PositiveSmallIntegerField(verbose_name="Goles Recibidos", blank=True, null=True, default=0)
+    dif_goals = models.IntegerField(verbose_name="Diferencia de goles", blank=True, null=True, default=0)
+    points = models.PositiveSmallIntegerField(verbose_name="Puntos", blank=True, null=True, default=0)

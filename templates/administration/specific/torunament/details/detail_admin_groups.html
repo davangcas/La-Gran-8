@@ -1,0 +1,289 @@
+{% extends 'administration/base/home.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'libs/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="content">
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-md-12">
+              <div class="card card-orange" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+                <div class="card-header">
+                  <h3 class="card-title" style="color: blanchedalmond;">Fixture</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus" style="color: bisque;"></i>
+                    </button>
+                  </div>
+                  <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  
+                  <table id="fechas" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                          <th>N°</th>
+                          <th>Fecha de Juego</th>
+                          <th>Fecha Jugada</th>
+                          <th>Acciones</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                          {% for obj in group_matchs %}
+                              <tr>
+                                  <td>{{ obj.number }}</td>
+                                  <td>{{ obj.day_of_match }}</td>
+                                  {% if obj.played %}
+                                    <td>Si</td>
+                                  {% else %}
+                                    <td>No</td>
+                                  {% endif %}
+                                  <td>
+                                    {% if obj.played %}
+                                      <a href="{% url 'administration:match_day_detail' obj.id %}"><i class="fas fa-eye"></i></a>
+                                    {% else %}
+                                      <a href="{% url 'administration:fecha_jugada' obj.id %}"><i class="fas fa-check-circle"></i></a>
+                                      <a href="{% url 'administration:match_day_edit' obj.id %}"><i class="fas fa-cogs"></i></a>
+                                      <a href="{% url 'administration:match_day_detail' obj.id %}"><i class="fas fa-eye"></i></a>
+                                    {% endif %}
+                                  </td>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <a href="{% url 'administration:create_match_day' tournament_id %}" class="btn btn-info"><i class="fas fa-calendar-plus"></i> Cargar Fecha Manualmente</a>
+                  <a href="{% url 'administration:automatic_generate' tournament_id %}" class="btn btn-success"><i class="fas fa-magic"></i> Generar encuentros automaticamente</a>
+                </div>
+              </div>
+              <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-md-12">
+            <div class="card card-primary" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+              <div class="card-header">
+                <h3 class="card-title">Posiciones</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="standings" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Posición</th>
+                        <th>Equipo</th>
+                        <th>Pts</th>
+                        <th>PJ</th>
+                        <th>PG</th>
+                        <th>PE</th>
+                        <th>PP</th>
+                        <th>GF</th>
+                        <th>GC</th>
+                        <th>DG</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in standings %}
+                            <tr>
+                                <td>{{ obj.position }}</td>
+                                <td>{{ obj.team.name }}</td>
+                                <td>{{ obj.points }}</td>
+                                <td>{{ obj.played }}</td>
+                                <td>{{ obj.wins }}</td>
+                                <td>{{ obj.draw }}</td>
+                                <td>{{ obj.loss }}</td>
+                                <td>{{ obj.goals }}</td>
+                                <td>{{ obj.goals_received }}</td>
+                                <td>{{ obj.dif_goals }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+              <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="card card-info" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+                  <div class="card-header">
+                    <h3 class="card-title">Goleadores</h3>
+    
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                    </div>
+                    <!-- /.card-tools -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <table id="scorers" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                          <th>Posición</th>
+                          <th>Nombre y Apellido</th>
+                          <th>Equipo</th>
+                          <th>Goles</th>
+                          <th>Partidos Jugados</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                          {% for obj in scorers %}
+                              <tr>
+                                  <td>{{ obj.position }}</td>
+                                  <td>{{ obj.player.name }}</td>
+                                  <td>{{ obj.player.team.name }}</td>
+                                  <td>{{ obj.goals }}</td>
+                                  <td>{{ obj.played }}</td>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="card card-purple" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+                  <div class="card-header">
+                    <h3 class="card-title">Amonestados</h3>
+    
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                    </div>
+                    <!-- /.card-tools -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <table id="cards" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                          <th>Posición</th>
+                          <th>Nombre y Apellido</th>
+                          <th>Equipo</th>
+                          <th>Tarjetas Amarillas</th>
+                          <th>Tarjetas Rojas</th>
+                          <th>Partidos Jugados</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                          {% for obj in cards %}
+                              <tr>
+                                  <td>{{ obj.position }}</td>
+                                  <td>{{ obj.player.name }}</td>
+                                  <td>{{ obj.player.team.name }}</td>
+                                  <td>{{ obj.yellow_cards }}</td>
+                                  <td>{{ obj.red_cards }}</td>
+                                  <td>{{ obj.played }}</td>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="card card-danger" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+                  <div class="card-header">
+                    <h3 class="card-title">Datos del torneo</h3>
+    
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                    </div>
+                    <!-- /.card-tools -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                      <div class="callout callout-danger">
+                          <h5>Formato del torneo - {{ formato }} </h5>
+                      </div>
+                      <div class="callout callout-danger">
+                        <h5>Cantidad de equipos participando - {{ tournament.teams.count }} </h5>
+                      </div>
+                      <div class="callout callout-danger">
+                        <h5>Grupos - {{ groups.count }} </h5>
+                      </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+    <!-- DataTables -->
+    <script src="{% static 'libs/adminlte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'libs/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'libs/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'libs/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script>
+        $(function () {
+          $("#standings").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "language":{
+                "url":"{% static 'administration/json/español.json' %}"
+            }
+          });
+          $("#scorers").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "language":{
+                "url":"{% static 'administration/json/español.json' %}"
+            }
+          });
+          $("#cards").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "language":{
+                "url":"{% static 'administration/json/español.json' %}"
+            }
+          });
+          $("#fechas").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "language":{
+                "url":"{% static 'administration/json/español.json' %}"
+            }
+          });
+        });
+    </script>
+{% endblock %}
