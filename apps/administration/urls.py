@@ -61,6 +61,7 @@ from apps.administration.views.special_views import (
 from apps.administration.views.day_of_match import DateOfMatchCreateView, DateOfMatchUpdateView, MatchDayDetailView
 from apps.administration.views.match import MatchCreateView, MatchUpdateView, LoadMatchResultView
 from apps.administration.views.config import ConfigListView, ConfigupdateView
+from apps.administration.views.groups import GroupDetailView
 
 app_name = "administration"
 
@@ -106,6 +107,7 @@ urlpatterns = [
     path('torneo/crear/partido/<int:pk>/', MatchCreateView.as_view(), name="create_match"),
     path('torneto/moficar/partido/<int:pk>/<int:date_id>/', MatchUpdateView.as_view(), name="update_match"),
     path('torneto/cargar/partido/<int:pk>/<int:date_id>/', LoadMatchResultView.as_view(), name="load_result"),
+    path('torneo/grupo/detalle/<int:pk>/', GroupDetailView.as_view(), name="group_detail_tournament"),
     # Views whithout a template
     path('equipos/activar/<int:pk>/', activate_team, name="activar_equipo"),
     path('fecha/activar/<int:pk>/', put_match_day_as_played, name="fecha_jugada"),

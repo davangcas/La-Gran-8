@@ -170,7 +170,7 @@
         </div>
         <div class="row">
             <!-- /.col -->
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card card-purple" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
                   <div class="card-header">
                     <h3 class="card-title">Amonestados</h3>
@@ -186,7 +186,6 @@
                     <table id="cards" class="table table-bordered table-striped">
                       <thead>
                       <tr>
-                          <th>Posición</th>
                           <th>Nombre y Apellido</th>
                           <th>Equipo</th>
                           <th>Tarjetas Amarillas</th>
@@ -197,7 +196,6 @@
                       <tbody>
                           {% for obj in cards %}
                               <tr>
-                                  <td>{{ obj.position }}</td>
                                   <td>{{ obj.player.name }}</td>
                                   <td>{{ obj.player.team.name }}</td>
                                   <td>{{ obj.yellow_cards }}</td>
@@ -213,36 +211,38 @@
                 <!-- /.card -->
             </div>
             <!-- /.col -->
-            <!-- /.col -->
-            <div class="col-md-6">
-              <div class="card card-danger" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
-                <div class="card-header">
-                  <h3 class="card-title">Datos del torneo</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-                  <!-- /.card-tools -->
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="callout callout-danger">
-                        <h5>Formato del torneo - {{ formato }} </h5>
-                    </div>
-                    <div class="callout callout-danger">
-                      <h5>Cantidad de equipos participando - {{ tournament.teams.count }} </h5>
-                    </div>
-                    <div class="callout callout-danger">
-                      <h5>Vueltas por equipo - {{ league.vueltas }} </h5>
-                    </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </div>
-            <!-- /.col -->
         </div>
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-md-12">
+            <div class="card card-danger" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
+              <div class="card-header">
+                <h3 class="card-title">Datos del torneo</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                  <div class="callout callout-danger">
+                      <h5>Formato del torneo - {{ formato }} </h5>
+                  </div>
+                  <div class="callout callout-danger">
+                    <h5>Cantidad de equipos participando - {{ tournament.teams.count }} </h5>
+                  </div>
+                  <div class="callout callout-danger">
+                    <h5>Vueltas por equipo - {{ league.vueltas }} </h5>
+                  </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+      </div>
     </section>
 {% endblock %}
 

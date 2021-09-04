@@ -74,7 +74,7 @@
           <div class="col-md-12">
             <div class="card card-primary" style="transition: all 0.15s ease 0s; height: inherit; width: inherit;">
               <div class="card-header">
-                <h3 class="card-title">Posiciones</h3>
+                <h3 class="card-title">Grupos</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -84,40 +84,32 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="standings" class="table table-bordered table-striped">
+                <table id="groups" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>Posición</th>
-                        <th>Equipo</th>
-                        <th>Pts</th>
-                        <th>PJ</th>
-                        <th>PG</th>
-                        <th>PE</th>
-                        <th>PP</th>
-                        <th>GF</th>
-                        <th>GC</th>
-                        <th>DG</th>
+                        <th>Grupo</th>
+                        <th>Cantidad de equipos</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
-                        {% for obj in standings %}
+                        {% for obj in groups %}
                             <tr>
-                                <td>{{ obj.position }}</td>
-                                <td>{{ obj.team.name }}</td>
-                                <td>{{ obj.points }}</td>
-                                <td>{{ obj.played }}</td>
-                                <td>{{ obj.wins }}</td>
-                                <td>{{ obj.draw }}</td>
-                                <td>{{ obj.loss }}</td>
-                                <td>{{ obj.goals }}</td>
-                                <td>{{ obj.goals_received }}</td>
-                                <td>{{ obj.dif_goals }}</td>
+                                <td>{{ obj.group_name }}</td>
+                                <td>{{ obj.teams.all.count }}</td>
+                                <td>
+                                  <a href=""><i class="fas fa-cogs"></i></a>
+                                  <a href="{% url 'administration:group_detail_tournament' obj.id %}"><i class="fas fa-eye"></i></a>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
+              <div class="card-footer">
+                <a href="{% url 'administration:automatic_generate' tournament_id %}" class="btn btn-success"><i class="fas fa-magic"></i> Asignar equipos a los grupos automáticamente</a>
+              </div>
             </div>
             <!-- /.card -->
               <!-- /.card -->
@@ -256,7 +248,7 @@
     <script src="{% static 'libs/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
     <script>
         $(function () {
-          $("#standings").DataTable({
+          $("#groups").DataTable({
             "responsive": true,
             "autoWidth": false,
             "language":{

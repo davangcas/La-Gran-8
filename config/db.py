@@ -1,4 +1,6 @@
 import os
+import dj_database_url
+from decouple import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -14,7 +16,7 @@ POSTGRES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lagran8',
         'USER': 'postgres',
-        'PASSWORD': '0518',
+        'PASSWORD': 'postgres',
         'HOST': '127.0.0.1',
         'DATABASE_PORT': '5432',
     }
@@ -29,4 +31,10 @@ POSTGRES_HOSTINGER = {
         'HOST': '127.0.0.1',
         'DATABASE_PORT': '5432',
     }
+}
+
+HEROKU = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }

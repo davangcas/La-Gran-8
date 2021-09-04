@@ -42,12 +42,16 @@ def change_delegate_to_register_players(view_function):
         torneo = Tournament.objects.filter(status=True)
         if torneo:
             last_tournament = torneo.last()
-            if last_tournament.date_finish < datetime.date.today() and request.user.administrator.tournament_sensitive:
-                administrator = Administrator.objects.get(user=request.user)
-                administrator.active = False
-                administrator.save()
+            if request.user.administrator.tournament_sensitive:
+                if last_tournament.date_finish < datetime.date.today():
+                    administrator = Administrator.objects.get(user=request.user)
+                    administrator.active = False
+                    administrator.save()
             return view_function(request, *args, **kwargs)
         else:
+            administrator = Administrator.objects.get(user=request.user)
+            administrator.tournament_sensitive = True
+            administrator.save()
             return view_function(request, *args, **kwargs)
 
     return validation

@@ -27,8 +27,12 @@ SECRET_KEY = 'q%6_l9)-d*x0#a&qx%98_^xiybm4a-*at%l&+5x8_(-*0!%7q9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 LOCAL_DEPLOY = True
+HEROKU_DEPLOY = False
 
-ALLOWED_HOSTS = []
+if HEROKU_DEPLOY:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -58,6 +62,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+if HEROKU_DEPLOY:
+    MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -83,19 +90,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 if LOCAL_DEPLOY:
-    DATABASES = db.SQLITE
+    DATABASES = db.POSTGRES
 
 else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'lagran8',
-            'USER': 'davangcas',
-            'PASSWORD': 'D35zb6pasederecho',
-            'HOST': '127.0.0.1',
-            'DATABASE_PORT': '5432',
-            }
-    }
+    if HEROKU_DEPLOY:
+        DATABASES = db.HEROKU
+    else:
+        DATABASES = db.POSTGRES_HOSTINGER
 
 
 # Password validation
@@ -140,12 +141,19 @@ if LOCAL_DEPLOY:
         os.path.join(BASE_DIR, 'static'),
     ]
 else:
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static'),
-    ]
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATIC_URL = '/static/'
-    #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    if HEROKU_DEPLOY:
+        STATICFILES_DIRS = [
+            os.path.join(BASE_DIR, 'static'),
+        ]
+        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+        STATIC_URL = '/static/'
+        STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    else:
+        STATICFILES_DIRS = [
+            os.path.join(BASE_DIR, 'static'),
+        ]
+        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+        STATIC_URL = '/static/'
 
 # media files root
 MEDIA_URL = '/media/'
