@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'q%6_l9)-d*x0#a&qx%98_^xiybm4a-*at%l&+5x8_(-*0!%7q9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 LOCAL_DEPLOY = False
 HEROKU_DEPLOY = True
 
