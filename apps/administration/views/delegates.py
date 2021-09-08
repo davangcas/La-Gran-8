@@ -83,9 +83,6 @@ class DelegateCreateView(CreateView):
             context['errors1'] = form.errors
             context['errors2'] = form2.errors
             context['errors3'] = form3.errors
-            print(form.errors)
-            print(form2.errors)
-            print(form3.errors)
             return render(request, self.template_name, context)
 
     def get_context_data(self, **kwargs):
