@@ -1,4 +1,5 @@
 import datetime
+import pdb
 
 from django.contrib.auth.models import User
 from django.views.generic.base import TemplateResponseMixin
@@ -16,7 +17,9 @@ from apps.team.models.tournament import (
     ConfigTournament,
 )
 from apps.team.models.match import (
+    DateOfMatch,
     FieldMatch,
+    Match,
 )
 from apps.administration.models.config import GeneralConfig
 
@@ -167,5 +170,108 @@ def change_player_dorsal(player):
         last_dorsal = Player.objects.filter(team=player.team).order_by('dorsal').last().dorsal
         other_player.dorsal = last_dorsal + 1
         other_player.save()
+
+
+def get_number_of_all_matchs(torneo):
+    teams = torneo.teams.all().count()
+    matchs_number = 0
+    if torneo.format == "1":
+        rounds = League.objects.get(tournament=torneo).vueltas
+        for round in range(rounds):
+            for team in range(teams):
+                matchs_number = matchs_number + (teams - 1) - team
+    return matchs_number
+
+
+def generate_matchs(torneo, partidos_por_fecha):
+    if torneo.format == "1":
+        teams = torneo.teams.all()
+        fields = FieldMatch.objects.filter(tournament=torneo)
+        rounds = League.objects.get(tournament=torneo).vueltas
+        flag_to_local = True
+        fechas = DateOfMatch.objects.filter(tournament=torneo)
+
+        for round in range(rounds):
+            flag_to_local = not flag_to_local
+            id_team_list = []
+            for team in teams:
+                id_team_list.append(team.id)
+                initial_query = teams.exclude(id__in=id_team_list)
+                if initial_query:
+                    for local in initial_query:
+                        if flag_to_local:
+                            new_match = Match.objects.create(
+                                tournament=torneo,
+                                local_team=team,
+                                away_team=local,
+                                field=fields.first(),
+                                date_of_match=torneo.date_init,
+                                hour_of_match="16",
+                            )
+                            flag_to_local = not flag_to_local
+                        else:
+                            new_match = Match.objects.create(
+                                tournament=torneo,
+                                local_team=local,
+                                away_team=team,
+                                field=fields.first(),
+                                date_of_match=torneo.date_init,
+                                hour_of_match="16",
+                            )
+                            flag_to_local = not flag_to_local
+        
+        matchs = Match.objects.filter(tournament=torneo)
+        ids_matchs = []
+
+        for fecha in fechas:
+            id_teams = []
+            for partido in range(partidos_por_fecha):
+                match = matchs.exclude(id__in=ids_matchs)
+                match = match.exclude(away_team_id__in=id_teams)
+                match = match.exclude(local_team_id__in=id_teams)
+                match = match.order_by('?')
+                match = match.first()
+                if match:
+                    ids_matchs.append(match.id)
+                    fecha.matchs.add(match)
+                    id_teams.append(match.local_team.id)
+                    id_teams.append(match.away_team.id)
+                else:
+                    continue
+        
+        id_fechas_incompletas = []
+        matchs = Match.objects.filter(tournament=torneo)
+        unasigned_matchs = matchs.exclude(id__in=ids_matchs)
+        dates_of_matchs = DateOfMatch.objects.filter(tournament=torneo)
+
+        for date in dates_of_matchs:
+            if date.matchs.all().count() < partidos_por_fecha:
+                id_fechas_incompletas.append(date.id)
+
+        fechas_incompletas = dates_of_matchs.filter(id__in=id_fechas_incompletas)
+
+        for fecha in fechas_incompletas:
+            equipos = []
+            fecha_partidos = fecha.matchs.all()
+            partidos_faltantes = partidos_por_fecha - fecha_partidos.count()
+            
+            for partidos in fecha_partidos:
+                equipos.append(partidos.local_team.id)
+                equipos.append(partidos.away_team.id)
+            
+            new_query = unasigned_matchs.exclude(local_team_id__in=equipos)
+            second_query = new_query.exclude(away_team_id__in=equipos)
+            print(partidos_faltantes, fecha, second_query)
+    
+    elif torneo.format == "2":
+        pass
+
+    elif torneo.format == "3":
+        pass
+
+    elif torneo.format == "4":
+        pass
+
+
 
 

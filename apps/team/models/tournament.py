@@ -7,6 +7,7 @@ from apps.team.models.team import Team
 from apps.team.models.player import Player
 from apps.team.choices import TOURNAMENT_FORMATS, MATCH_HOURS
 
+
 class Tournament(models.Model):
     name = models.CharField(verbose_name="Nombre del torneo", max_length=80)
     teams = models.ManyToManyField(Team, related_name="tournament_teams", verbose_name="Equipos del torneo")

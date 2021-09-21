@@ -26,8 +26,8 @@ SECRET_KEY = 'q%6_l9)-d*x0#a&qx%98_^xiybm4a-*at%l&+5x8_(-*0!%7q9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-LOCAL_DEPLOY = False
-HEROKU_DEPLOY = True
+LOCAL_DEPLOY = True
+HEROKU_DEPLOY = False
 
 if HEROKU_DEPLOY:
     ALLOWED_HOSTS = ['*']

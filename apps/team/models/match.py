@@ -55,6 +55,9 @@ class DateOfMatch(models.Model):
 
     played = models.BooleanField(verbose_name="Fecha Jugada", default=False, blank=True, null=True)
 
+    def __str__(self):
+        return self.tournament.name + " - Fecha N° " + str(self.number) + " - " + str(self.day_of_match)
+
     class Meta:
         verbose_name = "Fecha"
         verbose_name = "Fechas"
