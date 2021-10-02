@@ -219,7 +219,7 @@ class TournamentDetailView(DetailView):
         context['tournament_id'] = self.kwargs['pk']
         if self.get_object().format == "1":
             context['formato'] = "Liga"
-            context['standings'] = LeagueTable.objects.filter(league=League.objects.filter(tournament=self.get_object()).last())
+            context['standings'] = LeagueTable.objects.filter(league=League.objects.filter(tournament=self.get_object()).last()).order_by('-points', '-dif_goals')
             context['scorers'] = Scorers.objects.all().filter(tournament=context['tournament']).order_by('goals')
             context['tournament'] = Tournament.objects.get(pk=self.kwargs['pk'])
             context['league'] = League.objects.filter(tournament=context['tournament']).last()

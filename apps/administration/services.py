@@ -48,12 +48,14 @@ def generate_league_table(id_league):
     league = League.objects.get(pk=id_league)
     tournament = Tournament.objects.get(pk=league.tournament.id)
     try:
+        init_positions = 1
         for team in tournament.teams.all():
             league_table = LeagueTable.objects.create()
             league_table.league = league
             league_table.team = team
-            league_table.position = 1
+            league_table.position = init_positions
             league_table.save()
+            init_positions += 1
 
     except Exception as e:
         print(e)
@@ -175,11 +177,13 @@ def change_player_dorsal(player):
 def get_number_of_all_matchs(torneo):
     teams = torneo.teams.all().count()
     matchs_number = 0
+
     if torneo.format == "1":
         rounds = League.objects.get(tournament=torneo).vueltas
         for round in range(rounds):
             for team in range(teams):
                 matchs_number = matchs_number + (teams - 1) - team
+
     return matchs_number
 
 
@@ -273,5 +277,12 @@ def generate_matchs(torneo, partidos_por_fecha):
         pass
 
 
+def reposition_league_teams(table):
+    init_position = 1
+
+    for team in table:
+        team.position = init_position
+        team.save()
+        init_position += 1
 
 

@@ -4,10 +4,11 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from apps.team.models.tournament import Tournament
+from apps.team.models.tournament import Tournament, LeagueTable, League
 from apps.administration.decorators import user_validator
 from apps.administration.services import (
     check_tournament_active,
+    reposition_league_teams,
 )
 from apps.team.models.match import DateOfMatch, Match
 from apps.administration.forms.match import MatchLeagueForm, MatchLeagueEditForm, MatchLoadResultForm
@@ -101,6 +102,63 @@ class LoadMatchResultView(UpdateView):
     def form_valid(self, form):
         form.instance.played = True
         self.object = form.save()
+        local_team = self.object.local_team
+        away_team = self.object.away_team
+        torneo = self.object.tournament
+        liga = League.objects.filter(tournament=torneo).last()
+        tabla = LeagueTable.objects.filter(league=liga)
+        registro_local = tabla.get(team=local_team)
+        registro_visitante = tabla.get(team=away_team)
+
+        if self.object.goals_local > self.object.goals_away:
+            registro_local.played += 1
+            registro_visitante.played += 1
+            registro_local.wins += 1
+            registro_visitante.loss += 1
+            registro_local.goals += self.object.goals_local
+            registro_visitante.goals += self.object.goals_away
+            registro_local.goals_received += self.object.goals_away
+            registro_visitante.goals_received += self.object.goals_local
+            local_diff = self.object.goals_local - self.object.goals_away
+            away_diff = self.object.goals_away - self.object.goals_local
+            registro_local.dif_goals += local_diff
+            registro_visitante.dif_goals += away_diff
+            registro_local.points += 3
+            registro_local.save()
+            registro_visitante.save()
+            reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points'))
+
+        elif self.object.goals_local == self.object.goals_away:
+            registro_local.played += 1
+            registro_visitante.played += 1
+            registro_local.draw += 1
+            registro_visitante.draw += 1
+            registro_local.goals += self.object.goals_local
+            registro_visitante.goals += self.object.goals_away
+            registro_local.goals_received += self.object.goals_away
+            registro_visitante.goals_received += self.object.goals_local
+            registro_local.points += 1
+            registro_visitante.points += 1
+            registro_local.save()
+            registro_visitante.save()
+            reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points'))
+        else:
+            registro_local.played += 1
+            registro_visitante.played += 1
+            registro_visitante.wins += 1
+            registro_local.loss += 1
+            registro_local.goals += self.object.goals_local
+            registro_visitante.goals += self.object.goals_away
+            registro_local.goals_received += self.object.goals_away
+            registro_visitante.goals_received += self.object.goals_local
+            local_diff = self.object.goals_local - self.object.goals_away
+            away_diff = self.object.goals_away - self.object.goals_local
+            registro_local.dif_goals += local_diff
+            registro_visitante.dif_goals += away_diff
+            registro_visitante.points += 3
+            registro_local.save()
+            registro_visitante.save()
+            reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points', '-dif_goals'))
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

@@ -31,6 +31,7 @@ def put_match_day_as_played(request, pk):
 
 def generate_automatic_matchs(request, pk):
     torneo = Tournament.objects.filter(status=True).last()
+
     if torneo.format == "1":
         settings = ConfigTournament.objects.filter(tournament=torneo).first()
         fields_match = FieldMatch.objects.filter(tournament=torneo)
