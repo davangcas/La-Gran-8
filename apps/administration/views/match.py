@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponseRedirect, render
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from apps.team.models.team import Team
 
 from apps.team.models.tournament import Tournament, LeagueTable, League
 from apps.administration.decorators import user_validator
@@ -104,6 +105,8 @@ class LoadMatchResultView(UpdateView):
         self.object = form.save()
         local_team = self.object.local_team
         away_team = self.object.away_team
+        local_team_stats = Team.objects.get(pk=local_team.id)
+        away_team_stats = Team.objects.get(pk=away_team.id)
         torneo = self.object.tournament
         liga = League.objects.filter(tournament=torneo).last()
         tabla = LeagueTable.objects.filter(league=liga)
@@ -111,54 +114,111 @@ class LoadMatchResultView(UpdateView):
         registro_visitante = tabla.get(team=away_team)
 
         if self.object.goals_local > self.object.goals_away:
-            registro_local.played += 1
-            registro_visitante.played += 1
-            registro_local.wins += 1
-            registro_visitante.loss += 1
-            registro_local.goals += self.object.goals_local
-            registro_visitante.goals += self.object.goals_away
-            registro_local.goals_received += self.object.goals_away
-            registro_visitante.goals_received += self.object.goals_local
-            local_diff = self.object.goals_local - self.object.goals_away
-            away_diff = self.object.goals_away - self.object.goals_local
-            registro_local.dif_goals += local_diff
-            registro_visitante.dif_goals += away_diff
+            # Global local
+            local_team_stats.played += 1
+            local_team_stats.win += 1
+            local_team_stats.goals += self.object.goals_local
+            local_team_stats.goals_received += self.object.goals_local
+
+            # Match local
             registro_local.points += 3
+            registro_local.played += 1
+            registro_local.wins += 1
+            registro_local.goals += self.object.goals_local
+            registro_local.goals_received += self.object.goals_away
+            local_diff = self.object.goals_local - self.object.goals_away
+            registro_local.dif_goals += local_diff
+            
+            # Global away
+            away_team_stats.played += 1
+            away_team_stats.lost += 1
+            away_team_stats.goals += self.object.goals_away
+            away_team_stats.goals_received += self.object.goals_local
+
+            # Match away
+            registro_visitante.played += 1
+            registro_visitante.loss += 1
+            registro_visitante.goals += self.object.goals_away
+            registro_visitante.goals_received += self.object.goals_local
+            away_diff = self.object.goals_away - self.object.goals_local
+            registro_visitante.dif_goals += away_diff
+            
+            # Save all
             registro_local.save()
             registro_visitante.save()
-            reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points'))
+            local_team_stats.save()
+            away_team_stats.save()
+            reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points', '-dif_goals', '-goals'))
 
         elif self.object.goals_local == self.object.goals_away:
+            # Match local
             registro_local.played += 1
-            registro_visitante.played += 1
             registro_local.draw += 1
-            registro_visitante.draw += 1
             registro_local.goals += self.object.goals_local
-            registro_visitante.goals += self.object.goals_away
             registro_local.goals_received += self.object.goals_away
-            registro_visitante.goals_received += self.object.goals_local
             registro_local.points += 1
+
+            # Match away
+            registro_visitante.played += 1
+            registro_visitante.draw += 1
+            registro_visitante.goals += self.object.goals_away
+            registro_visitante.goals_received += self.object.goals_local
             registro_visitante.points += 1
+
+            # Global local
+            local_team_stats.played += 1
+            local_team_stats.draw += 1
+            local_team_stats.goals += self.object.goals_local
+            local_team_stats.goals_received += self.object.goals_away
+
+            # Global away
+            away_team_stats.played += 1
+            away_team_stats.draw += 1
+            away_team_stats.goals += self.object.goals_away
+            away_team_stats.goals_received += self.object.goals_local
+
+            # Save all
             registro_local.save()
             registro_visitante.save()
-            reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points'))
+            local_team_stats.save()
+            away_team_stats.save()
+            reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points', '-dif_goals', '-goals'))
         else:
+            # Match local
             registro_local.played += 1
-            registro_visitante.played += 1
-            registro_visitante.wins += 1
             registro_local.loss += 1
             registro_local.goals += self.object.goals_local
-            registro_visitante.goals += self.object.goals_away
             registro_local.goals_received += self.object.goals_away
-            registro_visitante.goals_received += self.object.goals_local
             local_diff = self.object.goals_local - self.object.goals_away
-            away_diff = self.object.goals_away - self.object.goals_local
             registro_local.dif_goals += local_diff
+
+            # Match away
+            registro_visitante.played += 1
+            registro_visitante.wins += 1
+            registro_visitante.goals += self.object.goals_away
+            registro_visitante.goals_received += self.object.goals_local
+            away_diff = self.object.goals_away - self.object.goals_local
             registro_visitante.dif_goals += away_diff
             registro_visitante.points += 3
+
+            # Global local
+            local_team_stats.played += 1
+            local_team_stats.lost += 1
+            local_team_stats.goals += self.object.goals_local
+            local_team_stats.goals_received += self.object.goals_away
+
+            # Global away
+            away_team_stats.played += 1
+            away_team_stats.win += 1
+            away_team_stats.goals += self.object.goals_away
+            away_team_stats.goals_received += self.object.goals_local
+
+            # Save all
             registro_local.save()
             registro_visitante.save()
-            reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points', '-dif_goals'))
+            local_team_stats.save()
+            away_team_stats.save()
+            reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points', '-dif_goals', '-goals'))
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -170,6 +230,4 @@ class LoadMatchResultView(UpdateView):
         context['jugadores_local'] = Player.objects.filter(team=self.object.local_team)
         context['jugadores_visitantes'] = Player.objects.filter(team=self.object.away_team)
         return context
-
-
 

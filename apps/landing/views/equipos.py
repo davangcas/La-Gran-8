@@ -8,7 +8,7 @@ class EquiposView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Equipos"
-        context['equipos'] = Team.objects.all()
+        context['equipos'] = Team.objects.all().order_by('-played', '-win', 'lost', '-goals')
         return context
 
 class EquipoView(TemplateView):

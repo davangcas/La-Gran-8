@@ -219,11 +219,11 @@ class TournamentDetailView(DetailView):
         context['tournament_id'] = self.kwargs['pk']
         if self.get_object().format == "1":
             context['formato'] = "Liga"
-            context['standings'] = LeagueTable.objects.filter(league=League.objects.filter(tournament=self.get_object()).last()).order_by('-points', '-dif_goals')
-            context['scorers'] = Scorers.objects.all().filter(tournament=context['tournament']).order_by('goals')
+            context['standings'] = LeagueTable.objects.filter(league=League.objects.filter(tournament=self.get_object()).last()).order_by('position')
+            context['scorers'] = Scorers.objects.all().filter(tournament=context['tournament']).order_by('goals').exclude(goals=0)
             context['tournament'] = Tournament.objects.get(pk=self.kwargs['pk'])
             context['league'] = League.objects.filter(tournament=context['tournament']).last()
-            context['cards'] = Cautions.objects.all().filter(tournament=context['tournament']).order_by('position')
+            context['cards'] = Cautions.objects.all().filter(tournament=context['tournament']).exclude(yellow_cards=0, red_cards=0)
             context['group_matchs'] = DateOfMatch.objects.filter(tournament=context['tournament'])
         elif self.get_object().format == "3":
             context['formato'] = "Grupo y Eliminatoria"

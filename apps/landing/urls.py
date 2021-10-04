@@ -1,6 +1,6 @@
 from django.urls import path
 
-from apps.landing.views.index import IndexView
+from apps.landing.views.index import IndexView, ProximamenteView
 from apps.landing.views.standings import StandigsView
 from apps.landing.views.goleadores import GoleadoresView
 from apps.landing.views.fixture import FixtureView
@@ -22,4 +22,5 @@ urlpatterns = [
     path('novedades/', NovedadesView.as_view(), name="novedades"),
     path('novedades/detalle/<int:pk>/', NovedadesDetailView.as_view(), name="novedades_detail"),
     path('contacto/', ContactoView.as_view(), name="contacto"),
+    path('proximamente/', ProximamenteView.as_view(), name="proximamente"),
 ]

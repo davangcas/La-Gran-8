@@ -81,12 +81,15 @@ def generate_scorers_table(id_tournament):
     for team in teams_query:
         players |= Player.objects.filter(team=team)
 
+    init_position = 1
     for player in players:
         scorers_table = Scorers.objects.create(
             tournament=tournament,
             player=player,
+            position=init_position,
         )
         scorers_table.save()
+        init_position += 1
 
 
 def generate_cards_to_players(id_tournament):

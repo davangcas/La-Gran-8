@@ -10,19 +10,19 @@
 <div class="main-next-match bg-cover">
 <img src="{% static 'landing\img\2.jpg' %}" class="next-match-background-img" alt="next-image"> 
 <div class="wrap">
-    <div class="place" >Estadio Olimpico Monumental</div>
-    <div class="date" >28 septemer 2016 / 8:30 PM</div>
-    <div class="teams-wrap">
-            <a href="staff.html" class="team">
-                <span>Team 1</span>
-                <span><img src="images/common/team-logo1.png" alt="team-image"></span>
+    <div class="place" style="background-color: black;" >{{ next_match.field }}</div>
+    <div class="date" style="background-color: darkgoldenrod;">{{ next_match.date_of_match }} / {{ next_match.hour_of_match }} hs</div>
+    <div class="teams-wrap" style="background-color: darkorange;">
+            <a href="" class="team">
+                <span>{{ next_match.local_team.name }}</span>
+                <span><img src="{{ next_match.local_team.logo.url }}" alt="team-image"></span>
             </a>
             <div class="vs">
                vs
             </div>
-            <a href="staff.html" class="team1">
-                <span><img src="images/common/team-logo2.png" alt="team-image"></span>
-                <span>Team2</span>
+            <a href="" class="team1">
+                <span><img src="{{ next_match.away_team.logo.url }}" alt="team-image"></span>
+                <span>{{ next_match.away_team.name }}</span>
             </a>
     </div>
     <a href="#" class="booking">Siguiente Partido</a>
@@ -33,106 +33,34 @@
                 <h6>Últimos Partidos</h6>
                     
 <div class="main-lates-matches">
-<a href="#" class="item">
-    <span class="championship">National cup - quarterfinal</span>
-    <span class="teams-wrap">
-            <span class="team">
-                <span>
-                    <img src="images/common/team-logo1.png" alt="team-image">
+    {% if last_matchs %}
+        {% for match in last_matchs %}
+            <a href="" class="item">
+                <span class="championship">{{ match.tournament.name }}</span>
+                <span class="teams-wrap">
+                        <span class="team">
+                            <span>
+                                <img src="{{ match.local_team.logo.url }}" alt="team-image">
+                            </span>
+                            <span>{{ match.local_team.name }}</span>
+                        </span>
+                        <span class="score">
+                            <span>{{ match.goals_local }}:{{ match.goals_away }}</span>
+            
+                        </span>
+                        <span class="team1">
+                            <span>{{ match.away_team.name }}</span>
+                            <span><img src="{{ match.away_team.logo.url }}" alt="team-image"></span>
+                        </span>
                 </span>
-                <span>Team 1</span>
-            </span>
-            <span class="score">
-                <span>3:2</span>
-
-            </span>
-            <span class="team1">
-                <span>Internacional</span>
-                <span><img src="images/common/team-logo2.png" alt="team-image"></span>
-            </span>
-    </span>
-    <span class="game-result">(5-4) penalties</span>
-</a>
-<a href="#" class="item">
-    <span class="championship">National cup - quarterfinal</span>
-    <span class="teams-wrap">
-            <span class="team">
-                <span>
-                    <img src="images/common/team-logo3.png" alt="team-image">
-                </span>
-                <span>Team 1</span>
-            </span>
-            <span class="score">
-                <span>3:2</span>
-
-            </span>
-            <span class="team1">
-                <span>Team 2</span>
-                <span><img src="images/common/team-logo4.png" alt="team-image"></span>
-            </span>
-    </span>
-    <span class="game-result">(5-4) penalties</span>
-</a>
-<a href="#" class="item">
-    <span class="championship">National cup - quarterfinal</span>
-    <span class="teams-wrap">
-            <span class="team">
-                <span>
-                    <img src="images/common/team-logo5.png" alt="team-image">
-                </span>
-                <span>Team 1</span>
-            </span>
-            <span class="score">
-                <span>3:2</span>
-
-            </span>
-            <span class="team1">
-                <span>Team 2</span>
-                <span><img src="images/common/team-logo1.png" alt="team-image"></span>
-            </span>
-    </span>
-    <span class="game-result">(5-4) penalties</span>
-</a>
-<a href="#" class="item">
-    <span class="championship">National cup - quarterfinal</span>
-    <span class="teams-wrap">
-            <span class="team">
-                <span>
-                    <img src="images/common/team-logo2.png" alt="team-image">
-                </span>
-                <span>Team 1</span>
-            </span>
-            <span class="score">
-                <span>3:2</span>
-
-            </span>
-            <span class="team1">
-                <span>Team 2</span>
-                <span><img src="images/common/team-logo3.png" alt="team-image"></span>
-            </span>
-    </span>
-    <span class="game-result">(5-4) penalties</span>
-</a>
-<a href="#" class="item">
-    <span class="championship">National cup - quarterfinal</span>
-    <span class="teams-wrap">
-            <span class="team">
-                <span>
-                    <img src="images/common/team-logo4.png" alt="team-image">
-                </span>
-                <span>Team 1</span>
-            </span>
-            <span class="score">
-                <span>3:2</span>
-
-            </span>
-            <span class="team1">
-                <span>Team 2</span>
-                <span><img src="images/common/team-logo5.png" alt="team-image"></span>
-            </span>
-    </span>
-    <span class="game-result">(5-4) penalties</span>
-</a>
+                {% if match.penalties %}
+                    <span class="game-result">({{ match.local_penalties }}-{{ match.away_penalties }}) penales</span>
+                {% endif %}
+            </a>
+        {% endfor %}
+    {% else %}
+        <p class="item">No se han jugado partidos ...</p>
+    {% endif %}
 </div>
             </div>
         </div>

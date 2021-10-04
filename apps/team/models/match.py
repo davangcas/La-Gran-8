@@ -27,11 +27,13 @@ class Match(models.Model):
     local_team = models.ForeignKey(Team, on_delete=models.PROTECT, verbose_name="Equipo local", related_name="local")
     away_team = models.ForeignKey(Team, on_delete=models.PROTECT, verbose_name="Equipo visitante", related_name="visitante")
     field = models.ForeignKey(FieldMatch, on_delete=models.CASCADE, verbose_name="Cancha")
-    
+    penalties = models.BooleanField(verbose_name="Penales", default=False, null=True, blank=True)
     goals_local = models.PositiveSmallIntegerField(verbose_name="Goles equipo local", blank=True, null=True, default=0)
     goals_away = models.PositiveSmallIntegerField(verbose_name="Goles equipo visitante", blank=True, null=True, default=0)
     date_of_match = models.DateField(verbose_name="Fecha del partido")
     hour_of_match = models.CharField(verbose_name="Hora del partido", max_length=2, choices=MATCH_HOURS, default="16")
+    local_penalties = models.PositiveSmallIntegerField(verbose_name="Penales Local", blank=True, null=True, default=0)
+    away_penalties = models.PositiveSmallIntegerField(verbose_name="Penales Visitante", blank=True, null=True, default=0)
 
     played = models.BooleanField(verbose_name="Partido Jugado", blank=True, null=True, default=False)
 

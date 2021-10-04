@@ -3,6 +3,7 @@ from django.forms import model_to_dict
 
 from apps.administration.models.users import Administrator
 
+
 class Team(models.Model):
     delegated = models.OneToOneField(Administrator, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Delegado")
     
@@ -11,6 +12,8 @@ class Team(models.Model):
     win = models.PositiveIntegerField(verbose_name="Partidos Ganados", blank=True, default=0, null=True)
     draw = models.PositiveIntegerField(verbose_name="Partidos Empatados", blank=True, default=0, null=True)
     lost = models.PositiveIntegerField(verbose_name="Partidos Perdidos", blank=True, default=0, null=True)
+    goals = models.PositiveIntegerField(verbose_name="Goles", default=0, null=True, blank=True)
+    goals_received = models.PositiveIntegerField(verbose_name="Goles recibidos", default=0, null=True, blank=True)
     titles = models.PositiveIntegerField(verbose_name="Títulos conseguidos", blank=True, default=0, null=True)
     date_created = models.DateTimeField(verbose_name="Fecha de creación", auto_now_add=True)
     active = models.BooleanField(verbose_name="Habilitado", default=False, blank=True, null=True)

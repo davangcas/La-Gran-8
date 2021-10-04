@@ -93,7 +93,6 @@ class Scorers(models.Model):
 class Cautions(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE, blank=True)
-    position = models.PositiveSmallIntegerField(verbose_name="Posición", blank=True, null=True, default=1)
     played = models.PositiveSmallIntegerField(verbose_name="Partidos Jugados", blank=True, null=True, default=0)
     yellow_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Amarillas", blank=True, null=True, default=0)
     red_cards = models.PositiveSmallIntegerField(verbose_name="Tarjetas Rojas", blank=True, null=True, default=0)

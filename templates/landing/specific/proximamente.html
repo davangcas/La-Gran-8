@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat%7COpen+Sans:700,400%7CRaleway:400,800,900" rel="stylesheet">
+    <link rel='shortcut icon' href="{% static 'landing/img/Logo.jpg' %}">
+    {% include 'landing/base/css.html' %}
+    
+    <!-- 
+    
+    Enable one styles which the you want
+    
+    <link href="css-min/soccer.min.css" rel="stylesheet" type="text/css" />
+    <link href="css-min/hockey.min.css" rel="stylesheet" type="text/css" />
+    <link href="css-min/basketball.min.css" rel="stylesheet" type="text/css" />
+    <link href="css-min/football.min.css" rel="stylesheet" type="text/css" />
+    <link href="css-min/baseball.min.css" rel="stylesheet" type="text/css" />
+    <link href="css-min/dota.min.css" rel="stylesheet" type="text/css" />
+    <link href="css-min/csgo.min.css" rel="stylesheet" type="text/css" />
+    
+    All libraries included in this css, concating rules in /grunt/cssmin.js
+    Use grunt default task for creating this files
+    
+    -->
+</head>
+<body class="coming-page">
+
+    <!--COMMING WRAP BEGIN-->
+    <div class="coming-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{% url 'administration:index' %}" class="error-logo"><img src="{% static 'landing/img/la gran ocho sin fondo.png' %}" alt="logo" class="custom-logo" height="100px"></a>
+                </div>
+            </div>
+        </div>	
+        <div class="coming-title">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="big-text">Proximamente ...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--COMMING WRAP END-->
+
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/jquery-ui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/jquery.sticky.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/jquery.jcarousel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/jcarousel.connected-carousels.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/owl.carousel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/progressbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/jquery.bracket.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/chartist.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/Chart.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/fancySelect.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/isotope.pkgd.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/imagesloaded.pkgd.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/jquery.team-coundown.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/matches-slider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/header.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/matches_broadcast_listing.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/news-line.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/match_galery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/main-club-gallery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/product-slider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/circle-bar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/standings.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/shop-price-filter.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/timeseries.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/radar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/slider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/preloader.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/diagram.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/bi-polar-diagram.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/label-placement-diagram.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/donut-chart.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/animate-donut.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/advanced-smil.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/svg-path.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/pick-circle.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/horizontal-bar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/gauge-chart.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/stacked-bar.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/chartist-plugin-legend.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/chartist-plugin-threshold.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/library/chartist-plugin-pointlabels.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/treshold.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/visible.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/anchor.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/landing_carousel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/landing_sport_standings.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/twitterslider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/champions.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/landing_mainnews_slider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/carousel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/video_slider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/footer_slides.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/player_test.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'libs/esport_soccer_js_library/main.js' %}"></script>
+
+</body>
+</html>
