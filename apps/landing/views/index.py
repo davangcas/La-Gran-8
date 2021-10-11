@@ -20,6 +20,7 @@ class IndexView(TemplateView):
         context['banner_unplayed'] = Match.objects.filter(played=False).order_by('date_of_match', 'hour_of_match')[:3]
         context['last_matchs'] = Match.objects.filter(played=True).order_by('date_of_match', 'hour_of_match')[:5]
         context['next_match'] = Match.objects.filter(played=False).order_by('date_of_match', 'hour_of_match').first()
+        context['campeonatos'] = Tournament.objects.filter(status=True)
         return context
 
 

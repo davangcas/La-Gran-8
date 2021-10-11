@@ -129,14 +129,12 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            {% if not active_tournament %}
             <li class="nav-item">
               <a href="{% url 'administration:tournament_new' %}" class="nav-link">
                 <i class="fas fa-plus-circle nav-icon"></i>
                 <p>Nuevo torneo</p>
               </a>
             </li>
-            {% endif %}
             <li class="nav-item">
               <a href="{% url 'administration:tournaments' %}" class="nav-link">
                 <i class="far fa-eye nav-icon"></i>

@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView
 
 from apps.administration.models.noticias import Noticia
+from apps.team.models.tournament import Tournament
 
 class NovedadesView(TemplateView):
     template_name = "landing/specific/novedades.html"
@@ -18,6 +19,7 @@ class NovedadesView(TemplateView):
         context['title'] = "Novedades"
         context['novedades'] = Noticia.objects.all().order_by('-id')[:7]
         context['ultima'] = Noticia.objects.last().id
+        context['campeonatos'] = Tournament.objects.filter(status=True)
         return context
 
 class NovedadesDetailView(TemplateView):
@@ -28,5 +30,6 @@ class NovedadesDetailView(TemplateView):
         context['title'] = "Novedades"
         context['novedad'] = Noticia.objects.get(pk=self.kwargs['pk'])
         context['ultimo_id'] = Noticia.objects.last().id
+        context['campeonatos'] = Tournament.objects.filter(status=True)
         return context
 
