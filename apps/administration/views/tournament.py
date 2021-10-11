@@ -228,9 +228,9 @@ class TournamentDetailView(DetailView):
         elif self.get_object().format == "3":
             context['formato'] = "Grupo y Eliminatoria"
             context['tournament'] = Tournament.objects.get(pk=self.kwargs['pk'])
-            context['cards'] = Cautions.objects.all().filter(tournament=context['tournament']).order_by('position')
+            context['cards'] = Cautions.objects.all().filter(tournament=context['tournament']).exclude(yellow_cards=0, red_cards=0)
             context['group_matchs'] = DateOfMatch.objects.filter(tournament=context['tournament'])
             context['groups'] = Group.objects.filter(group_play_off__tournament=context['tournament'])
-            context['scorers'] = Scorers.objects.all().filter(tournament=context['tournament']).order_by('goals')
+            context['scorers'] = Scorers.objects.all().filter(tournament=context['tournament']).order_by('goals').exclude(goals=0)
         return context
 
