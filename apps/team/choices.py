@@ -31,3 +31,9 @@ MATCH_HOURS = [
     ("22", "22:00"),
     ("23", "23:00"),
 ]
+
+AMONESTACIONES = [
+    ("1", "Amonestación Simple"),
+    ("2", "Doble Amarilla"),
+    ("3", "Roja Directa"),
+]

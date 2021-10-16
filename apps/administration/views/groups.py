@@ -16,7 +16,7 @@ from django.utils.decorators import method_decorator
 
 from apps.administration.decorators import user_validator
 from apps.team.models.tournament import Group, GroupTable, Tournament
-from apps.administration.services import check_tournament_active
+from apps.administration.services import check_tournament_active, reposition_league_teams
 from apps.administration.forms.groups import AddTeamToGroupForm
 
 
@@ -62,6 +62,23 @@ class AssignTeamToGroup(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save()
+        tabla = GroupTable.objects.filter(group_play_off=self.object)
+        if tabla:
+            for elemento in tabla:
+                elemento.delete()
+            for team in self.object.teams.all():
+                nueva_posicion = GroupTable.objects.create(
+                    group_play_off=self.get_object(),
+                    team=team,
+                )
+        else:
+            for team in self.object.teams.all():
+                nueva_posicion = GroupTable.objects.create(
+                    group_play_off=self.get_object(),
+                    team=team,
+                )
+        tabla = GroupTable.objects.filter(group_play_off=self.object)
+        reposition_league_teams(tabla)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

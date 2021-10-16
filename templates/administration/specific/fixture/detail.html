@@ -51,6 +51,7 @@
                                   <td>
                                     {% if obj.played %}
                                       <a href="" class="btn btn-primary"><i class="fas fa-poll-h"></i> Modificar Resultado</a>
+                                      <a href="" class="btn btn-warning"><i class="fas fa-poll-h"></i> Cargar Amonestados</a>
                                     {% else %}
                                       <a href="{% url 'administration:update_match' obj.id day_match_id %}" class="btn btn-secondary"><i class="fas fa-edit"></i> Modificar Datos del Partido</a>
                                       <a href="{% url 'administration:load_result' obj.id day_match_id %}" class="btn btn-primary"><i class="fas fa-poll-h"></i> Cargar Resultado</a>

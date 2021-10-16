@@ -13,7 +13,7 @@ from django.utils.decorators import method_decorator
 from apps.team.models.player import Player
 from apps.administration.forms.player import PlayerForm, PlayerEditForm, PlayerCreateDelegatedForm
 from apps.administration.decorators import user_validator, change_delegate_to_register_players
-from apps.administration.services import check_players_capacity, check_tournament_active, create_dorsal, change_player_dorsal
+from apps.administration.services import check_players_capacity, check_tournament_active, create_dorsal, change_player_dorsal, agregate_player_to_scorers
 
 
 class PlayerCreateView(CreateView):
@@ -35,6 +35,7 @@ class PlayerCreateView(CreateView):
                 player = form.save()
                 check_players_capacity()
                 create_dorsal(player.team)
+                agregate_player_to_scorers(player)
                 return HttpResponseRedirect(self.get_success_url())
             except Exception as e:
                 context = self.get_context_data(**kwargs)
@@ -139,6 +140,7 @@ class PlayerDelegateCreateView(CreateView):
                 player.save()
                 create_dorsal(player.team)
                 check_players_capacity()
+                agregate_player_to_scorers(player)
                 return HttpResponseRedirect(self.get_success_url())
             except Exception as e:
                 context = self.get_context_data(**kwargs)

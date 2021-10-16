@@ -290,6 +290,7 @@ def reposition_league_teams(table):
         team.save()
         init_position += 1
 
+
 def check_groups_conformation(tournament):
     grupos = Group.objects.filter(group_play_off=GroupAndPlayOff.objects.filter(tournament=tournament).last())
     todos_los_equipos = tournament.teams.all().count()
@@ -301,4 +302,21 @@ def check_groups_conformation(tournament):
     else:
         return True
 
+
+def agregate_player_to_scorers(player):
+    equipo = player.team
+    torneos = Tournament.objects.filter(status=True)
+    torneos = torneos.filter(teams__id=equipo.id)
+    for torneo in torneos:
+        nuevo_registro_tarjetas = Cautions.objects.create(
+            tournament=torneo,
+            player=player,
+        )
+        tabla_goleadores = Scorers.objects.filter(tournament=torneo).order_by('-position')
+        ultima_posicion = tabla_goleadores.first().position
+        nuevo_registro_goles = Scorers.objects.create(
+            tournament=torneo,
+            player=player,
+            position=ultima_posicion + 1,
+        )
 
