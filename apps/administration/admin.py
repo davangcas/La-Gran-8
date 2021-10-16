@@ -1,24 +1,14 @@
 from django.contrib import admin
 
-from apps.administration.models.users import (
-    Administrator, 
-    Message,
-)
-from apps.team.models.team import (
-    Team,
-)
-from apps.administration.models.noticias import (
-    Noticia,
-)
-from apps.team.models.match import (
-    FieldMatch,
-    Match,
-)
-
-# Register your models here.
+from apps.administration.models.users import *
+from apps.administration.models.noticias import *
+from apps.administration.models.config import *
 
 admin.site.register(Administrator)
-admin.site.register(Team)
 admin.site.register(Noticia)
-admin.site.register(FieldMatch)
-admin.site.register(Match)
+admin.site.register(Sender)
+admin.site.register(Receiver)
+admin.site.register(Message)
+admin.site.register(Notification)
+admin.site.register(GeneralConfig)
+

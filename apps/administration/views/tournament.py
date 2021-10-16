@@ -15,8 +15,9 @@ from apps.administration.services import (
     check_or_create_days,
     check_tournament_active,
     generate_fields,
+    check_groups_conformation,
 )
-from apps.team.models.match import DateOfMatch
+from apps.team.models.match import DateOfMatch, Match
 
 
 class TorunamentCreateView(CreateView):
@@ -232,5 +233,7 @@ class TournamentDetailView(DetailView):
             context['group_matchs'] = DateOfMatch.objects.filter(tournament=context['tournament'])
             context['groups'] = Group.objects.filter(group_play_off__tournament=context['tournament'])
             context['scorers'] = Scorers.objects.all().filter(tournament=context['tournament']).order_by('goals').exclude(goals=0)
+            context['generated_matchs'] = Match.objects.filter(tournament=self.get_object())
+            context['conformated_groups'] = check_groups_conformation(self.get_object())
         return context
 

@@ -61,7 +61,9 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
+                  {% if conformated_groups %}
                   <a href="{% url 'administration:create_match_day' tournament_id %}" class="btn btn-info"><i class="fas fa-calendar-plus"></i> Cargar Fecha Manualmente</a>
+                  {% endif %}
                   <a href="{% url 'administration:automatic_generate' tournament_id %}" class="btn btn-success"><i class="fas fa-magic"></i> Generar encuentros automaticamente</a>
                 </div>
               </div>
@@ -98,7 +100,9 @@
                                 <td>{{ obj.group_name }}</td>
                                 <td>{{ obj.teams.all.count }}</td>
                                 <td>
-                                  <a href=""><i class="fas fa-cogs"></i></a>
+                                  {% if not generated_matchs %}
+                                  <a href="{% url 'administration:assign_team_to_group' obj.id %}"><i class="fas fa-cogs"></i></a>
+                                  {% endif %}
                                   <a href="{% url 'administration:group_detail_tournament' obj.id %}"><i class="fas fa-eye"></i></a>
                                 </td>
                             </tr>

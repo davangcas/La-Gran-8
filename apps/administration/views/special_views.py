@@ -2,10 +2,11 @@ from datetime import date
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 from apps.team.models.team import Team
 from apps.team.models.match import DateOfMatch, FieldMatch, Match
-from apps.team.models.tournament import League, Tournament, ConfigTournament, DaysOfWeek
+from apps.team.models.tournament import Group, GroupAndPlayOff, League, Tournament, ConfigTournament, DaysOfWeek
 from apps.administration.services import get_number_of_all_matchs, generate_matchs
 from apps.administration.models.users import Administrator
 
@@ -30,7 +31,7 @@ def put_match_day_as_played(request, pk):
 
 
 def generate_automatic_matchs(request, pk):
-    torneo = Tournament.objects.filter(status=True).last()
+    torneo = Tournament.objects.get(pk=pk)
 
     if torneo.format == "1":
         settings = ConfigTournament.objects.filter(tournament=torneo).first()
@@ -55,7 +56,19 @@ def generate_automatic_matchs(request, pk):
     elif torneo.format == "2":
         pass
     elif torneo.format == "3":
-        pass
+        groupconfig = GroupAndPlayOff.objects.filter(tournament=torneo).last()
+        groups = Group.objects.filter(group_play_off=groupconfig)
+        teams_in_groups = 0
+        for group in groups:
+            teams_in_groups += group.teams.count()
+        teams_in_tournament = torneo.teams.count()
+        if teams_in_tournament > teams_in_groups:
+            print("Los grupos deben de estar conformados")
+            success_url = reverse_lazy('administration:tournament_detail', kwargs={'pk':pk})
+            return HttpResponseRedirect(success_url)
+        else:
+            print("Fechas generadas")
+        
     elif torneo.format == "4":
         pass
     success_url = reverse_lazy('administration:tournament_detail', kwargs={'pk':pk})

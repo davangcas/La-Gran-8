@@ -62,5 +62,5 @@ class DateOfMatch(models.Model):
 
     class Meta:
         verbose_name = "Fecha"
-        verbose_name = "Fechas"
+        verbose_name_plural = "Fechas"
 

@@ -8,6 +8,8 @@ from apps.team.models.team import Team
 from apps.administration.models.users import Administrator
 from apps.team.models.player import Player
 from apps.team.models.tournament import (
+    Group,
+    GroupAndPlayOff,
     Tournament, 
     League, 
     LeagueTable, 
@@ -287,5 +289,16 @@ def reposition_league_teams(table):
         team.position = init_position
         team.save()
         init_position += 1
+
+def check_groups_conformation(tournament):
+    grupos = Group.objects.filter(group_play_off=GroupAndPlayOff.objects.filter(tournament=tournament).last())
+    todos_los_equipos = tournament.teams.all().count()
+    equipos_asignados = 0
+    for grupo in grupos:
+        equipos_asignados += grupo.teams.all().count()
+    if todos_los_equipos != equipos_asignados:
+        return False
+    else:
+        return True
 
 

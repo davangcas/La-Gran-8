@@ -183,6 +183,7 @@ class LoadMatchResultView(UpdateView):
             local_team_stats.save()
             away_team_stats.save()
             reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points', '-dif_goals', '-goals'))
+        
         else:
             # Match local
             registro_local.played += 1
@@ -219,6 +220,7 @@ class LoadMatchResultView(UpdateView):
             local_team_stats.save()
             away_team_stats.save()
             reposition_league_teams(LeagueTable.objects.filter(league=liga).order_by('-points', '-dif_goals', '-goals'))
+        
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
