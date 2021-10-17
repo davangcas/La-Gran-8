@@ -14,7 +14,7 @@ from apps.administration.services import (
 from apps.team.models.match import DateOfMatch, Match
 from apps.administration.forms.match import MatchLeagueForm, MatchLeagueEditForm, MatchLoadResultForm
 from apps.team.models.player import Player
-from apps.administration.forms.cautions import CautionsForm
+from apps.administration.forms.cautions import CautionsMultipleForm
 
 
 class MatchCreateView(CreateView):
@@ -236,3 +236,25 @@ class LoadMatchResultView(UpdateView):
         context['jugadores_visitantes'] = Player.objects.filter(team=self.object.away_team)
         return context
 
+
+@login_required
+@user_validator
+def load_result(request, pk, date_id):
+    template_name = "administration/specific/match/load_result2.html"
+    self_object = Match.objects.get(pk=pk)
+    local_players = Player.objects.filter(team=self_object.local_team)
+    context = {}
+    if request.method == 'POST':
+        form = CautionsMultipleForm(request.POST, extra=request.POST.get('extra_field_count'), local_players=local_players)
+        if form.is_valid():
+            print("valid!")
+    else:
+        form = CautionsMultipleForm(local_players=local_players)
+    context['form'] = form
+    context['object'] = self_object
+    context['form_title'] = "Cargar Resultado"
+    context['header_page_title'] = str(self_object.local_team.name) + " vs " + str(self_object.away_team.name)
+    context['active_tournament'] = check_tournament_active()
+    context['jugadores_local'] = Player.objects.filter(team=self_object.local_team)
+    context['jugadores_visitantes'] = Player.objects.filter(team=self_object.away_team)
+    return render(request, template_name, context)

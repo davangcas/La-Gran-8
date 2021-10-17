@@ -59,7 +59,7 @@ from apps.administration.views.special_views import (
     change_delegate_status,
 )
 from apps.administration.views.day_of_match import DateOfMatchCreateView, DateOfMatchUpdateView, MatchDayDetailView
-from apps.administration.views.match import MatchCreateView, MatchUpdateView, LoadMatchResultView
+from apps.administration.views.match import MatchCreateView, MatchUpdateView, LoadMatchResultView, load_result
 from apps.administration.views.config import ConfigListView, ConfigupdateView
 from apps.administration.views.groups import GroupDetailView, AssignTeamToGroup
 
