@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'q%6_l9)-d*x0#a&qx%98_^xiybm4a-*at%l&+5x8_(-*0!%7q9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-LOCAL_DEPLOY = False
-HEROKU_DEPLOY = True
+DEBUG = os.environ.get('DEBUG', False)
+LOCAL_DEPLOY = os.environ.get('LOCAL_DEPLOY', False)
+HEROKU_DEPLOY = os.environ.get('HEROKU_DEPLOY', True)
 
 if HEROKU_DEPLOY:
     ALLOWED_HOSTS = ['*']
@@ -91,12 +91,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 if LOCAL_DEPLOY:
     DATABASES = db.POSTGRES
-
+elif HEROKU_DEPLOY:
+    DATABASES = db.HEROKU
 else:
-    if HEROKU_DEPLOY:
-        DATABASES = db.HEROKU
-    else:
-        DATABASES = db.POSTGRES_HOSTINGER
+    DATABASES = db.POSTGRES_HOSTINGER
 
 
 # Password validation
@@ -140,17 +138,16 @@ if LOCAL_DEPLOY:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'static'),
     ]
+elif HEROKU_DEPLOY:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATIC_URL = '/static/'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else:
-    if HEROKU_DEPLOY:
-        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-        STATIC_URL = '/static/'
-        STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    else:
-        STATICFILES_DIRS = [
-            os.path.join(BASE_DIR, 'static'),
-        ]
-        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-        STATIC_URL = '/static/'
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATIC_URL = '/static/'
 
 # media files root
 MEDIA_URL = '/media/'
