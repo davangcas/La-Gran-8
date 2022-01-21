@@ -33,8 +33,8 @@ POSTGRES_HOSTINGER = {
     }
 }
 
-HEROKU = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
-}
+# HEROKU = {
+#     'default': dj_database_url.config(
+#         default=config('DATABASE_URL')
+#     )
+# }
