@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 if LOCAL_DEPLOY:
-    DATABASES = db.POSTGRES
+    DATABASES = db.SQLITE
 elif HEROKU_DEPLOY:
     DATABASES = db.HEROKU
 else:
